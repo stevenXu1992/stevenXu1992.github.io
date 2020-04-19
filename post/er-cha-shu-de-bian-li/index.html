@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>二叉树的遍历 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico?v=1587301983441">
+<link rel="stylesheet" href="https://stevenXu1992.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="1. 递归遍历
+public static class Node{
+  public int value;
+  public Node left;
+  public Node right;
+  
+  public Node(int data..." />
+    <meta name="keywords" content="二叉树" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://stevenXu1992.github.io">
+        <img src="https://stevenXu1992.github.io/images/avatar.png?v=1587301983441" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://stevenXu1992.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">二叉树的遍历</h2>
+            <div class="post-date">2020-04-19</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="1-递归遍历">1. 递归遍历</h2>
+<pre><code class="language-java">public static class Node{
+  public int value;
+  public Node left;
+  public Node right;
+  
+  public Node(int data){
+    this.value = data;
+  }
+}
+
+public static void f(Node head){
+  if(head == null){
+    return;
+  }
+  //先序遍历操作
+  f(head.left);
+  //中序遍历操作
+  f(head.right);
+  //后序遍历操作
+}
+</code></pre>
+<p>二叉树递归遍历的本质：通过树的完整递归序加工而成<br>
+完整递归序：1 -&gt; 2 -&gt; 2 -&gt; 2 -&gt; 1 -&gt; 3 -&gt; 3 -&gt; 3 -&gt; 1<br>
+先序：第一次来到节点时进行操作 1 -&gt; 2 -&gt; 3<br>
+中序：第二次来到节点时进行操作 2 -&gt; 1 -&gt; 3<br>
+后序：第三次来到节点时进行操作 2 -&gt; 3 -&gt; 1</p>
+<h2 id="2-非递归遍历">2. 非递归遍历</h2>
+<h3 id="21-先序遍历">2.1 先序遍历</h3>
+<p>遍历顺序：中 --&gt; 左 --&gt; 右，1 -&gt; 2 -&gt; 4 -&gt; 5 -&gt; 3 -&gt; 6 -&gt; 7</p>
+<ol>
+<li>建立栈结构，压入头节点</li>
+<li>从栈中弹出当前节点，并执行遍历操作</li>
+<li>先压入弹出节点的右子节点，再压左子节点，重复步骤2直到栈为空</li>
+</ol>
+<pre><code class="language-java">public static void preUnRecur(Node head){
+  if(head != null){
+    Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+    stack.add(head);
+    while(!stack.isEmpty()){
+      head = stack.pop();
+      //该处执行遍历操作
+      if(head.right != null){
+        stack.push(head.right);
+      }
+      if(head.left != null){
+        stack.push(head.left);
+      }
+    }
+  }
+}
+</code></pre>
+<h3 id="22-中序遍历">2.2 中序遍历</h3>
+<p>遍历顺序：左 --&gt; 中 --&gt; 右，4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 6 -&gt; 3 -&gt; 7</p>
+<ol>
+<li>建立栈结构，压入头节点</li>
+<li>不断将当前节点的左子节点压栈，直到某节点的左子节点为空，此时从栈中弹出该节点并执行遍历操作</li>
+<li>若弹出节点的右子节点不为空，重复步骤2；若为空，则继续从栈中弹出下一节点直到栈为空</li>
+</ol>
+<pre><code class="language-java">public void inUnRecur(Node head){
+  if(head != null){
+    Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+    Node cur = head;
+    while(!stack.isEmpty() || cur != null){
+      if(cur != null){
+        stack.push(cur);
+        cur = cur.left;
+      }else{
+        cur = stack.pop();
+        //此处执行遍历操作
+        cur = cur.right;
+      }
+    }
+  }
+}
+</code></pre>
+<h3 id="23-后序遍历">2.3 后序遍历</h3>
+<p>遍历顺序：左 --&gt; 右 --&gt; 中，4 -&gt; 5 -&gt; 2 -&gt; 6 -&gt; 7 -&gt; 3 -&gt; 1<br>
+类似于先序遍历，按照先左后右的顺序压栈。额外准备一个栈，将弹出节点压入，直到1号栈为空时，将节点依次从2号栈弹出并执行遍历操作。</p>
+<pre><code class="language-java">public static void postUnRecur(Node head){
+  if(head != null){
+    Stack&lt;Node&gt; s1 = new Stack&lt;&gt;();
+    Stack&lt;Node&gt; s2 = new Stack&lt;&gt;();
+    s1.push(head);
+    while(!s1.isEmpty()){
+      head = s1.pop();
+      s2.push(head);
+      if(head.left != null){
+        s1.push(head.left);
+      }
+      if(head.right != null){
+        s1.push(head.right);
+      }
+    }
+    while(!s2.isEmpty()){
+      head = s2.pop();
+      //此处执行遍历操作
+    }
+  }
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://stevenXu1992.github.io/tag/dxJiV25Oq/" class="tag">
+                    二叉树
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://stevenXu1992.github.io/post/hello-gridea/">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
