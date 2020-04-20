@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Gridea</title>
-    <updated>2020-04-19T13:13:38.170Z</updated>
+    <updated>2020-04-20T13:52:31.914Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -115,6 +115,49 @@ public static void f(Node head){
       //此处执行遍历操作
     }
   }
+}
+</code></pre>
+<h2 id="3宽度优先遍历">3.宽度优先遍历</h2>
+<ol>
+<li>使用哈希表记录每个节点所在层数，使用队列进行宽度优先遍历</li>
+<li>每个节点都进入队列，其左右子节点层数+1进入哈希表</li>
+<li>从队列弹出时，比较该节点所在层数是否大于当前层数，若大于（说明已到了下一层），则将当前层宽度清零并更新当前层数；若不大于（说明还在同一层），则当前层宽度+1。每次对一个节点操作完成后都比较并更新最大宽度与当前层宽度的最大值。</li>
+</ol>
+<pre><code class="language-java">public static int getMaxWidth(Node head){
+  if(head ==null){
+    return 0;
+  }
+  int maxWidth = 0;
+  int curWidth = 0;
+  int curLevel = 0;
+  HashMap&lt;Node, Integer&gt; levelMap = new HashMap&lt;&gt;();
+  LinkedList&lt;Node&gt; queue = new LinkedList&lt;&gt;();
+  levelMap.put(head, 1);
+  queue.add(head);
+  Node cur = null;
+  Node left = null;
+  Node right = null;
+  while(!queue.isEmpty()){
+    cur = queue.poll();
+    left = cur.left;
+    right = cur.right;
+    if(left != null){
+      levelMap.put(left, levelMap.get(cur) + 1);
+      queue.add(left);
+    }
+    if(right != null){
+      levelMap.put(right, levelMap.get(cur) + 1);
+      queue.add(right);
+    }
+    if(levelMap.get(cur) &gt; curLevel){
+      curWidth = 0;
+      curLevel = levelMap.get(cur);
+    }else{
+      curWidth++;
+    }
+    maxWidth = Math.max(curWidth, maxWidth);
+  }
+  return maxWidth;
 }
 </code></pre>
 ]]></content>
