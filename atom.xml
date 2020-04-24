@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Gridea</title>
-    <updated>2020-04-20T13:53:31.259Z</updated>
+    <updated>2020-04-24T09:06:38.407Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,165 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[二叉树的递归框架]]></title>
+        <id>https://stevenXu1992.github.io/post/er-cha-shu-de-di-gui-kuang-jia/</id>
+        <link href="https://stevenXu1992.github.io/post/er-cha-shu-de-di-gui-kuang-jia/">
+        </link>
+        <updated>2020-04-24T09:04:23.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1判断一棵树是否为满二叉树">1.判断一棵树是否为满二叉树</h2>
+<p>满二叉树条件：总节点个数 = 2 ^ 高度 - 1</p>
+<ol>
+<li>定义一个信息类，用于获取需要的信息（此处为节点数和高度）</li>
+<li>递归函数中先使用黑盒，再补充黑盒中获取信息的操作（此处为假定通过黑盒已获取到了当前节点的左右子树的高度和节点个数，使用该信息得出当前节点处的高度和节点个数）</li>
+<li>在主函数中判断是否满足条件</li>
+</ol>
+<pre><code class="language-java">//定义信息类
+public static class Info{
+  public int size;
+  public int height;
+  public Info(int s, int h){
+    this.size = s;
+    this.height = h;
+  }
+}
+//递归函数
+public static Info process(Node head){
+  if(head == null){
+    return new Info(0, 0);
+  }
+  Info leftInfo = process(head.left);
+  Info rightInfo = process(head.right);
+  int size = leftInfo.size + rightInfo.size + 1;
+  int height = Math.max(leftInfo.height, rightInfo.height)+1;
+  return new Info(size, height);
+} 
+//主函数
+public static boolean isFullTree(Node head){
+  Info info = process(head);
+  return info.size == (1 &lt;&lt; height) - 1; // 左移1位=2^height
+}
+</code></pre>
+<h2 id="2判断一棵树是否为平衡二叉树">2.判断一棵树是否为平衡二叉树</h2>
+<p>平衡二叉树条件：左右子树高度差不超过1且所有子树都平衡<br>
+信息类：高度，子树是否平衡</p>
+<pre><code class="language-java">public static class Info{
+  public int height;
+  public boolean balance;
+  public Info(int h, boolean b){
+    this.height = h;
+    this.balance = b;
+  }
+}
+public static Info process(Node head){
+  if(head == null){
+    return new Info(0, true);
+  }
+  Info leftInfo = process(head.left);
+  Info rightInfo = process(head.right);
+  int height = Math.max(leftInfo.height, rightInfo.height) +1;
+  boolean balance = 
+    leftInfo.balance &amp;&amp; rightInfo.balance 
+    &amp;&amp; Math.abs(leftInfo.height - rightInfo.height) &lt; 2;
+  return new Info(height, balance);
+}
+</code></pre>
+<h2 id="3求二叉树两节点间的最大距离">3.求二叉树两节点间的最大距离</h2>
+<p>信息类：高度，最大距离<br>
+最大距离出现的三种情况：左树上，右树上，横跨头节点</p>
+<pre><code class="language-java">public static class Info{
+  public int height;
+  public int distance;
+  public Info(int h, int d){
+    this.height = h;
+    this.distance = d;
+  }
+}
+public static Info process(Node head){
+  if(head = null){
+    return new Info(0, 0);
+  }
+  Info leftInfo = process(head.left);
+  Info rightInfo = process(head.right);
+  int height = Math.max(leftInfo.height, rightInfo.height) +1;
+  int distance = Math.max(leftInfo.height+rightInfo.height+1,
+             Math.max(leftInfo.distance, rightInfo.distance));
+  return new Info(height, distance);
+}
+</code></pre>
+<h2 id="4判断一棵树是否为搜索二叉树">4.判断一棵树是否为搜索二叉树</h2>
+<p>搜索二叉树的条件：1）左树是搜索二叉树， 2）右树是搜索二叉树，3）左树的最大值小于头节点， 4）右树的最小值大于头节点<br>
+信息类：是否为搜索二叉树，最大值，最小值</p>
+<pre><code class="language-java">public static class Info{
+  public boolean searchTree;
+  public int max;
+  public int min;
+  public Info(boolean s, int max, int min){
+    this.searchTree = s;
+    this.max = max;
+    this.min = min;
+  }
+}
+public static Info process(Node head){
+  if(head == null){
+    return null;
+  }
+  
+  Info leftInfo = process(head.left);
+  Info rightInfo = process(head.right);
+  
+  int max = head.data;
+  int min = head.data;
+  
+  if(leftInfo != null){
+    max = Math.max(max, leftInfo.max);
+    min = Math.min(min, leftInfo.min);
+  }
+  if(rightInfo != null){
+    max = Math.max(max, rightInfo.max);
+    min = Math.min(min, rightInfo.min);
+  }
+  
+  boolean searchTree = false;
+  //三目的意义：若左树不为空，按1）左树是搜索树 2）左树最大值小于节点值 进行判断；若左树为空，则直接为true不用判断。右树同理。
+  if(
+    (leftInfo != null ? 
+    (leftInfo.searchTree &amp;&amp; leftInfo.max &lt; head.data) : true)
+    &amp;&amp;
+    (rightInfo != null ?
+    (rightInfo.searchTree &amp;&amp; rightInfo.min &gt; head.data): true)
+  ){
+    searchTree = true;
+  }
+  return new Info(searchTree, max, min);
+}
+</code></pre>
+<p>中序遍历方法</p>
+<pre><code class="language-java">public static boolean searchTree(Node head){
+  if(head == null){
+    return true;
+  }
+  Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+  Node cur = head;
+  int pre = Integer.MIN_VALUE;
+  while(!stack.isEmpty() || cur != null){
+    if(cur != null){
+      stack.push(cur);
+      cur = cur.left;
+    }else{
+      cur = stack.pop();
+      if(cur.data &lt;= pre){
+        return false;
+      }
+      pre = cur.data;
+      cur = cur.right;
+    }
+  }
+  return true;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[二叉树的遍历]]></title>
         <id>https://stevenXu1992.github.io/post/er-cha-shu-de-bian-li/</id>
