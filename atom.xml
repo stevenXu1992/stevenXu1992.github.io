@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Gridea</title>
-    <updated>2020-04-24T09:15:13.438Z</updated>
+    <updated>2020-05-12T09:24:04.463Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,130 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[二叉树常见题目]]></title>
+        <id>https://stevenXu1992.github.io/post/er-cha-shu-chang-jian-ti-mu/</id>
+        <link href="https://stevenXu1992.github.io/post/er-cha-shu-chang-jian-ti-mu/">
+        </link>
+        <updated>2020-05-12T09:22:58.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1判断是否为完全二叉树">1.判断是否为完全二叉树</h2>
+<p>判断标准：宽度优先遍历时 1）若某节点有右节点无左节点，则不为完全二叉树 2）某节点左右节点不全，后续都必须为叶节点，否则不是完全二叉树(用一个布尔值记录状态)</p>
+<pre><code class="language-java">public static boolean heapTree(Node head){
+  if(head == null){
+    return true;
+  }
+  LinkedList&lt;Node&gt;() queue = new LinkedList&lt;&gt;();
+  queue.add(head);
+  boolean leaf = false;
+  Node right = null;
+  Node left = null;
+  while(!queue.isEmpty()){
+    head = queue.poll();
+    right = head.right;
+    left = head.left;
+    if( (right != null &amp;&amp; left == null) //条件1
+       || (leaf &amp;&amp; (right != null || left != null))){ //条件2
+      return false;
+    }
+    if(right != null){
+      queue.add(right);
+    }
+    if(left != null){
+      queue.add(left);
+    }
+    if(right == null || left == null){
+      leaf = true; //左右子树有一个为空，开启叶节点的记录状态
+    }
+  }
+  return true;
+} 
+</code></pre>
+<h2 id="2查找两个节点的最低公共祖先节点">2.查找两个节点的最低公共祖先节点</h2>
+<p>设两个节点为n1,n2， 递归函数中：</p>
+<ol>
+<li>若头节点为n1或n2,返回自己（为空则返回空 ）</li>
+<li>递归黑盒求出左右子树的返回值</li>
+<li>若左右子树返回值都不为空，返回自己（已找到公共祖先）</li>
+<li>左右子树一个为空一个不为空，返回不为空的一项</li>
+</ol>
+<pre><code class="language-java">public static Node process(Node head, Node n1, Node n2){
+  if(head == null || head == n1 || head == n2){
+    return head;
+  }
+  Node left = process(head.left, n1, n2);
+  Node right = process(head.right, n1, n2);
+  if(left != null &amp;&amp; right != null){
+    return head;
+  }
+  return left == null ? right : left;
+}
+</code></pre>
+<h2 id="3查找某节点的后继节点">3.查找某节点的后继节点</h2>
+<p>后继节点：某节点在中序遍历中的下一个节点</p>
+<pre><code class="language-java">public static Node find(Node node){
+  if(node == null){
+    return node;
+  }
+  if(node.right != null){ //有右树
+    return process(node.right); //则中继为右树上最左的节点
+  }else{ 	//	无右树
+    Node parent = node.parent;
+    //若node = parent.left, 则直接返回parent
+    //否则继续向上寻找，直到node = parent.node
+    //最后，若一直未找到则返回null(最右节点的中继为null)
+    while(parent != null &amp;&amp; node != parent.left){
+      node = parent;
+      parent = node.parent;
+    }
+    return parent;
+  }
+} 
+
+public static Node process(Node node){
+  if(node == null){
+    return node;
+  }
+  while(node.left != null){
+    node = node.left;
+  }
+  return node;
+}
+</code></pre>
+<h2 id="4序列化与反序列化">4.序列化与反序列化</h2>
+<pre><code class="language-java">// '#'表示null, '_'用于分隔
+public static String serial(Node node){
+  if(node == null){
+    return '#_';
+  }
+  String res = node.data + '_';
+  //按照先序遍历的顺序将树序列化成字符串
+  res += serial(node.left);
+  res += serial(node.right);
+  return res;
+}
+
+public static Node recon(String str){
+  String[] arr = str.split('_');
+  Queue&lt;String&gt; queue = new LinkedList&lt;String&gt;();
+  for(int i = 0; i != arr.length; i++){
+    queue.offer(arr[i]);
+  }
+  return reconProcess(queue);
+}
+
+public static Node reconProcess(Queue&lt;String&gt; queue){
+  String str = queue.poll();
+  if(str.equals('#')){
+    return null;
+  }
+  Node head = new Node(Integer.valueOf(str));
+  head.left = reconProcess(queue);
+  head.right = reconProcess(queue);
+  return head;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[二叉树的递归框架]]></title>
         <id>https://stevenXu1992.github.io/post/er-cha-shu-de-di-gui-kuang-jia/</id>
