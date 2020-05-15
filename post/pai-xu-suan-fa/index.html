@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>排序算法 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico?v=1589549979834">
+<link rel="stylesheet" href="https://stevenXu1992.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="1.冒泡排序
+public static void bubbleSort(int[] arr){
+  if(arr.length &lt; 2 || arr == null){
+    return;
+  }
+  //大数冒泡
+  for(..." />
+    <meta name="keywords" content="排序" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://stevenXu1992.github.io">
+        <img src="https://stevenXu1992.github.io/images/avatar.png?v=1589549979834" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://stevenXu1992.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">排序算法</h2>
+            <div class="post-date">2020-05-15</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="1冒泡排序">1.冒泡排序</h2>
+<pre><code class="language-java">public static void bubbleSort(int[] arr){
+  if(arr.length &lt; 2 || arr == null){
+    return;
+  }
+  //大数冒泡
+  for(int i = arr.length - 1; i &gt; 0; i--){
+    for(int j = 0; j &lt; i; j++){
+      if(arr[j] &gt; arr[j + 1]){
+        swap(arr, j, j + 1);
+      }
+    }
+  }
+  
+  //小数冒泡
+  for(int i = 0; i &lt; arr.length - 1; i++){
+    for(int j = length - 1; j &gt; i; j--){
+      if(arr[j] &lt; arr[j - 1]){
+        swap(arr, j, j - 1);
+      }
+    }
+  }
+}
+
+public static void swap(int[] arr, int a, int b){
+  int temp = arr[a];
+  arr[a] = arr[b];
+  arr[b] = temp;
+}
+</code></pre>
+<h2 id="2插入排序">2.插入排序</h2>
+<pre><code class="language-java">public static void insertSort(int[] arr){
+  if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  for(int i = 1; i &lt; arr.length; i++){
+    for(int j = i - 1; j &gt;= 0 &amp;&amp; arr[j] &gt; arr[j + 1]; j--){
+      swap(arr, j, j + 1);
+    }
+  }
+}
+</code></pre>
+<h2 id="3-选择排序">3. 选择排序</h2>
+<pre><code class="language-java">public static void selectSort(int[] arr){
+  if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  for(int i = 0; i &lt; arr.length; i++){
+    int minIndex = i;
+    for(int j = i + 1; j &lt; arr.length; j++){
+      minIndex = arr[j] &lt; arr[minIndex] ? j : minIndex;
+    }
+    swap(arr, minIndex, i);
+  }
+  
+}
+</code></pre>
+<h2 id="4-归并排序">4. 归并排序</h2>
+<pre><code class="language-java">public static void mergeSort(int[] arr){
+   if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  process(arr, 0, arr.length - 1);
+}
+
+public static void process(int[] arr, int left, int right){
+  if(left == right){
+    return;
+  }
+  int mid = (left + right) / 2;
+  process(arr, left, mid);
+  process(arr, mid + 1, right);
+  merge(arr, left, mid, right);
+}
+
+public static void merge(int[] arr, int left, int mid, int right){
+  int[] help = new int[right - left + 1];
+  int p1 = left;
+  int p2 = mid + 1;
+  int i = 0;
+  while(p1 &lt;= mid &amp;&amp; p2 &lt;= right){
+    help[i++] = arr[p1] &lt; arr[p2] ? arr[p1++] : arr[p2++];
+  }
+  while(p1 &lt;= mid){
+    help[i++] = arr[p1++];
+  }
+  while(p2 &lt;= right){
+    help[i++] = arr[p2++];
+  }
+  for(int j = 0; j &lt; help.length; j++){
+    arr[left + j] = help[j];
+  }
+}
+</code></pre>
+<h2 id="5-随机快排">5. 随机快排</h2>
+<pre><code class="language-java">public static void quickSort(int[] arr){
+  if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  process(arr, 0, arr.length - 1);
+}
+
+public static void process(int[] arr, int left, int right){
+  if(left &lt; right){
+    swap(arr, right, 
+         left + (int)(Math.random() * (right - left + 1)));
+    int[] p = partition(arr, left, right);
+    process(arr, left, p[0] - 1);
+    process(arr, p[1] + 1, right);
+  }
+}
+
+public static int[] partition(int[] arr, int left, int right){
+  int lessZone = left - 1;
+  int moreZone = right;
+  while(left &lt; moreZone){
+    if(arr[left] &gt; arr[right]){
+      swap(arr, left, --moreZone);
+    }if(arr[left] &lt; arr[right]){
+      swap(arr, left++, ++lessZone);
+    }else{
+      left++;
+    }
+  }
+  swap(arr, right, moreZone);
+  return new int[] {lessZone + 1, moreZone};
+}
+</code></pre>
+<h2 id="6-堆排序">6. 堆排序</h2>
+<p>用数组的方式表示完全二叉树，对于任意节点i：</p>
+<p>左子节点: 2i + 1, 	右子节点: 2i + 2, 	父节点: （i - 1）/ 2</p>
+<pre><code class="language-java">public static void heapSort(int[] arr){
+  if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  for(int i = 0; i &lt; arr.length; i++){
+    heapInsert(arr, i);
+  }
+  int size = arr.length;
+  swap(arr, 0, --size);
+  while(size &gt; 0){
+    heapify(arr, 0, size);
+    swap(arr, 0, --size);
+  }
+}
+
+public static void heapInsert(int[] arr, int index){
+  while(arr[index] &gt; arr[(index - 1) / 2]){
+    swap(arr, index, (index - 1) / 2);
+    index = (index - 1) / 2;
+  }
+}
+
+public static void heapify(int[] arr, int index, int size){
+  int left = 2 * index + 1;
+  while(left &lt; size){
+    int max = left + 1 &lt; size &amp;&amp; arr[left + 1] &gt; arr[left] 
+      ? left + 1 : left;
+    max = arr[max] &gt; arr[index] ? max : index;
+    if(max == index){
+      break;
+    }
+    swap(arr, index, max);
+    index = max;
+    left = 2 * index + 1;
+  }
+}
+</code></pre>
+<h2 id="7-桶排序">7. 桶排序</h2>
+<p>基数排序</p>
+<p>计数排序</p>
+<h2 id="8-总结">8. 总结</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">时间复杂度</th>
+<th style="text-align:center">空间复杂度</th>
+<th style="text-align:center">是否稳定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>选择排序</td>
+<td style="text-align:center">O(N^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td>冒泡排序</td>
+<td style="text-align:center">O(N^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td>插入排序</td>
+<td style="text-align:center">O(N^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td style="text-align:center">O(N*logN)</td>
+<td style="text-align:center">O(N)</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td>随机快排</td>
+<td style="text-align:center">O(N*logN)</td>
+<td style="text-align:center">O(logN)</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td>堆排序</td>
+<td style="text-align:center">O(N*logN)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td>桶排序</td>
+<td style="text-align:center">O(N)</td>
+<td style="text-align:center">O(M)</td>
+<td style="text-align:center">是</td>
+</tr>
+</tbody>
+</table>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://stevenXu1992.github.io/tag/CMUo0gMOe/" class="tag">
+                    排序
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://stevenXu1992.github.io/post/er-cha-shu-chang-jian-ti-mu/">
+                  <h3 class="post-title">
+                    二叉树常见题目
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
