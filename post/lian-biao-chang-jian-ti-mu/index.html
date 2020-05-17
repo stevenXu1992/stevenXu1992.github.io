@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>链表常见题目 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico?v=1589725451892">
+<link rel="stylesheet" href="https://stevenXu1992.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="1.反转链表
+//单向链表的反转
+public static class Node{
+  int value;
+  Node next;
+  public Node(int data){
+    this.value = data;
+  }..." />
+    <meta name="keywords" content="链表" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://stevenXu1992.github.io">
+        <img src="https://stevenXu1992.github.io/images/avatar.png?v=1589725451892" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://stevenXu1992.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">链表常见题目</h2>
+            <div class="post-date">2020-05-17</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="1反转链表">1.反转链表</h2>
+<pre><code class="language-java">//单向链表的反转
+public static class Node{
+  int value;
+  Node next;
+  public Node(int data){
+    this.value = data;
+  }
+}
+
+public static Node reverse(Node head){
+  Node pre = null;
+  Node next = null;
+  while(head != null){
+    next = head.next;
+    head.next = pre;
+    pre = head;
+    head = next;
+  }
+  return pre;
+}
+
+//双向链表的反转
+public static class DoubleNode{
+  int value;
+  DoubleNode next;
+  DoubleNode last;
+  public Double(int data){
+    this.value = data;
+  }
+}
+
+public static Node reverse(DoubleNode head){
+  DoubleNode pre = null;
+  DoubleNode next = null;
+  while(head != null){
+    next = head.next;
+    head.next = pre;
+    head.last = next;
+    pre = head;
+    head = next;
+  }
+  return pre;
+}
+</code></pre>
+<h2 id="2判断是否为回文结构">2.判断是否为回文结构</h2>
+<pre><code class="language-java">public static boolean palindrome1(Node head){
+  Stack&lt;Node&gt; stack = new Stack&lt;Node&gt;();
+  Node cur = head;
+  while(cur != null){
+    stack.push(cur);
+    cur = cur.next;
+  }
+  while(!stack.isEmpty()){
+    Node n = stack.pop();
+    if(head.value != n.value){
+      return false;
+    }
+    head = head.next;
+  }
+  return true;
+}
+
+public static boolean palindrome2(Node head){
+  Node slow = head.next;
+  Node fast = head;
+  while(slow.next != null &amp;&amp; fast.next.next != null){
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  Stack&lt;Node&gt; stack = new Stack&lt;Node&gt;();
+  while(slow != null){
+    stack.push(slow);
+    slow = slow.next;
+  }
+  while(!stack.isEmpty()){
+    Node n = stack.pop();
+    if(n.value != head.value){
+      return false;
+    }
+    head = head.next;
+  }
+  return true;
+}
+
+public static boolean palindrome3(Node head){
+  Node slow = head;
+  Node fast = head;
+  while(slow.next != null &amp;&amp; fast.next.next != null){
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  
+  //此时slow停在中点，复用fast指针反转链表
+  fast = slow.next;
+  slow.next = null;
+  Node next = null;
+  while(fast != null){
+    next = fast.next;
+    fast.next = slow;
+    slow = fast;
+    fast = next;
+  }
+  
+  //反转完成，此时slow在尾部,fast为null，开始判断
+  Node end = slow; //记录尾部节点，复原使用
+  boolean res = true;
+  while(head != null &amp;&amp; slow != null){
+    if(head.value != slow.value){
+      res = false;
+    }
+    head = head.next;
+    slow = slow.next;
+  }
+  
+  //复原链表,复用fast指针
+  fast = end.next;
+  end.next = null;
+  while(fast != null){
+    next = fast.next;
+    fast.next = end;
+    end = fast;
+    fast = next;
+  }
+  return res;
+}
+</code></pre>
+<h2 id="3-链表的荷兰国旗问题">3. 链表的荷兰国旗问题</h2>
+<pre><code class="language-java">public static Node flag(Node head, int pivot){
+  
+  Node sHead = null;
+  Node sTail = null;
+  
+  Node eHead = null;
+  Node eTail = null;
+  
+  Node bHead = null;
+  Node bTail = null;
+  
+  while(head != null){
+    if(head.value &lt; pivot){
+      if(sHead == null){
+        sHead = head;
+        sTail = head;
+      }else{
+        sTail.next = head;
+        sTail = head;
+      }
+    }else if(head.value &gt; pivot){
+      if(bHead == null){
+        bHead = head;
+        bTail = head;
+      }else{
+        bTail.next = head;
+        bTail = head;
+      }
+    }else{
+      if(eHead == null){
+        eHead = head;
+        eTail = head;
+      }else{
+        eTail.next = head;
+        eTail = head;
+      }
+    }
+    head = head.next;
+  }
+  
+  if(sTail != null){
+    sTail.next = eHead;
+    eTail = eTail == null ? sTail : eTail;
+  }
+  
+  if(eTail != null){
+    eTail.next = bHead;
+  }
+  
+  return sHead != null ? 
+    		 sHead : eHead != null ? eHead : bHead; 
+}
+</code></pre>
+<h2 id="4带随机指针的链表复制">4.带随机指针的链表复制</h2>
+<pre><code class="language-java">public static Node copy1(Node head){
+  HashMap&lt;Node, Node&gt; map = new HashMap&lt;&gt;();
+  Node cur = head;
+  while(cur != null){
+    map.put(cur, new Node(cur.value));
+    cur = cur.next;
+  }
+  cur = head;
+  while(cur != null){
+    map.get(cur).next = map.get(cur.next);
+    map.get(cur).random = map.get(cur.random);
+    cur = cur.next;
+  }
+  return map.get(head);
+}
+
+public static Node copy2(Node head){
+  
+  //先按照next指针在原链表中每个节点后面复制对应节点
+  Node cur = head;
+  Node next = null;
+  while(cur != null){
+    next = cur.next;
+    cur.next = new Node(cur.value);
+    cur.next.next = next;
+    cur = next;
+  }
+  
+  //复制原链表的random指针
+  cur = head;
+  Node copy = null;
+  while(cur != null){
+    next = cur.next.next;
+    copy = cur.next;
+    copy.random = cur.random != ? cur.random.next : null;
+    cur = next;
+  }
+  
+  //将原链表与复制好的链表分离
+  Node res = head.next;
+  cur = head;
+  while(cur != null){
+    next = cur.next.next;
+    copy = cur.next;
+    cur.next = next;
+    copy.next = next != null ? next.next : null;
+    cur = next;
+  }
+  return res;
+}
+</code></pre>
+<h2 id="5链表相交相关问题">5.链表相交相关问题</h2>
+<p>判断两个链表是否相交，若相交返回相交节点</p>
+<pre><code class="language-java">public static Node intersection(Node head1, Node head2){
+  if(head1 == null || head2 == null){
+    return null;
+  }
+  Node loop1 = getLoop(head1);
+  Node loop2 = getLoop(head2);
+  //1.若两个链表都无环
+  if(loop1 == null &amp;&amp; loop2 == null){
+    return noLoop(head1, head2);
+  }
+  //2.若一个有环，一个无环，必定不相交
+  //3.若两个链表都有环
+  if(loop1 != null &amp;&amp; loop2 != null){
+    return bothLoop(head1, loop1, head2, loop2);
+  }
+  return null;
+}
+
+//判断一个链表是否有环并返回入环节点
+public static Node getLoop(Node head){
+  if(head == null || head.next == null 
+     || head.next.next == null){
+    return null;
+  }
+  Node slow = head.next;
+  Node fast = head.next.next;
+  while(slow != fast){
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  fast = head;
+  while(slow != fast){
+    slow = slow.next;
+    fast = fast.next;
+  }
+  return fast;
+}
+
+//都无环
+public static Node noLoop(Node head1, Node head2){
+  Node cur1 = head1;
+  Node cur2 = head2;
+  int length = 0;
+  //分别找出两个链表的尾部,length用于求长度的差值
+  while(cur1.next != null){
+    length++;
+    cur1 = cur1.next;
+  }
+  while(cur2.next != null){
+    length--;
+    cur2 = cur2.next;
+  }
+  //只有尾节点相同才会相交
+  if(cur1 == cur2){
+    cur1 = length &gt; 0 ? head1 : head2; //cur1指向更长链表的头部
+    cur2 = cur1 == head1 ? head2 : head1;
+    length = Math.abs(length);
+    while(length != 0){
+      length--;
+      cur1 = cur1.next;
+    }
+    while(cur1 != cur2){
+      cur1 = cur1.next;
+      cur2 = cur2.next;
+    }
+    return cur1;
+  }else{
+    return null;
+  }
+}
+
+//都有环
+public static Node bothLoop(
+  Node head1, Node loop1, Node head2, Node loop2){
+  Node cur1 = null;
+  Node cur2 = null;
+  //若入环节点相同，则类似于无环相交的情况
+  if(loop1 == loop2){
+    cur1 = head1;
+    cur2 = head2;
+    int length = 0;
+    while(cur1 != loop1){
+      length++;
+      cur1 = cur1.next;
+    }
+    while(cur2 != loop2){
+      length--;
+      cur2 = cur.next;
+    }
+    cur1 = length &gt; 0 ? head1 : head2;
+    cur2 = cur1 == head1 ? head2 : head1;
+    length = Math.abs(length);
+    while(length != 0){
+      length--;
+      cur1 = cur1.next;
+    }
+    while(cur1 != cur2){
+      cur1 = cur1.next;
+      cur2 = cur2.next;
+    }
+    return cur1;
+  }else{
+    cur1 = loop1.next;
+    while(cur1 != loop1){
+      if(cur1 == loop2){
+        return loop1;
+      }
+      cur1 = cur1.next;
+    }
+    return null;
+  }
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://stevenXu1992.github.io/tag/6Vb34yWKJ/" class="tag">
+                    链表
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://stevenXu1992.github.io/post/pai-xu-suan-fa/">
+                  <h3 class="post-title">
+                    排序算法
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
