@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>暴力递归 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico?v=1590053555060">
+<link rel="stylesheet" href="https://stevenXu1992.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="1. 汉诺塔
+public static void hannoi(int n){
+  process(n, &quot;from&quot;, &quot;to&quot;, &quot;help&quot;);
+} 
+
+public st..." />
+    <meta name="keywords" content="暴力递归" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://stevenXu1992.github.io">
+        <img src="https://stevenXu1992.github.io/images/avatar.png?v=1590053555060" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://stevenXu1992.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">暴力递归</h2>
+            <div class="post-date">2020-05-21</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="1-汉诺塔">1. 汉诺塔</h2>
+<pre><code class="language-java">public static void hannoi(int n){
+  process(n, &quot;from&quot;, &quot;to&quot;, &quot;help&quot;);
+} 
+
+public static void process(int n, String from, String to, String help){
+  if(n == 1){
+    System.out.println(&quot;move&quot; + from + &quot;to&quot; + to);
+  }else{
+    process(n - 1, from, help, to);
+    process(1, from, to, help);
+    process(n - 1, help, to, from);
+  }
+}
+</code></pre>
+<h2 id="2-字符串子序列">2. 字符串子序列</h2>
+<pre><code class="language-java">public static List&lt;String&gt; subSequence(String str){
+  List&lt;String&gt; res = new ArrayList&lt;&gt;();
+  if(str == null){
+    return res;
+  }
+  if(str.length() == 0){
+    res.add(&quot;&quot;);
+    return res;
+  }
+  
+  char[] chars = str.toCharArray();
+  process(res, chars, &quot;&quot;, 0);
+}
+
+public static List&lt;String&gt; process(List&lt;String&gt; list, char[] chars, String path, int index){
+  if(index == chars.length){
+    list.add(path);
+  }else{
+    process(list, chars, path, index + 1);
+    process(list, chars, path + String.valueOf(chars[index]), index + 1);
+  }
+}
+</code></pre>
+<h2 id="3字符串全排列">3.字符串全排列</h2>
+<pre><code class="language-java">public static List&lt;String&gt; allArray(String str){
+  List&lt;String&gt; res = new ArrayList&lt;&gt;();
+  ArrayList&lt;String&gt; set = new ArrayList&lt;&gt;();
+  char[] chars = str.toCharArray();
+  for(char c : chars){
+    set.add(c);
+  }
+  process(set, &quot;&quot;, res);
+  return res;
+}
+
+public static void process(ArrayList&lt;String&gt; set, String path, List&lt;String&gt; list){
+  if(set.isEmpty()){
+    list.add(path);
+  }
+  HashSet&lt;Character&gt; picked = new HashSet&lt;&gt;();
+  for(int i = 0; i &lt; set.size(); i++){
+    if(!picked.contains(set.get(i))){
+      picked.add(set.get(i));
+      String newPath = path + set.get(i);
+      ArrayList&lt;String&gt; next = new ArrayList&lt;&gt;(set);
+      next.remove(i);
+      process(next, newPath, list);
+    }
+  }
+}
+</code></pre>
+<h2 id="4背包问题">4.背包问题</h2>
+<pre><code class="language-java">public static int backpack(int[] weights, int[] values, int index, int weighted, int bagLimit){
+  if(weighted &gt; bagLimit){
+    return 0;
+  }
+  if(index &gt; weights.length){
+    return 0;
+  }
+  Math.max(
+    backpack(weights, values, index + 1, weighted, bagLimit),
+  	backpack(weights, values, index + 1, weighted + weights[index], bagLimit) + values[index]
+  );
+}
+</code></pre>
+<h2 id="5纸牌问题">5.纸牌问题</h2>
+<pre><code class="language-java">public static int maxWinSorce(int[] arr){
+  if(arr == null){
+    return 0;
+  }
+  return Math.max(
+    firstHand(arr, 0, arr.length - 1),)
+    secondHand(arr, 0, arr.length - 1);
+}
+
+public static int firstHand(int[] arr, int left, int right){
+  if(left == right){
+    return arr[left];
+  }
+  Math.max(
+    arr[left] + secondHand(arr, left + 1, right),
+  	arr[right] + secondHand(arr, left, right -1)
+  );
+}
+
+public static int secondHand(int[] arr, int left, int right){
+  if(left == right){
+    return 0;
+  }
+  Math.min(
+    firstHand(arr, left + 1, right),
+  	firstHand(arr, left, right -1)
+  );
+}
+</code></pre>
+<h2 id="6n皇后">6.N皇后</h2>
+<pre><code class="language-java">public static int NQueen(int n){
+  if(n &lt; 1){
+    return 0;
+  }
+  return process(0, new int[n], n);
+}
+
+public static int process(int index, int[] record, int n){
+  if(index == n){
+    return 1;
+  }
+  int res = 0;
+  for(int j = 0; j &lt; n; j++){
+    if(valid(record, index, j)){
+      record[index] = j;
+      res += process(index + 1, record, n);
+    }
+  }
+  return res;
+}
+
+public static boolean valid(int[] record, int index, int j){
+  for(int k = 0; k &lt; index; k++){
+    if(record[k] == j || Math.abs(record[k] - j) == Math.abs(i - k)){return false;}
+  }
+  return true;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://stevenXu1992.github.io/tag/BHUVcam9f/" class="tag">
+                    暴力递归
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://stevenXu1992.github.io/post/tu-de-jing-dian-suan-fa/">
+                  <h3 class="post-title">
+                    图的经典算法
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
