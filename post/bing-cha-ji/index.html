@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>并查集 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico?v=1590217024068">
+<link rel="stylesheet" href="https://stevenXu1992.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="1. 并查集结构
+public class UnionFind{
+  
+  //并查集元素
+  public static class Element&lt;V&gt;{
+    public V value;
+    public Ele..." />
+    <meta name="keywords" content="并查集" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://stevenXu1992.github.io">
+        <img src="https://stevenXu1992.github.io/images/avatar.png?v=1590217024068" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://stevenXu1992.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">并查集</h2>
+            <div class="post-date">2020-05-23</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="1-并查集结构">1. 并查集结构</h2>
+<pre><code class="language-java">public class UnionFind{
+  
+  //并查集元素
+  public static class Element&lt;V&gt;{
+    public V value;
+    public Element(V value){
+      this.value = value;
+    }
+  } 
+  
+  //并查集初始化
+  public static class UnionSet{
+    HashMap&lt;V, Element&lt;V&gt;&gt; elementMap;
+    HashMap&lt;Element&lt;V&gt;, Element&lt;V&gt;&gt; fatherMap;
+    HashMap&lt;Element&lt;V&gt;, Integer&gt; sizeMap;
+    
+    public UnionSet&lt;V&gt;(List&lt;V&gt; list){
+      elementMap = new HashMap&lt;&gt;();
+      fatherMap = new HashMap&lt;&gt;();
+      sizeMap = new HashMap&lt;&gt;();
+      for(V v: list){
+        Element&lt;V&gt; e = new Element&lt;&gt;(v);
+        elementMap.put(v, e);
+        fatherMap.put(e, e);
+        sizeMap.put(e, 1);
+      }
+    }
+  }
+  
+  //判断是否属于同一集合
+  public static boolean same(V v1, V v2){
+    if( elementMap.containsKey(v1)
+     &amp;&amp; elementMap.containsKey(v2)){
+      	return findHead(elementMap.get(v1)) 
+          ==  findHead(elementMap.get(v2));	
+    	}
+    return false;
+  }
+  
+  
+  //集合合并
+  public static void union(V v1, V v2){
+    if(elementMap.containsKey(v1)
+     &amp;&amp; elementMap.containsKey(v2)){
+      Element&lt;V&gt; head1 = findHead(elementMap.get(v1));
+      Element&lt;V&gt; head2 = findHead(elementMap.get(v2));
+      if(head1 != head2){
+        Element&lt;V&gt; big = 
+          sizeMap.get(head1) &gt;= sizeMap.get(head2) ?
+          head1 : head2;
+        Element&lt;V&gt; small = big == head1 ? head2 : head1:
+        fatherMap.put(small, big);
+        sizeMap.put(big,sizeMap.get(big)+sizeMap.get(small));
+        sizeMap.remove(small);
+      }
+    }
+  }
+  
+  
+  //查找头元素
+  private static Element&lt;V&gt; findHead(Element&lt;V&gt; e){
+    Stack&lt;Element&lt;V&gt;&gt; stack = new Stack&lt;&gt;();
+    while(e != fatherMap.get(e)){
+      stack.push(e);
+      e = fatherMap.get(e);
+    }
+    while(!stack.isEmpty()){
+      fatherMap.put(stack.pop(), e);
+    }
+    return e;
+  }  
+  
+}
+</code></pre>
+<h2 id="2kruskal最小生成树">2.Kruskal最小生成树</h2>
+<pre><code class="language-java">//优先级队列的比较器，权重小的边先出
+public static class myComparator implements Comparator&lt;edge&gt;{
+  public int compare(Edge o1, Edge o2){
+    return o1.weight - o1.weight;
+  }
+}
+
+public static Set&lt;Edge&gt; kruskal(Graph graph){
+  List&lt;Node&gt; list = (List&lt;Node&gt;)graph.nodes.values();
+  UnionSet&lt;Node&gt; unionSet = new unionSet&lt;&gt;(List);
+  PriorityQueue&lt;Edge&gt; queue = 
+    new PriorityQueue&lt;&gt;(new myComparator());
+  for(Edge e : graph.edges){
+    queue.add(e);
+  }
+  
+  HashSet&lt;Edge&gt; res = new HashSet&lt;&gt;();
+  while(!queue.isEmpty()){
+    Edge e = queue.poll();
+    if(!unionSet.same(e.from, e.to)){
+      res.add(e);
+      unionSet.union(e.from, e.to);
+    }
+  }
+  return res;
+  
+}
+</code></pre>
+<h2 id="3-岛问题的并行算法设计">3. 岛问题的并行算法设计</h2>
+<pre><code class="language-java">public static int island(int[][] matrix){
+  if(matrix == null || matrix[0] == null){
+    return 0;
+  }
+  
+  int length = matrix.length;
+  int width = matrix[0].length;
+  int res = 0;
+  
+  for(int i = 0; i &lt; length; i++){
+    for(int j = 0; j &lt; width; j++){
+      if(matrix[i][j] == 1){
+        res++;
+        infect(matrix, i, j, length, width);
+      }
+    }
+  }
+}
+
+public static void infect(int[] matrix, int i, int j, int length, int width){
+  if(i &lt; 0 || i &gt;= length || j &lt; 0 || j &gt;= width 
+     || matrix[i][j] != 1){
+    return;
+  }
+  	matrix[i][j] = 2;
+    infect(matrix, i + 1, j, length, width);
+    infect(matrix, i - 1, j, length, width);
+    infect(matrix, i, j + 1, length, width);
+    infect(matrix, i, j - 1, length, width);
+  
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://stevenXu1992.github.io/tag/wp7QBpUv_/" class="tag">
+                    并查集
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://stevenXu1992.github.io/post/bao-li-di-gui/">
+                  <h3 class="post-title">
+                    暴力递归
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
