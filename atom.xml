@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Gridea</title>
-    <updated>2020-05-23T17:18:07.581Z</updated>
+    <updated>2020-05-25T06:34:21.950Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,155 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[特殊结构]]></title>
+        <id>https://stevenXu1992.github.io/post/te-shu-jie-gou/</id>
+        <link href="https://stevenXu1992.github.io/post/te-shu-jie-gou/">
+        </link>
+        <updated>2020-05-25T06:33:08.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1滑动窗口">1.滑动窗口</h2>
+<pre><code class="language-java">//窗口结构（最大值）
+public static class WindowMax{
+  private int L;
+  private int R;
+  private int[] arr;
+  //队列中存放数组的下标，peekfirst最大值
+  private LinkedList&lt;Integer&gt; queue; 
+  
+  //初始化窗口
+  public WindowMax(int[] arr){
+    this.arr = arr;
+    L = -1;
+    R = 0;
+    queue = new LinkedList&lt;&gt;(); 
+  }
+  
+  //窗口右边界移动
+  public void shiftRight(){
+    if(R == arr.length){
+      return;
+    }
+    while(!queue.isEmpty() &amp;&amp; arr[queue.peekLast()]&lt;=arr[R]){
+      queue.pollLast();
+    }
+    queue.addLast(R);
+    R++;
+  }
+  
+  //窗口左边界移动
+  public void shiftLeft(){
+    if(L &gt; R - 1){
+      return;
+    }
+    L++;
+    if(queue.peekFirst() == L){
+      queue.pollFirst();
+    }
+  }
+  
+  //获取窗口内最大值
+  public int getMax(){
+    if(!queue.isEmpty()){
+      return arr[queue.peekFirst()];
+    }
+    return null;
+  }
+}
+
+//请实现一个函数。 输入:整型数组arr，窗口大小为w。 输出:一个长度为n-w+1的数组res，res[i]表示每一种窗口状态下的最大值
+public static int[] getMaxInWindow(int[] arr, int w){
+  if(arr == null || w &lt; 1 || arr.length &lt; w){
+    return null;
+  }
+  LinkedList&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+  int[] res = new int[arr.length - w + 1];
+  int index = 0;
+  for(int i = 0; i &lt; arr.length; i++){
+    //窗口右边界向右滑动
+    while(!queue.isEmpty() &amp;&amp; arr[queue.peekLast()] &lt;=arr[i]){
+      queue.pollLast();
+    }
+  	queue.addLast(i);
+    //窗口左边界向右滑动
+    if(queue.peekFirst() == i - w){ 
+      //i-w：过期的点，刚从窗口中出来的点，判断该点是否是队列的first
+      queue.pollFirst();
+    }
+    //保存最大值信息
+    if(i &gt;= w - 1){
+      res[index++] = queue.peekFirst();
+    }
+  }
+  return res;
+}
+</code></pre>
+<h2 id="2单调栈">2.单调栈</h2>
+<p>在数组中想找到一个数，左边和右边比这个数小、且离这个数最近的位置。如果对每一个数都想求这样的信息，能不能整体代价达到O(N)?</p>
+<pre><code class="language-java">public static int[][] monotonousStack1(int[] arr){
+  if(arr == null || arr.length &lt; 1){
+    return null;
+  }
+  int[][] res = new int[arr.length][2];
+  //单调栈顶为最大值,栈内存储数组的下标
+  Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+  for(int i = 0; i &lt; arr.length; i++){
+    //若新加元素小于栈顶，则弹出栈顶元素并记录结果
+    while(!stack.isEmpty() &amp;&amp; arr[stack.peek()] &gt; arr[i]){
+      int popIndex = stack.pop();
+      int leftIndex = stack.isEmpty() ? -1 : stack.peek();
+      res[popIndex][0] = leftIndex;
+      res[popIndex][1] = i;
+    }
+    stack.push(i);
+  }
+  //加完全部元素并记录了结果后，弹出剩下的元素并记录
+  while(!stack.isEmpty()){
+    int popIndex = stack.pop();
+    int leftIndex = stack.isEmpty() ? -1 : stack.peek();
+    res[popIndex][0] = leftIndex;
+    res[popIndex][1] = -1;
+  }
+  return res;
+}
+
+//数组中有重复的元素
+public static int[][] monotonousStack2(int[] arr){
+  Stack&lt;List&lt;Integer&gt;&gt; stack = new Stack&lt;&gt;();
+  int[][] res = new int[arr.length][2];
+  for(int i = 0; i &lt; arr.length; i++){
+    //新加元素小于栈顶
+    	while(!stack.isEmpty() &amp;&amp; arr[i] &lt; arr[stack.peek()]){
+        int popIndex = stack.pop();
+        int leftIndex = stack.isEmpty() ? 
+          -1 : stack.peek().get(stack.peek().size() - 1);
+        res[popIndex][0] = leftIndex;
+        res[popIndex][1] = i;
+      }
+    //新加元素等于栈顶
+    if(arr[i] == arr[stack.peek().get(0)]{
+      stack.peek().add(Integer.valueOf(i));
+    }else{
+      //新加元素大于栈顶
+      ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+      list.add(i);
+      stack.push(list);
+    }
+  }
+  //加完全部元素并记录了结果后，弹出剩下的元素并记录
+  while(!stack.isEmpty()){
+    List&lt;Integer&gt; restList = stack.pop();
+    int leftIndex = stack.isEmpty() ? 
+      -1 : stack.peek().get(stack.peek().size() - 1);
+    for(Integer i : restList){
+      res[i][0] = leftIndex;
+      res[i][1] = -1;
+    }
+  }
+  return res;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[字符串算法]]></title>
         <id>https://stevenXu1992.github.io/post/zi-fu-chuan-suan-fa/</id>
@@ -1720,38 +1869,6 @@ public static void f(Node head){
   return maxWidth;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://stevenXu1992.github.io/post/hello-gridea/</id>
-        <link href="https://stevenXu1992.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
 ]]></content>
     </entry>
 </feed>
