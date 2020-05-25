@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Gridea</title>
-    <updated>2020-05-25T06:34:21.950Z</updated>
+    <updated>2020-05-25T08:15:53.766Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,88 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[Morris遍历]]></title>
+        <id>https://stevenXu1992.github.io/post/morris-bian-li/</id>
+        <link href="https://stevenXu1992.github.io/post/morris-bian-li/">
+        </link>
+        <updated>2020-05-25T08:14:24.000Z</updated>
+        <content type="html"><![CDATA[<p>Morris遍历细节 假设来到当前节点cur，开始时cur来到头节点位置</p>
+<p>1)如果cur没有左孩子，cur向右移动(cur = cur.right)</p>
+<p>2)如果cur有左孩子，找到左子树上最右的节点mostRight:</p>
+<p>​	a.如果mostRight的右指针指向空，让其指向cur， 然后cur向左移动(cur = cur.left)</p>
+<p>​	b.如果mostRight的右指针指向cur，让其指向null， 然后cur向右移动(cur = cur.right)</p>
+<p>3)cur为空时遍历停止</p>
+<h2 id="1morris自然序遍历">1.Morris自然序遍历</h2>
+<p>Morris序： 1 -&gt; 2 -&gt; 4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 3 -&gt; 6 -&gt; 3 -&gt; 7</p>
+<pre><code class="language-java">public static void morrisClassical(Node head){
+  if(head == null){
+    return;
+  }
+  
+  Node cur = head;
+  Node mostR = null;
+  while(cur != null){
+    mostR = cur.left;
+    //cur有左树，找到左树上最右的节点
+    if(mostR != null){
+      while(mostR.right != null &amp;&amp; mostR.right != cur){
+        mostR = mostR.right;
+      }
+      //此时mostR已到达cur左树上最右的节点处
+      if(mostR.right == null){
+        //若发现mostR右树为空，则是第一次到达该点
+        mostR.right = cur;
+        //先序操作
+        //将mostR.right指向cur后，cur继续往下走执行外部while循环
+        cur = cur.left;
+        continue;
+      }else{
+        //若发现mostR.right指向cur，则是第二次到达该点，还原指针
+        mostR.right = null;
+        //edgeR(cur.left); 后序操作
+      }
+    }//else{先序操作}
+    //cur无左树，cur向右移动（通过之前修改的mostR.right指针返回父节点）,继续执行外部的while循环
+    //中序操作
+    cur = cur.right;
+  }
+  //edgeR（head); 后序操作
+}
+</code></pre>
+<h2 id="2先序遍历">2.先序遍历</h2>
+<p>先序： 1 -&gt; 2 -&gt; 4 -&gt; 5 -&gt; 3 -&gt; 6 -&gt; 7</p>
+<p>首次到达时进行操作，见1自然序注释</p>
+<h2 id="3中序遍历">3.中序遍历</h2>
+<p>先序： 4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 6 -&gt; 3 -&gt; 7</p>
+<p>叶节点直接操作，其他节点第二次达到时操作，见1自然序注释</p>
+<h2 id="4后序遍历">4.后序遍历</h2>
+<p>后序： 4 -&gt; 5 -&gt; 2 -&gt; 6 -&gt; 7 -&gt; 3 -&gt; 1</p>
+<p>发现第二次到达时，逆序操作cur左树的右边界，遍历完成后逆序操作整棵树的右边界，见1自然序注释</p>
+<pre><code class="language-java">public static void edgeR(Node head){
+  Node tail = reverseEdge(head);
+  Node cur = tail;
+  while(cur != null){
+    //遍历操作
+    cur = cur.right;
+  }
+  reverseEdge(tail);
+}
+
+public static Node reverseEdge(Node from){
+  Node pre = null;
+  Node next = next;
+  while(from != null){
+    next = from.right;
+    from.right = pre;
+    pre = from;
+    from = next;
+  }
+  return pre;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[特殊结构]]></title>
         <id>https://stevenXu1992.github.io/post/te-shu-jie-gou/</id>
@@ -1715,158 +1797,6 @@ public static Info process(Node head){
     }
   }
   return true;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[二叉树的遍历]]></title>
-        <id>https://stevenXu1992.github.io/post/er-cha-shu-de-bian-li/</id>
-        <link href="https://stevenXu1992.github.io/post/er-cha-shu-de-bian-li/">
-        </link>
-        <updated>2020-04-19T13:04:35.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1-递归遍历">1. 递归遍历</h2>
-<pre><code class="language-java">public static class Node{
-  public int value;
-  public Node left;
-  public Node right;
-  
-  public Node(int data){
-    this.value = data;
-  }
-}
-
-public static void f(Node head){
-  if(head == null){
-    return;
-  }
-  //先序遍历操作
-  f(head.left);
-  //中序遍历操作
-  f(head.right);
-  //后序遍历操作
-}
-</code></pre>
-<p>二叉树递归遍历的本质：通过树的完整递归序加工而成<br>
-完整递归序：1 -&gt; 2 -&gt; 2 -&gt; 2 -&gt; 1 -&gt; 3 -&gt; 3 -&gt; 3 -&gt; 1<br>
-先序：第一次来到节点时进行操作 1 -&gt; 2 -&gt; 3<br>
-中序：第二次来到节点时进行操作 2 -&gt; 1 -&gt; 3<br>
-后序：第三次来到节点时进行操作 2 -&gt; 3 -&gt; 1</p>
-<h2 id="2-非递归遍历">2. 非递归遍历</h2>
-<h3 id="21-先序遍历">2.1 先序遍历</h3>
-<p>遍历顺序：中 --&gt; 左 --&gt; 右，1 -&gt; 2 -&gt; 4 -&gt; 5 -&gt; 3 -&gt; 6 -&gt; 7</p>
-<ol>
-<li>建立栈结构，压入头节点</li>
-<li>从栈中弹出当前节点，并执行遍历操作</li>
-<li>先压入弹出节点的右子节点，再压左子节点，重复步骤2直到栈为空</li>
-</ol>
-<pre><code class="language-java">public static void preUnRecur(Node head){
-  if(head != null){
-    Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-    stack.add(head);
-    while(!stack.isEmpty()){
-      head = stack.pop();
-      //该处执行遍历操作
-      if(head.right != null){
-        stack.push(head.right);
-      }
-      if(head.left != null){
-        stack.push(head.left);
-      }
-    }
-  }
-}
-</code></pre>
-<h3 id="22-中序遍历">2.2 中序遍历</h3>
-<p>遍历顺序：左 --&gt; 中 --&gt; 右，4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 6 -&gt; 3 -&gt; 7</p>
-<ol>
-<li>建立栈结构，压入头节点</li>
-<li>不断将当前节点的左子节点压栈，直到某节点的左子节点为空，此时从栈中弹出该节点并执行遍历操作</li>
-<li>若弹出节点的右子节点不为空，重复步骤2；若为空，则继续从栈中弹出下一节点直到栈为空</li>
-</ol>
-<pre><code class="language-java">public void inUnRecur(Node head){
-  if(head != null){
-    Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-    Node cur = head;
-    while(!stack.isEmpty() || cur != null){
-      if(cur != null){
-        stack.push(cur);
-        cur = cur.left;
-      }else{
-        cur = stack.pop();
-        //此处执行遍历操作
-        cur = cur.right;
-      }
-    }
-  }
-}
-</code></pre>
-<h3 id="23-后序遍历">2.3 后序遍历</h3>
-<p>遍历顺序：左 --&gt; 右 --&gt; 中，4 -&gt; 5 -&gt; 2 -&gt; 6 -&gt; 7 -&gt; 3 -&gt; 1<br>
-类似于先序遍历，按照先左后右的顺序压栈。额外准备一个栈，将弹出节点压入，直到1号栈为空时，将节点依次从2号栈弹出并执行遍历操作。</p>
-<pre><code class="language-java">public static void postUnRecur(Node head){
-  if(head != null){
-    Stack&lt;Node&gt; s1 = new Stack&lt;&gt;();
-    Stack&lt;Node&gt; s2 = new Stack&lt;&gt;();
-    s1.push(head);
-    while(!s1.isEmpty()){
-      head = s1.pop();
-      s2.push(head);
-      if(head.left != null){
-        s1.push(head.left);
-      }
-      if(head.right != null){
-        s1.push(head.right);
-      }
-    }
-    while(!s2.isEmpty()){
-      head = s2.pop();
-      //此处执行遍历操作
-    }
-  }
-}
-</code></pre>
-<h2 id="3宽度优先遍历">3.宽度优先遍历</h2>
-<ol>
-<li>使用哈希表记录每个节点所在层数，使用队列进行宽度优先遍历</li>
-<li>每个节点都进入队列，其左右子节点层数+1进入哈希表</li>
-<li>从队列弹出时，比较该节点所在层数是否大于当前层数，若大于（说明已到了下一层），则将当前层宽度清零并更新当前层数；若不大于（说明还在同一层），则当前层宽度+1。每次对一个节点操作完成后都比较并更新最大宽度与当前层宽度的最大值。</li>
-</ol>
-<pre><code class="language-java">public static int getMaxWidth(Node head){
-  if(head ==null){
-    return 0;
-  }
-  int maxWidth = 0;
-  int curWidth = 0;
-  int curLevel = 0;
-  HashMap&lt;Node, Integer&gt; levelMap = new HashMap&lt;&gt;();
-  LinkedList&lt;Node&gt; queue = new LinkedList&lt;&gt;();
-  levelMap.put(head, 1);
-  queue.add(head);
-  Node cur = null;
-  Node left = null;
-  Node right = null;
-  while(!queue.isEmpty()){
-    cur = queue.poll();
-    left = cur.left;
-    right = cur.right;
-    if(left != null){
-      levelMap.put(left, levelMap.get(cur) + 1);
-      queue.add(left);
-    }
-    if(right != null){
-      levelMap.put(right, levelMap.get(cur) + 1);
-      queue.add(right);
-    }
-    if(levelMap.get(cur) &gt; curLevel){
-      curWidth = 0;
-      curLevel = levelMap.get(cur);
-    }else{
-      curWidth++;
-    }
-    maxWidth = Math.max(curWidth, maxWidth);
-  }
-  return maxWidth;
 }
 </code></pre>
 ]]></content>

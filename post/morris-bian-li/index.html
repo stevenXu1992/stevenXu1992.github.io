@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Morris遍历 | Gridea</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico?v=1590394550189">
+<link rel="stylesheet" href="https://stevenXu1992.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Morris遍历细节 假设来到当前节点cur，开始时cur来到头节点位置
+1)如果cur没有左孩子，cur向右移动(cur = cur.right)
+2)如果cur有左孩子，找到左子树上最右的节点mostRight:
+​	a.如果mostR..." />
+    <meta name="keywords" content="二叉树" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://stevenXu1992.github.io">
+        <img src="https://stevenXu1992.github.io/images/avatar.png?v=1590394550189" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://stevenXu1992.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Morris遍历</h2>
+            <div class="post-date">2020-05-25</div>
+            
+            <div class="post-content" v-pre>
+              <p>Morris遍历细节 假设来到当前节点cur，开始时cur来到头节点位置</p>
+<p>1)如果cur没有左孩子，cur向右移动(cur = cur.right)</p>
+<p>2)如果cur有左孩子，找到左子树上最右的节点mostRight:</p>
+<p>​	a.如果mostRight的右指针指向空，让其指向cur， 然后cur向左移动(cur = cur.left)</p>
+<p>​	b.如果mostRight的右指针指向cur，让其指向null， 然后cur向右移动(cur = cur.right)</p>
+<p>3)cur为空时遍历停止</p>
+<h2 id="1morris自然序遍历">1.Morris自然序遍历</h2>
+<p>Morris序： 1 -&gt; 2 -&gt; 4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 3 -&gt; 6 -&gt; 3 -&gt; 7</p>
+<pre><code class="language-java">public static void morrisClassical(Node head){
+  if(head == null){
+    return;
+  }
+  
+  Node cur = head;
+  Node mostR = null;
+  while(cur != null){
+    mostR = cur.left;
+    //cur有左树，找到左树上最右的节点
+    if(mostR != null){
+      while(mostR.right != null &amp;&amp; mostR.right != cur){
+        mostR = mostR.right;
+      }
+      //此时mostR已到达cur左树上最右的节点处
+      if(mostR.right == null){
+        //若发现mostR右树为空，则是第一次到达该点
+        mostR.right = cur;
+        //先序操作
+        //将mostR.right指向cur后，cur继续往下走执行外部while循环
+        cur = cur.left;
+        continue;
+      }else{
+        //若发现mostR.right指向cur，则是第二次到达该点，还原指针
+        mostR.right = null;
+        //edgeR(cur.left); 后序操作
+      }
+    }//else{先序操作}
+    //cur无左树，cur向右移动（通过之前修改的mostR.right指针返回父节点）,继续执行外部的while循环
+    //中序操作
+    cur = cur.right;
+  }
+  //edgeR（head); 后序操作
+}
+</code></pre>
+<h2 id="2先序遍历">2.先序遍历</h2>
+<p>先序： 1 -&gt; 2 -&gt; 4 -&gt; 5 -&gt; 3 -&gt; 6 -&gt; 7</p>
+<p>首次到达时进行操作，见1自然序注释</p>
+<h2 id="3中序遍历">3.中序遍历</h2>
+<p>先序： 4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 6 -&gt; 3 -&gt; 7</p>
+<p>叶节点直接操作，其他节点第二次达到时操作，见1自然序注释</p>
+<h2 id="4后序遍历">4.后序遍历</h2>
+<p>后序： 4 -&gt; 5 -&gt; 2 -&gt; 6 -&gt; 7 -&gt; 3 -&gt; 1</p>
+<p>发现第二次到达时，逆序操作cur左树的右边界，遍历完成后逆序操作整棵树的右边界，见1自然序注释</p>
+<pre><code class="language-java">public static void edgeR(Node head){
+  Node tail = reverseEdge(head);
+  Node cur = tail;
+  while(cur != null){
+    //遍历操作
+    cur = cur.right;
+  }
+  reverseEdge(tail);
+}
+
+public static Node reverseEdge(Node from){
+  Node pre = null;
+  Node next = next;
+  while(from != null){
+    next = from.right;
+    from.right = pre;
+    pre = from;
+    from = next;
+  }
+  return pre;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://stevenXu1992.github.io/tag/dxJiV25Oq/" class="tag">
+                    二叉树
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://stevenXu1992.github.io/post/te-shu-jie-gou/">
+                  <h3 class="post-title">
+                    特殊结构
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
