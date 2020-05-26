@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Gridea</title>
-    <updated>2020-05-25T08:15:53.766Z</updated>
+    <updated>2020-05-26T16:16:14.839Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,389 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[动态规划]]></title>
+        <id>https://stevenXu1992.github.io/post/dong-tai-gui-hua/</id>
+        <link href="https://stevenXu1992.github.io/post/dong-tai-gui-hua/">
+        </link>
+        <updated>2020-05-26T16:15:07.000Z</updated>
+        <content type="html"><![CDATA[<p>暴力递归 --&gt; 动态规划步骤：</p>
+<p>1)找到什么可变参数可以代表一个递归状态，也就是哪些参数一旦确定，返回值就确定了</p>
+<p>2)把可变参数的所有组合映射成一张表，有1个可变参数就是一维表，2个可变参数就 是二维</p>
+<p>3)最终答案要的是表中的哪个位置，在表中标出</p>
+<p>4)根据递归过程的 base case，把这张表的最简单不需要依赖其他位置的那些位置填好值</p>
+<p>5)根据递归过程非base case的部分，也就是分析表中的普遍位置需要怎么计算得到，那 么这张表的填写顺序也就确定了</p>
+<p>6)综上确定计算顺序，填好表，返回最终答案在表中位置的值</p>
+<h2 id="1-机器人达到指定位置">1. 机器人达到指定位置</h2>
+<p>假设有排成一行的 N 个位置，记为 1~N，N 一定大于或等于 2。开始时机器人在其中的 M 位 置上(M 一定是 1~N 中的一个)，机器人可以往左走或者往右走，如果机器人来到 1 位置， 那 么下一步只能往右来到 2 位置;如果机器人来到 N 位置，那么下一步只能往左来到 N-1 位置。 规定机器人必须走 K 步，最终能来到 P 位置(P 也一定是 1~N 中的一个)的方法有多少种。给 定四个参数 N、M、K、P，返回方法数。</p>
+<pre><code class="language-java">public static int robot(int N, int S, int E, int K){
+  // N:	共N个位置
+  // S:	起点
+  // E: 终点
+  // K: 可以走的步数
+  if(N &lt; 2 || K &lt; 1 || S &lt; 1 || S &gt; N || E &lt; 1 || E &gt; N){
+    return 0;
+  }
+  
+  //暴力递归
+  int res = process1(N, S, E, K);
+  
+  //记忆化搜索
+  int[][] dp = new int[K + 1][N + 1];
+  for(int i = 0; i &lt; K; i++){
+    for(int j = 0; j &lt; N; j++){
+      dp[i][j] = -1;
+    }
+  }
+  int res = process2(N, S, E, K, dp);
+  
+  //严格表结构动态规划
+  int res = process(N, S, E, K);
+  
+}
+
+//暴力递归
+public static int process1(int N, int index, int E, int rest){
+  // index: 当前位置
+  // rest: 还剩rest步
+  if(rest == 0){
+    return index == E ? 1 : 0;
+  }
+  if(index == 1){
+    return process(N, 2, E, rest - 1);
+  }
+  if(index == N){
+    return process(N, N - 1, E, rest - 1);
+  }
+  return process(N, index + 1, E, rest - 1) + 
+    		 process(N, index - 1, E, rest - 1);
+}
+
+//记忆化搜索
+public static int process2(int N, int index, int E, int rest,
+                          int[][] dp){
+  if(dp[index][rest] != -1){
+    return dp[index][rest];
+  }
+  
+  if(rest == 0){
+    dp[index][rest] = E ? 1 : 0;
+  }else if(index == 1){
+    dp[index][rest] = process(N, 2, E, rest - 1);
+  }else if(index == N){
+    dp[index][rest] = process(N, N - 1, E, rest - 1);
+  }else{
+    dp[index][rest] = process(N, index + 1, E, rest - 1) + 
+    		 						process(N, index - 1, E, rest - 1);
+  }
+  return dp[index][rest];
+}
+
+//严格表结构动态规划
+public static int process3(int N, int index, int E, int rest){
+  int[][] dp = new int[index + 1][rest + 1];
+  dp[E][0] = 1;
+  for(int i = 1; i &lt; index; i++){
+    for(int j = 1; j &lt; rest; j++){
+      if(i == 1){
+        dp[i][j] = dp[2][ j - 1];
+      }
+      if(i == N){
+       dp[i][j] = dp[N - 1][j - 1]; 
+      }
+  		dp[i][j] = dp[i + 1][j - 1] + dp[i - 1][j - 1]
+    }
+  }
+  return dp[index][rest];
+}
+
+</code></pre>
+<h2 id="2-换钱的最少货币数">2. 换钱的最少货币数</h2>
+<p>给定数组 arr，arr 中所有的值都为正数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个整数 aim，代表要找的钱数，求组成 aim 的最少货币数。</p>
+<pre><code class="language-java">public static int minCoin(int[] arr, int aim){
+  if(arr.length == 0 || arr == null || aim &lt; 0){
+    return -1;
+  }
+  
+  //暴力递归
+  int res = process1(arr, 0, aim);
+  
+  //记忆化搜索
+  int[][] dp = new int[arr.length + 1][aim + 1];
+  for(int i = 0; i &lt;= arr.length; i++){
+    for(int j = 0; j &lt;= aim; j++){
+      dp[i][j] = -2;
+    }
+  }
+  int res = process2(arr, 0, aim, dp);
+  
+  
+  //严格表结构动态规划
+  int res = process3(arr, 0, aim);
+}
+
+//暴力递归
+public static int process1(int[] arr, int index, int rest){
+  if(rest &lt; 0){
+    return -1;
+  }
+  if(rest == 0){
+    return 0;
+  }
+  if(index == arr.length){
+    return -1;
+  }
+  int p1 = process1(arr, index + 1, rest);
+  int p2 = process1(arr, index + 1, rest - arr[index]);
+  
+  if(p1 == -1 &amp;&amp; p2 == -1){
+    return -1;
+  }
+  if(p1 == -1){
+    return p2 + 1;
+  }
+  if(p2 == -1){
+    return p1;
+  }
+  return Math.min(p1, p2 + 1);
+}
+
+
+//记忆化搜索
+public static int process2(int[] arr, int index, int rest, int[][] dp){
+  if(rest &lt; 0){
+    return -1;
+  }
+  if(dp[index][rest] != -2){
+    return dp[index][rest];
+  }
+  
+  if(rest == 0){
+    dp[index][rest] = 0;
+  }else if(index == arr.length){
+    dp[index][rest] = -1;
+  }else {
+    int p1 = process1(arr, index + 1, rest);
+  	int p2 = process1(arr, index + 1, rest - arr[index]);
+    if(p1 == -1 &amp;&amp; p2 == -1){
+    	dp[index][rest] = -1;
+  	}else{
+    	if(p1 == -1){
+    		dp[index][rest] = p2 + 1;
+  		}else if(p2 == -1){
+    		dp[index][rest] = p1;
+  		}else{
+        dp[index][rest] = Math.min(p1, p2 + 1);  
+      }
+    }
+  }
+  return dp[index][rest];
+}
+
+//严格表结构动态规划
+public static int process3(int[] arr, int index, int rest){
+  int[][] dp = new int[arr.length + 1][rest + 1];
+  for(int i = 0; i &lt;= arr.length; i++){
+    dp[i][0] = 0;
+  }
+  for(int j = 1; j &lt;= rest; j++){
+    dp[arr.length][j] = -1;
+  }
+  
+  for(int i = arr.length - 1; i &gt;= 0; i--){
+    for(int j = 1; j &lt;= rest; j++){
+      int p1 = dp[i + 1][j];
+      int p2 = -1;
+      if(j - arr[i] &gt;= 0){
+        p2 = dp[i + 1][j - arr[j]];
+      }
+      if(p1 == -1 &amp;&amp; p2 == -1){
+        dp[i][j] = -1;
+      }
+      if(p1 == -1){
+        dp[i][j] = p2 + 1;
+      }
+      if(p2 == -1){
+        dp[i][j] = p1;
+      }
+      dp[i][j] = Math.min(p1, p2 + 1);
+    }
+  }
+  return dp[index][rest];
+}
+
+</code></pre>
+<h2 id="3-取纸牌问题">3. 取纸牌问题</h2>
+<p>给定一个整型数组arr，代表数值不同的纸牌排成一条线。玩家A和玩家B依次拿走每张纸 牌，规定玩家A先拿，玩家B后拿，但是每个玩家每次只能拿走最左或最右的纸牌，玩家A 和玩家B都绝顶聪明。请返回最后获胜者的分数。</p>
+<pre><code class="language-java">//暴力递归
+public static int maxWinSorce1(int[] arr){
+  if(arr == null){
+    return 0;
+  }
+  return Math.max(
+    firstHand(arr, 0, arr.length - 1),
+    secondHand(arr, 0, arr.length - 1));
+}
+
+public static int firstHand(int[] arr, int left, int right){
+  if(left == right){
+    return arr[left];
+  }
+  Math.max(
+    arr[left] + secondHand(arr, left + 1, right),
+  	arr[right] + secondHand(arr, left, right -1)
+  );
+}
+
+public static int secondHand(int[] arr, int left, int right){
+  if(left == right){
+    return 0;
+  }
+  Math.min(
+    firstHand(arr, left + 1, right),
+  	firstHand(arr, left, right -1)
+  );
+}
+
+//动态规划
+public static int maxWinScorce2(int[] arr){
+  if(arr == null || arr.length = 0){
+    return 0;
+  }
+  
+  int N = arr.length;
+  int[][] dpF = new int[N][N];
+  int[][] dpS = new int[N][N];
+  
+  for(int left = 0; left &lt; N; left++){
+    dpF[left][left] = arr[left];
+    for(int right = left - 1; right &gt;= 0; right--){
+      dpF[left][right] = Math.max(
+        arr[left] + dpS[left + 1][right],
+      	arr[right] + dpS[left][right - 1]);
+       dpS[left][right] = Math.min(
+        dpF[left + 1][right],
+        dpF[left][right - 1]);
+    }
+  }
+  return Math.max(dpF[0][N - 1], dpS[0][N - 1]);
+}
+
+
+</code></pre>
+<h2 id="4象棋中马的跳法">4.象棋中马的跳法</h2>
+<p>请同学们自行搜索或者想象一个象棋的棋盘，然后把整个棋盘放入第一象限，棋盘的最左下 角是(0,0)位置。那么整个棋盘就是横坐标上9条线、纵坐标上10条线的一个区域。给你三个 参数，x，y，k，返回如果“马”从(0,0)位置出发，必须走k步，最后落在(x,y)上的方法数 有多少种?</p>
+<pre><code class="language-java">//暴力递归
+public static int process1(int x, int y, int k){
+  if(x &lt; 0 || x &gt; 8 || y &lt; 0 || y &gt; 9){
+    return 0;
+  }
+  //剩余步数为零时，所在位置(x,y)距终点的相对距离为(0,0)时找到一种跳法
+  if(k == 0){
+    return (x == 0 &amp;&amp; y == 0) ? 1 : 0;
+  }
+  int res = process1(x - 1, y + 2, k - 1)
+				+ process1(x + 1, y + 2, k - 1)
+				+ process1(x + 2, y + 1, k - 1)
+				+ process1(x + 2, y - 1, k - 1)
+				+ process1(x + 1, y - 2, k - 1)
+				+ process1(x - 1, y - 2, k - 1)
+				+ process1(x - 2, y - 1, k - 1)
+				+ process1(x - 2, y + 1, k - 1);
+  return res;
+}
+
+//动态规划
+public static int process2(int x, int y, int k){
+  if(x &lt; 0 || x &gt; 8 || y &lt; 0 || y &gt; 9){
+    return 0;
+  }
+  
+  //x,y,k为立方体的长宽高, k层的数据取决于k-1层，因此从下往上填
+  int[][][] dp = new int[9][10][k + 1];
+  dp[0][0][0] = 1;
+  for(int height = 1; height &lt;= k; height++){
+    for(int len = 0; len &lt; 9; len++){
+      for(int wid = 0; wid &lt; 10; wid++){
+        dp[len][wid][height] =
+          getValue(dp, len - 1, wid + 2, height - 1)
+				+ getValue(dp, len + 1, wid + 2, height - 1)
+				+ getValue(dp, len + 2, wid + 1, height - 1)
+				+ getValue(dp, len + 2, wid - 1, height - 1)
+				+ getValue(dp, len + 1, wid - 2, height - 1)
+				+ getValue(dp, len - 1, wid - 2, height - 1)
+				+ getValue(dp, len - 2, wid - 1, height - 1)
+				+ getValue(dp, len - 2, wid + 1, height - 1);
+      }
+    }
+  }
+  return dp[x][y][k];
+}
+
+public static int getValue(int[][][] dp, int height, int len, int wid){
+  if(len &lt; 0 || len &gt; 8 || wid &lt; 0 || wid &gt; 9){
+    return 0;
+  }
+  return dp[len][wid][height];
+}
+
+</code></pre>
+<h2 id="5-bob的生存概率">5. Bob的生存概率</h2>
+<p>给定五个参数n,m,i,j,k。表示在一个N*M的区域，Bob处在(i,j)点，每次Bob等概率的向上、 下、左、右四个方向移动一步，Bob必须走K步。如果走完之后，Bob还停留在这个区域上， 就算Bob存活，否则就算Bob死亡。请求解Bob的生存概率，返回字符串表示分数的方式。</p>
+<pre><code class="language-java">//暴力递归
+public static String bob(int n, int m, int i, int j, int k){
+  long all = (long)Math.pow(4, k);
+  long live = process1(n, m, i, j, k);
+  long gc = gcd(all, live);
+  return String.valueOf((live / gc) + &quot;/&quot; + (all / gc));
+  
+}
+
+//返回可以存活的走法数
+public static long process1(int N, int M, int i, int j, 
+                           int rest){
+  if(i &lt; 0 || i &gt; N || j &lt; 0 || j &gt; M){
+    return 0;
+  }
+  if(rest == 0){
+    return 1;
+  }
+  long live = process1(N, M, i + 1, j, rest - 1)
+    				+ process1(N, M, i, j + 1, rest - 1)
+    				+ process1(N, M, i - 1, j, rest - 1)
+    				+ process1(N, M, i, j - 1, rest - 1);
+}
+
+//动态规划
+public static long process2(int N, int M, int i, int j, 
+                           int K){
+  int[][][] dp = new int[N + 1][M + 1][K + 1];
+  for(int len = 0; len &lt;= N; len++){
+    for(int wid = 0; wid &lt;= M; wid++){
+      dp[len][wid][0] = 1;
+    }
+  }
+  for(int height = 1; height &lt;= K; height++){
+    for(int len = 0; len &lt;= N; len++){
+      for(int wid = 0; wid &lt;= M; wid++){
+        dp[len][wid][height] = 
+        			dp[len + 1][wid][height - 1]
+    				+ dp[len - 1][wid][height - 1]
+    				+ dp[len][wid + 1][height - 1]
+    				+ dp[len][wid - 1][height - 1];
+      }
+    }
+  }
+  return dp[i][j][K];
+}
+
+
+public static long gcd(long m, long n){
+  return n == 0 ? m : gcd(n, m % n);
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Morris遍历]]></title>
         <id>https://stevenXu1992.github.io/post/morris-bian-li/</id>
@@ -1638,165 +2021,6 @@ public static Node reconProcess(Queue&lt;String&gt; queue){
   head.left = reconProcess(queue);
   head.right = reconProcess(queue);
   return head;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[二叉树的递归框架]]></title>
-        <id>https://stevenXu1992.github.io/post/er-cha-shu-de-di-gui-kuang-jia/</id>
-        <link href="https://stevenXu1992.github.io/post/er-cha-shu-de-di-gui-kuang-jia/">
-        </link>
-        <updated>2020-04-24T09:04:23.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1判断一棵树是否为满二叉树">1.判断一棵树是否为满二叉树</h2>
-<p>满二叉树条件：总节点个数 = 2 ^ 高度 - 1</p>
-<ol>
-<li>定义一个信息类，用于获取需要的信息（此处为节点数和高度）</li>
-<li>递归函数中先使用黑盒，再补充黑盒中获取信息的操作（此处为假定通过黑盒已获取到了当前节点的左右子树的高度和节点个数，使用该信息得出当前节点处的高度和节点个数）</li>
-<li>在主函数中判断是否满足条件</li>
-</ol>
-<pre><code class="language-java">//定义信息类
-public static class Info{
-  public int size;
-  public int height;
-  public Info(int s, int h){
-    this.size = s;
-    this.height = h;
-  }
-}
-//递归函数
-public static Info process(Node head){
-  if(head == null){
-    return new Info(0, 0);
-  }
-  Info leftInfo = process(head.left);
-  Info rightInfo = process(head.right);
-  int size = leftInfo.size + rightInfo.size + 1;
-  int height = Math.max(leftInfo.height, rightInfo.height)+1;
-  return new Info(size, height);
-} 
-//主函数
-public static boolean isFullTree(Node head){
-  Info info = process(head);
-  return info.size == (1 &lt;&lt; height) - 1; // 左移1位=2^height
-}
-</code></pre>
-<h2 id="2判断一棵树是否为平衡二叉树">2.判断一棵树是否为平衡二叉树</h2>
-<p>平衡二叉树条件：左右子树高度差不超过1且所有子树都平衡<br>
-信息类：高度，子树是否平衡</p>
-<pre><code class="language-java">public static class Info{
-  public int height;
-  public boolean balance;
-  public Info(int h, boolean b){
-    this.height = h;
-    this.balance = b;
-  }
-}
-public static Info process(Node head){
-  if(head == null){
-    return new Info(0, true);
-  }
-  Info leftInfo = process(head.left);
-  Info rightInfo = process(head.right);
-  int height = Math.max(leftInfo.height, rightInfo.height) +1;
-  boolean balance = 
-    leftInfo.balance &amp;&amp; rightInfo.balance 
-    &amp;&amp; Math.abs(leftInfo.height - rightInfo.height) &lt; 2;
-  return new Info(height, balance);
-}
-</code></pre>
-<h2 id="3求二叉树两节点间的最大距离">3.求二叉树两节点间的最大距离</h2>
-<p>信息类：高度，最大距离<br>
-最大距离出现的三种情况：左树上，右树上，横跨头节点</p>
-<pre><code class="language-java">public static class Info{
-  public int height;
-  public int distance;
-  public Info(int h, int d){
-    this.height = h;
-    this.distance = d;
-  }
-}
-public static Info process(Node head){
-  if(head = null){
-    return new Info(0, 0);
-  }
-  Info leftInfo = process(head.left);
-  Info rightInfo = process(head.right);
-  int height = Math.max(leftInfo.height, rightInfo.height) +1;
-  int distance = Math.max(leftInfo.height+rightInfo.height+1,
-             Math.max(leftInfo.distance, rightInfo.distance));
-  return new Info(height, distance);
-}
-</code></pre>
-<h2 id="4判断一棵树是否为搜索二叉树">4.判断一棵树是否为搜索二叉树</h2>
-<p>搜索二叉树的条件：1）左树是搜索二叉树， 2）右树是搜索二叉树，3）左树的最大值小于头节点， 4）右树的最小值大于头节点<br>
-信息类：是否为搜索二叉树，最大值，最小值</p>
-<pre><code class="language-java">public static class Info{
-  public boolean searchTree;
-  public int max;
-  public int min;
-  public Info(boolean s, int max, int min){
-    this.searchTree = s;
-    this.max = max;
-    this.min = min;
-  }
-}
-public static Info process(Node head){
-  if(head == null){
-    return null;
-  }
-  
-  Info leftInfo = process(head.left);
-  Info rightInfo = process(head.right);
-  
-  int max = head.data;
-  int min = head.data;
-  
-  if(leftInfo != null){
-    max = Math.max(max, leftInfo.max);
-    min = Math.min(min, leftInfo.min);
-  }
-  if(rightInfo != null){
-    max = Math.max(max, rightInfo.max);
-    min = Math.min(min, rightInfo.min);
-  }
-  
-  boolean searchTree = false;
-  //三目的意义：若左树不为空，按1）左树是搜索树 2）左树最大值小于节点值 进行判断；若左树为空，则直接为true不用判断。右树同理。
-  if(
-    (leftInfo != null ? 
-    (leftInfo.searchTree &amp;&amp; leftInfo.max &lt; head.data) : true)
-    &amp;&amp;
-    (rightInfo != null ?
-    (rightInfo.searchTree &amp;&amp; rightInfo.min &gt; head.data): true)
-  ){
-    searchTree = true;
-  }
-  return new Info(searchTree, max, min);
-}
-</code></pre>
-<h3 id="中序遍历方法">中序遍历方法</h3>
-<pre><code class="language-java">public static boolean searchTree(Node head){
-  if(head == null){
-    return true;
-  }
-  Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-  Node cur = head;
-  int pre = Integer.MIN_VALUE;
-  while(!stack.isEmpty() || cur != null){
-    if(cur != null){
-      stack.push(cur);
-      cur = cur.left;
-    }else{
-      cur = stack.pop();
-      if(cur.data &lt;= pre){
-        return false;
-      }
-      pre = cur.data;
-      cur = cur.right;
-    }
-  }
-  return true;
 }
 </code></pre>
 ]]></content>
