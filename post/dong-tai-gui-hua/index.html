@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico?v=1590509771229">
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico?v=1590552419624">
 <link rel="stylesheet" href="https://stevenXu1992.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://stevenXu1992.github.io">
-        <img src="https://stevenXu1992.github.io/images/avatar.png?v=1590509771229" class="site-logo">
+        <img src="https://stevenXu1992.github.io/images/avatar.png?v=1590552419624" class="site-logo">
         <h1 class="site-title">Gridea</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -145,13 +145,12 @@ public static int process1(int N, int index, int E, int rest){
   if(index == N){
     return process(N, N - 1, E, rest - 1);
   }
-  return process(N, index + 1, E, rest - 1) + 
-    		 process(N, index - 1, E, rest - 1);
+  return process(N, index + 1, E, rest - 1) 
+        +  process(N, index - 1, E, rest - 1);
 }
 
 //记忆化搜索
-public static int process2(int N, int index, int E, int rest,
-                          int[][] dp){
+public static int process2(int N, int index, int E, int rest, int[][] dp){
   if(dp[index][rest] != -1){
     return dp[index][rest];
   }
@@ -163,8 +162,8 @@ public static int process2(int N, int index, int E, int rest,
   }else if(index == N){
     dp[index][rest] = process(N, N - 1, E, rest - 1);
   }else{
-    dp[index][rest] = process(N, index + 1, E, rest - 1) + 
-    		 						process(N, index - 1, E, rest - 1);
+    dp[index][rest] = process(N, index + 1, E, rest - 1) 
+                         + process(N, index - 1, E, rest - 1);
   }
   return dp[index][rest];
 }

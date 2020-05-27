@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Gridea</title>
-    <updated>2020-05-26T16:16:14.839Z</updated>
+    <updated>2020-05-27T04:07:09.699Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -64,13 +64,12 @@ public static int process1(int N, int index, int E, int rest){
   if(index == N){
     return process(N, N - 1, E, rest - 1);
   }
-  return process(N, index + 1, E, rest - 1) + 
-    		 process(N, index - 1, E, rest - 1);
+  return process(N, index + 1, E, rest - 1) 
+        +  process(N, index - 1, E, rest - 1);
 }
 
 //记忆化搜索
-public static int process2(int N, int index, int E, int rest,
-                          int[][] dp){
+public static int process2(int N, int index, int E, int rest, int[][] dp){
   if(dp[index][rest] != -1){
     return dp[index][rest];
   }
@@ -82,8 +81,8 @@ public static int process2(int N, int index, int E, int rest,
   }else if(index == N){
     dp[index][rest] = process(N, N - 1, E, rest - 1);
   }else{
-    dp[index][rest] = process(N, index + 1, E, rest - 1) + 
-    		 						process(N, index - 1, E, rest - 1);
+    dp[index][rest] = process(N, index + 1, E, rest - 1) 
+                         + process(N, index - 1, E, rest - 1);
   }
   return dp[index][rest];
 }
