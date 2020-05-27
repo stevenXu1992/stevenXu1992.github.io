@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
-    <title>Gridea</title>
-    <updated>2020-05-27T04:07:09.699Z</updated>
+    <title>Steven Xu</title>
+    <updated>2020-05-27T04:20:51.220Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Gridea</rights>
+    <rights>All rights reserved 2020, Steven Xu</rights>
     <entry>
         <title type="html"><![CDATA[动态规划]]></title>
         <id>https://stevenXu1992.github.io/post/dong-tai-gui-hua/</id>
