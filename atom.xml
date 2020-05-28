@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-05-28T09:19:42.455Z</updated>
+    <updated>2020-05-28T13:19:12.904Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,136 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-80 Remove Duplicates from Sorted Array II]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-80-remove-duplicates-from-sorted-array-ii/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-80-remove-duplicates-from-sorted-array-ii/">
+        </link>
+        <updated>2020-05-28T13:16:18.000Z</updated>
+        <content type="html"><![CDATA[<p>Given a sorted array <em>nums</em>, remove the duplicates <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a> such that duplicates appeared at most <em>twice</em> and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm">in-place</a></strong> with O(1) extra memory.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Given nums = [1,1,1,2,2,3],
+
+Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3 respectively.
+
+It doesn't matter what you leave beyond the returned length.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Given nums = [0,0,1,1,1,1,2,3,3],
+
+Your function should return length = 7, with the first seven elements of nums being modified to 0, 0, 1, 1, 2, 3 and 3 respectively.
+
+It doesn't matter what values are set beyond the returned length.
+</code></pre>
+<pre><code class="language-java">//solution
+public int removeDuplicates(int[] nums) {
+    if(nums.length &lt; 3){
+      return nums.length;
+    }
+    int dif = 2;
+    for(int i = 2; i &lt; nums.length; i++){
+      if(nums[i] != nums[dif-2]){
+        nums[dif++] = nums[i];
+      }
+    }
+    return dif;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-26 Remove Duplicates from Sorted Array]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-26-remove-duplicates-from-sorted-array/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-26-remove-duplicates-from-sorted-array/">
+        </link>
+        <updated>2020-05-28T13:15:26.000Z</updated>
+        <content type="html"><![CDATA[<p>Given a sorted array <em>nums</em>, remove the duplicates <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a> such that each element appear only <em>once</em> and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm">in-place</a></strong> with O(1) extra memory.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Given nums = [1,1,2],
+
+Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.
+
+It doesn't matter what you leave beyond the returned length.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Given nums = [0,0,1,1,1,2,2,3,3,4],
+
+Your function should return length = 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively.
+
+It doesn't matter what values are set beyond the returned length.
+</code></pre>
+<pre><code class="language-java">//solution
+public static int f(int[] nums){
+  if(nums.length == 0){ return 0;}
+  int i = 0;
+  for(int j = 1; j &lt; nums.length; j++){
+    if(nums[i] != nums[j]){
+      i++;
+      nums[i] = nums[j];
+    }
+  }
+  return i + 1;
+  
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-27 Remove Element]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-27-remove-element/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-27-remove-element/">
+        </link>
+        <updated>2020-05-28T13:14:54.000Z</updated>
+        <content type="html"><![CDATA[<p>Given an array <em>nums</em> and a value <em>val</em>, remove all instances of that value <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a> and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm">in-place</a></strong> with O(1) extra memory.</p>
+<p>The order of elements can be changed. It doesn't matter what you leave beyond the new length.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Given nums = [3,2,2,3], val = 3,
+
+Your function should return length = 2, with the first two elements of nums being 2.
+
+It doesn't matter what you leave beyond the returned length.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Given nums = [0,1,2,2,3,0,4,2], val = 2,
+
+Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.
+
+Note that the order of those five elements can be arbitrary.
+
+It doesn't matter what values are set beyond the returned length.
+</code></pre>
+<pre><code class="language-java">//my submission
+public int removeElement(int[] nums, int val) {
+    if(nums.length == 0){
+      return 0;
+    }
+    if(nums.length == 1){
+      return nums[0] == val ? 0 : 1;
+    }
+
+    int zone = nums.length - 1;
+    int index = 0;
+    while(index &lt;= zone){
+      if(nums[index] == val){
+        swap(nums, index, zone--);
+      }else{
+        index++;
+      }
+    }
+    return zone + 1;
+}
+
+public static void swap(int[] arr, int a, int b){
+    int temp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = temp;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-5 Longest Palindromic Substring]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-5-longest-palindromic-substring/</id>
@@ -839,499 +969,6 @@ public static Node reverseEdge(Node from){
     from = next;
   }
   return pre;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[特殊结构]]></title>
-        <id>https://stevenXu1992.github.io/post/te-shu-jie-gou/</id>
-        <link href="https://stevenXu1992.github.io/post/te-shu-jie-gou/">
-        </link>
-        <updated>2020-05-25T06:33:08.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1滑动窗口">1.滑动窗口</h2>
-<pre><code class="language-java">//窗口结构（最大值）
-public static class WindowMax{
-  private int L;
-  private int R;
-  private int[] arr;
-  //队列中存放数组的下标，peekfirst最大值
-  private LinkedList&lt;Integer&gt; queue; 
-  
-  //初始化窗口
-  public WindowMax(int[] arr){
-    this.arr = arr;
-    L = -1;
-    R = 0;
-    queue = new LinkedList&lt;&gt;(); 
-  }
-  
-  //窗口右边界移动
-  public void shiftRight(){
-    if(R == arr.length){
-      return;
-    }
-    while(!queue.isEmpty() &amp;&amp; arr[queue.peekLast()]&lt;=arr[R]){
-      queue.pollLast();
-    }
-    queue.addLast(R);
-    R++;
-  }
-  
-  //窗口左边界移动
-  public void shiftLeft(){
-    if(L &gt; R - 1){
-      return;
-    }
-    L++;
-    if(queue.peekFirst() == L){
-      queue.pollFirst();
-    }
-  }
-  
-  //获取窗口内最大值
-  public int getMax(){
-    if(!queue.isEmpty()){
-      return arr[queue.peekFirst()];
-    }
-    return null;
-  }
-}
-
-//请实现一个函数。 输入:整型数组arr，窗口大小为w。 输出:一个长度为n-w+1的数组res，res[i]表示每一种窗口状态下的最大值
-public static int[] getMaxInWindow(int[] arr, int w){
-  if(arr == null || w &lt; 1 || arr.length &lt; w){
-    return null;
-  }
-  LinkedList&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
-  int[] res = new int[arr.length - w + 1];
-  int index = 0;
-  for(int i = 0; i &lt; arr.length; i++){
-    //窗口右边界向右滑动
-    while(!queue.isEmpty() &amp;&amp; arr[queue.peekLast()] &lt;=arr[i]){
-      queue.pollLast();
-    }
-  	queue.addLast(i);
-    //窗口左边界向右滑动
-    if(queue.peekFirst() == i - w){ 
-      //i-w：过期的点，刚从窗口中出来的点，判断该点是否是队列的first
-      queue.pollFirst();
-    }
-    //保存最大值信息
-    if(i &gt;= w - 1){
-      res[index++] = queue.peekFirst();
-    }
-  }
-  return res;
-}
-</code></pre>
-<h2 id="2单调栈">2.单调栈</h2>
-<p>在数组中想找到一个数，左边和右边比这个数小、且离这个数最近的位置。如果对每一个数都想求这样的信息，能不能整体代价达到O(N)?</p>
-<pre><code class="language-java">public static int[][] monotonousStack1(int[] arr){
-  if(arr == null || arr.length &lt; 1){
-    return null;
-  }
-  int[][] res = new int[arr.length][2];
-  //单调栈顶为最大值,栈内存储数组的下标
-  Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
-  for(int i = 0; i &lt; arr.length; i++){
-    //若新加元素小于栈顶，则弹出栈顶元素并记录结果
-    while(!stack.isEmpty() &amp;&amp; arr[stack.peek()] &gt; arr[i]){
-      int popIndex = stack.pop();
-      int leftIndex = stack.isEmpty() ? -1 : stack.peek();
-      res[popIndex][0] = leftIndex;
-      res[popIndex][1] = i;
-    }
-    stack.push(i);
-  }
-  //加完全部元素并记录了结果后，弹出剩下的元素并记录
-  while(!stack.isEmpty()){
-    int popIndex = stack.pop();
-    int leftIndex = stack.isEmpty() ? -1 : stack.peek();
-    res[popIndex][0] = leftIndex;
-    res[popIndex][1] = -1;
-  }
-  return res;
-}
-
-//数组中有重复的元素
-public static int[][] monotonousStack2(int[] arr){
-  Stack&lt;List&lt;Integer&gt;&gt; stack = new Stack&lt;&gt;();
-  int[][] res = new int[arr.length][2];
-  for(int i = 0; i &lt; arr.length; i++){
-    //新加元素小于栈顶
-    	while(!stack.isEmpty() &amp;&amp; arr[i] &lt; arr[stack.peek()]){
-        int popIndex = stack.pop();
-        int leftIndex = stack.isEmpty() ? 
-          -1 : stack.peek().get(stack.peek().size() - 1);
-        res[popIndex][0] = leftIndex;
-        res[popIndex][1] = i;
-      }
-    //新加元素等于栈顶
-    if(arr[i] == arr[stack.peek().get(0)]{
-      stack.peek().add(Integer.valueOf(i));
-    }else{
-      //新加元素大于栈顶
-      ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
-      list.add(i);
-      stack.push(list);
-    }
-  }
-  //加完全部元素并记录了结果后，弹出剩下的元素并记录
-  while(!stack.isEmpty()){
-    List&lt;Integer&gt; restList = stack.pop();
-    int leftIndex = stack.isEmpty() ? 
-      -1 : stack.peek().get(stack.peek().size() - 1);
-    for(Integer i : restList){
-      res[i][0] = leftIndex;
-      res[i][1] = -1;
-    }
-  }
-  return res;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[字符串算法]]></title>
-        <id>https://stevenXu1992.github.io/post/zi-fu-chuan-suan-fa/</id>
-        <link href="https://stevenXu1992.github.io/post/zi-fu-chuan-suan-fa/">
-        </link>
-        <updated>2020-05-23T17:17:10.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1-前缀树">1. 前缀树</h2>
-<pre><code class="language-java">public static class TrieNode{
-  public int pass;
-  public int end;
-  public TrieNode[] nexts;
-  
-  public TrieNode(){
-    pass = 0;
-    end = 0;
-    nexts = new TrieNode[26];
-  }
-}
-
-public static class Trie{
-  private TrieNode root;
-  public Trie(){
-    root = new TrieNode();
-  }
-  
-  //加入单词
-  public static void insert(String word){
-    if(word == null){
-      return;
-    }
-    char[] chars = word.toCharArray();
-    TrieNode node = root;
-    node.pass++;
-    int index = 0;
-    for(int i = 0; i &lt; chars.length; i++){
-      index = chars[i] - 'a';
-      if(node.nexts[index] == null){
-        node.nexts[index] = new TrieNode();
-      }
-      node = node.nexts[index];
-      node.pass++;
-    }
-    node.end++;
-  }
-  
-  //查询某单词加过几次
-  public static int search(String word){
-    if(word == null){
-      return 0;
-    }
-    char[] chars = word.toCharArray();
-    TrieNode node = root;
-    int index = 0;
-    for(int i = 0; i &lt; chars.length; i++){
-      index = chars[i] - 'a';
-      if(node.nexts[index] == null){
-        return 0;
-      }
-      node = node.nexts[index];
-    }
-    return node.end;
-  }
-  
-  //查询某前缀加过几次
-  public static int searchPrefix(String word){
-    if(word == null){
-      return 0;
-    }
-    char[] chars = word.toCharArray();
-    TrieNode node = root;
-    int index = 0;
-    for(int i = 0; i &lt; chars.length; i++){
-      index = chars[i] - 'a';
-      if(node.nexts[index] == null){
-        return 0;
-      }
-      node = node.nexts[index];
-    }
-    return node.pass;
-  }
-  
-  //删除单词
-  public static void delete(String word){
-    if(search(word) == 0){
-      return;
-    }
-    char[] chars = word.toCharArray();
-    TrieNode node = root;
-    node.pass--;
-    int index = 0;
-    for(int i = 0; i &lt; chars.length; i++){
-      index = chars[i] - 'a';
-      if(--node.nexts[index].pass == 0){
-        node.nexts[index] == null;
-        return;
-      }
-    }
-    node.end--;
-  }
-  
-}
-</code></pre>
-<h2 id="2-kmp">2. KMP</h2>
-<pre><code class="language-java">public static int KMP(String str1, String str2){
-  if(str1 == null || str2 == null || 
-     str2.length &gt; str1.length || str2.length() &lt; 1){
-    return -1;
-  }
-  char[] char1 = str1.toCharArray();
-  char[] char2 = str2.toCharArray();
-  int[] next = getNext(char2);
-  int i1 = 0;
-  int i2 = 0;
-  
-  while(i1 &lt; char1.length &amp;&amp; i2 &lt; char2.length){
-    if(char1[i1] == char2[i2]){
-      i1++;
-      i2++;
-    }else if(i2 == 0){
-      i1++;
-    }else{
-      i2 = next[i2];
-    }
-  }
-  return i2 == char2.length ? i1 - i2 : -1;
-}
-
-//获取每个字符之前的最大相同前缀后缀的长度
-public static int[] getNext(char[] chars){
-  if(chars.length == 1){
-    return new int[]{-1};
-  }
-  
-  int[] next = new int[chars.length];
-  next[0] = -1;
-  next[1] = 0;
-  int index = 2;
-  int cn = 0;
-  
-  while(index &lt; next.length){
-    if(chars[index - 1] == chars[cn]){
-      next[index++] = cn++;
-    }else(cn &gt; 0){
-      cn = next[cn];
-    }else{
-      next[index++] = 0;
-    }
-  }
-  return next;
-}
-</code></pre>
-<h2 id="3-manacher">3. Manacher</h2>
-<pre><code class="language-java">public static int manacher(String str){
-  if(str == null || str.length == 1){
-    return 0;
-  }
-  char[] chars = getManacherString(str);
-  int[] help = new int[chars.length];
-  int R = -1;	//R为已找到的最大回文区域的右边界
-  int C = -1;	//C为最大回文区域的中心点
-  int max = Integer.MIN_VALUE;
-  for(int i = 0; i != chars.length; i++){
-    
-    //情况1: i超出已知的最大回文区域右边界，正常向两边寻找回文区域
-    //情况2: i在已知的最大回文区域右边界内部
-    //	1）i'的回文区域不超过最大回文区域的左边界：与i相同
-    //	2）i'的回文区域超过最大回文区域的左边界：与R-i相同
-    //	3）i'的回文区域正好在最大回文区域的左边界上：在R-i的基础上正常向两边寻找回文区域
-    //2 * C - i 为 i'
-    help[i] = R &gt; i ? Math.min(help[2 * C - i], R - i) : 1;
-    while(i + help[i] &lt; chars.length &amp;&amp; i - help[i] &gt; -1){
-      if(chars[i + help[i]] == chars[i - help[i]]){
-        help[i]++;
-      }else{
-        break;
-      }
-    }
-    //更新R和C
-     if(i + help[i] &gt; R){
-        R = i + help[i];
-        C = i;
-      }
-      max = Math.max(max, help[i]);
-  }
-  return max - 1;
-}
-
-public static char[] getManacherString(String str){
-  char[] chars = str.toCharArray();
-  char[] res = new char[str.length * 2 - 1];
-  int index = 0;
-  for(int i = 0; i &lt; chars.length; i++){
-    res[i] = (i &amp; 1) == 0 ? '#' : chars[index++];
-  }
-  return res;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[并查集]]></title>
-        <id>https://stevenXu1992.github.io/post/bing-cha-ji/</id>
-        <link href="https://stevenXu1992.github.io/post/bing-cha-ji/">
-        </link>
-        <updated>2020-05-23T06:56:01.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1-并查集结构">1. 并查集结构</h2>
-<pre><code class="language-java">public class UnionFind{
-  
-  //并查集元素
-  public static class Element&lt;V&gt;{
-    public V value;
-    public Element(V value){
-      this.value = value;
-    }
-  } 
-  
-  //并查集初始化
-  public static class UnionSet{
-    HashMap&lt;V, Element&lt;V&gt;&gt; elementMap;
-    HashMap&lt;Element&lt;V&gt;, Element&lt;V&gt;&gt; fatherMap;
-    HashMap&lt;Element&lt;V&gt;, Integer&gt; sizeMap;
-    
-    public UnionSet&lt;V&gt;(List&lt;V&gt; list){
-      elementMap = new HashMap&lt;&gt;();
-      fatherMap = new HashMap&lt;&gt;();
-      sizeMap = new HashMap&lt;&gt;();
-      for(V v: list){
-        Element&lt;V&gt; e = new Element&lt;&gt;(v);
-        elementMap.put(v, e);
-        fatherMap.put(e, e);
-        sizeMap.put(e, 1);
-      }
-    }
-  }
-  
-  //判断是否属于同一集合
-  public static boolean same(V v1, V v2){
-    if( elementMap.containsKey(v1)
-     &amp;&amp; elementMap.containsKey(v2)){
-      	return findHead(elementMap.get(v1)) 
-          ==  findHead(elementMap.get(v2));	
-    	}
-    return false;
-  }
-  
-  
-  //集合合并
-  public static void union(V v1, V v2){
-    if(elementMap.containsKey(v1)
-     &amp;&amp; elementMap.containsKey(v2)){
-      Element&lt;V&gt; head1 = findHead(elementMap.get(v1));
-      Element&lt;V&gt; head2 = findHead(elementMap.get(v2));
-      if(head1 != head2){
-        Element&lt;V&gt; big = 
-          sizeMap.get(head1) &gt;= sizeMap.get(head2) ?
-          head1 : head2;
-        Element&lt;V&gt; small = big == head1 ? head2 : head1:
-        fatherMap.put(small, big);
-        sizeMap.put(big,sizeMap.get(big)+sizeMap.get(small));
-        sizeMap.remove(small);
-      }
-    }
-  }
-  
-  
-  //查找头元素
-  private static Element&lt;V&gt; findHead(Element&lt;V&gt; e){
-    Stack&lt;Element&lt;V&gt;&gt; stack = new Stack&lt;&gt;();
-    while(e != fatherMap.get(e)){
-      stack.push(e);
-      e = fatherMap.get(e);
-    }
-    while(!stack.isEmpty()){
-      fatherMap.put(stack.pop(), e);
-    }
-    return e;
-  }  
-  
-}
-</code></pre>
-<h2 id="2kruskal最小生成树">2.Kruskal最小生成树</h2>
-<pre><code class="language-java">//优先级队列的比较器，权重小的边先出
-public static class myComparator implements Comparator&lt;edge&gt;{
-  public int compare(Edge o1, Edge o2){
-    return o1.weight - o1.weight;
-  }
-}
-
-public static Set&lt;Edge&gt; kruskal(Graph graph){
-  List&lt;Node&gt; list = (List&lt;Node&gt;)graph.nodes.values();
-  UnionSet&lt;Node&gt; unionSet = new unionSet&lt;&gt;(List);
-  PriorityQueue&lt;Edge&gt; queue = 
-    new PriorityQueue&lt;&gt;(new myComparator());
-  for(Edge e : graph.edges){
-    queue.add(e);
-  }
-  
-  HashSet&lt;Edge&gt; res = new HashSet&lt;&gt;();
-  while(!queue.isEmpty()){
-    Edge e = queue.poll();
-    if(!unionSet.same(e.from, e.to)){
-      res.add(e);
-      unionSet.union(e.from, e.to);
-    }
-  }
-  return res;
-  
-}
-</code></pre>
-<h2 id="3-岛问题的并行算法设计">3. 岛问题的并行算法设计</h2>
-<pre><code class="language-java">public static int island(int[][] matrix){
-  if(matrix == null || matrix[0] == null){
-    return 0;
-  }
-  
-  int length = matrix.length;
-  int width = matrix[0].length;
-  int res = 0;
-  
-  for(int i = 0; i &lt; length; i++){
-    for(int j = 0; j &lt; width; j++){
-      if(matrix[i][j] == 1){
-        res++;
-        infect(matrix, i, j, length, width);
-      }
-    }
-  }
-}
-
-public static void infect(int[] matrix, int i, int j, int length, int width){
-  if(i &lt; 0 || i &gt;= length || j &lt; 0 || j &gt;= width 
-     || matrix[i][j] != 1){
-    return;
-  }
-  	matrix[i][j] = 2;
-    infect(matrix, i + 1, j, length, width);
-    infect(matrix, i - 1, j, length, width);
-    infect(matrix, i, j + 1, length, width);
-    infect(matrix, i, j - 1, length, width);
-  
 }
 </code></pre>
 ]]></content>
