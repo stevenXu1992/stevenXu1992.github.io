@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>二叉树的递归框架 | Steven Xu</title>
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>Leetcode-4 Median of Two Sorted Arrays | Steven Xu</title>
 <link href="https://stevenXu1992.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://stevenXu1992.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://stevenXu1992.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://stevenXu1992.github.io/post/er-cha-shu-de-di-gui-kuang-jia/" />
+<link rel="canonical" href="https://stevenXu1992.github.io/post/leetcode-4-median-of-two-sorted-arrays/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -23,184 +23,112 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>二叉树的递归框架</a></h2>
+<h2 class="post_title sm_margin"><a>Leetcode-4 Median of Two Sorted Arrays</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-04-24</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/dxJiV25Oq/" class="tag">二叉树</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">818字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">5 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-05-28</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/bJyxrFhVO/" class="tag">Leetcode</a> | 	<a href="https://stevenXu1992.github.io/tag/0_XUcrMBO/" class="tag">数组</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">340字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">3 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
 </section>
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<h2 id="1判断一棵树是否为满二叉树">1.判断一棵树是否为满二叉树</h2>
-<p>满二叉树条件：总节点个数 = 2 ^ 高度 - 1</p>
-<ol>
-<li>定义一个信息类，用于获取需要的信息（此处为节点数和高度）</li>
-<li>递归函数中先使用黑盒，再补充黑盒中获取信息的操作（此处为假定通过黑盒已获取到了当前节点的左右子树的高度和节点个数，使用该信息得出当前节点处的高度和节点个数）</li>
-<li>在主函数中判断是否满足条件</li>
-</ol>
-<pre><code class="language-java">//定义信息类
-public static class Info{
-  public int size;
-  public int height;
-  public Info(int s, int h){
-    this.size = s;
-    this.height = h;
-  }
-}
-//递归函数
-public static Info process(Node head){
-  if(head == null){
-    return new Info(0, 0);
-  }
-  Info leftInfo = process(head.left);
-  Info rightInfo = process(head.right);
-  int size = leftInfo.size + rightInfo.size + 1;
-  int height = Math.max(leftInfo.height, rightInfo.height)+1;
-  return new Info(size, height);
-} 
-//主函数
-public static boolean isFullTree(Node head){
-  Info info = process(head);
-  return info.size == (1 &lt;&lt; height) - 1; // 左移1位=2^height
-}
+<p>There are two sorted arrays <strong>nums1</strong> and <strong>nums2</strong> of size m and n respectively.</p>
+<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+<p>You may assume <strong>nums1</strong> and <strong>nums2</strong> cannot be both empty.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>nums1 = [1, 3]
+nums2 = [2]
+
+The median is 2.0
 </code></pre>
-<h2 id="2判断一棵树是否为平衡二叉树">2.判断一棵树是否为平衡二叉树</h2>
-<p>平衡二叉树条件：左右子树高度差不超过1且所有子树都平衡<br>
-信息类：高度，子树是否平衡</p>
-<pre><code class="language-java">public static class Info{
-  public int height;
-  public boolean balance;
-  public Info(int h, boolean b){
-    this.height = h;
-    this.balance = b;
-  }
-}
-public static Info process(Node head){
-  if(head == null){
-    return new Info(0, true);
-  }
-  Info leftInfo = process(head.left);
-  Info rightInfo = process(head.right);
-  int height = Math.max(leftInfo.height, rightInfo.height) +1;
-  boolean balance = 
-    leftInfo.balance &amp;&amp; rightInfo.balance 
-    &amp;&amp; Math.abs(leftInfo.height - rightInfo.height) &lt; 2;
-  return new Info(height, balance);
-}
+<p><strong>Example 2:</strong></p>
+<pre><code>nums1 = [1, 2]
+nums2 = [3, 4]
+
+The median is (2 + 3)/2 = 2.5
 </code></pre>
-<h2 id="3求二叉树两节点间的最大距离">3.求二叉树两节点间的最大距离</h2>
-<p>信息类：高度，最大距离<br>
-最大距离出现的三种情况：左树上，右树上，横跨头节点</p>
-<pre><code class="language-java">public static class Info{
-  public int height;
-  public int distance;
-  public Info(int h, int d){
-    this.height = h;
-    this.distance = d;
+<pre><code class="language-java">//my submission
+public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+  int N1 = nums1.length;
+  int N2 = nums2.length;
+  if(N1 == 0){
+    return N2 % 2 == 0 ? 
+      (nums2[N2 / 2] + nums2[N2 / 2 - 1]) / 2.0 
+      : nums2[N2 / 2];
+  }else if(N2 == 0){
+    return N1 % 2 == 0 ? 
+  		(nums1[N1 / 2] + nums1[N1 / 2 - 1] ) / 2.0 
+      : nums1[N1 / 2];
   }
-}
-public static Info process(Node head){
-  if(head = null){
-    return new Info(0, 0);
+
+  Queue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;(); 
+  Queue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b-a );
+
+
+  for(int i = 0; i &lt; nums1.length / 2; i++){
+    maxHeap.add(nums1[i]);
   }
-  Info leftInfo = process(head.left);
-  Info rightInfo = process(head.right);
-  int height = Math.max(leftInfo.height, rightInfo.height) +1;
-  int distance = Math.max(leftInfo.height+rightInfo.height+1,
-             Math.max(leftInfo.distance, rightInfo.distance));
-  return new Info(height, distance);
-}
-</code></pre>
-<h2 id="4判断一棵树是否为搜索二叉树">4.判断一棵树是否为搜索二叉树</h2>
-<p>搜索二叉树的条件：1）左树是搜索二叉树， 2）右树是搜索二叉树，3）左树的最大值小于头节点， 4）右树的最小值大于头节点<br>
-信息类：是否为搜索二叉树，最大值，最小值</p>
-<pre><code class="language-java">public static class Info{
-  public boolean searchTree;
-  public int max;
-  public int min;
-  public Info(boolean s, int max, int min){
-    this.searchTree = s;
-    this.max = max;
-    this.min = min;
+
+  for(int j = nums1.length - 1; j &gt;= nums1.length / 2; j--){
+    minHeap.add(nums1[j]);
   }
-}
-public static Info process(Node head){
-  if(head == null){
-    return null;
-  }
-  
-  Info leftInfo = process(head.left);
-  Info rightInfo = process(head.right);
-  
-  int max = head.data;
-  int min = head.data;
-  
-  if(leftInfo != null){
-    max = Math.max(max, leftInfo.max);
-    min = Math.min(min, leftInfo.min);
-  }
-  if(rightInfo != null){
-    max = Math.max(max, rightInfo.max);
-    min = Math.min(min, rightInfo.min);
-  }
-  
-  boolean searchTree = false;
-  //三目的意义：若左树不为空，按1）左树是搜索树 2）左树最大值小于节点值 进行判断；若左树为空，则直接为true不用判断。右树同理。
-  if(
-    (leftInfo != null ? 
-    (leftInfo.searchTree &amp;&amp; leftInfo.max &lt; head.data) : true)
-    &amp;&amp;
-    (rightInfo != null ?
-    (rightInfo.searchTree &amp;&amp; rightInfo.min &gt; head.data): true)
-  ){
-    searchTree = true;
-  }
-  return new Info(searchTree, max, min);
-}
-</code></pre>
-<h3 id="中序遍历方法">中序遍历方法</h3>
-<pre><code class="language-java">public static boolean searchTree(Node head){
-  if(head == null){
-    return true;
-  }
-  Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-  Node cur = head;
-  int pre = Integer.MIN_VALUE;
-  while(!stack.isEmpty() || cur != null){
-    if(cur != null){
-      stack.push(cur);
-      cur = cur.left;
-    }else{
-      cur = stack.pop();
-      if(cur.data &lt;= pre){
-        return false;
-      }
-      pre = cur.data;
-      cur = cur.right;
+
+  for(int k = 0; k &lt; nums2.length; k++){
+    if(nums2[k] &gt; minHeap.element()){
+      minHeap.add(nums2[k]);
+    }else {
+      maxHeap.add(nums2[k]);
+    }
+
+    if(maxHeap.size() - minHeap.size() &gt; 1){
+      minHeap.add(maxHeap.poll());
+    }else if(minHeap.size() - maxHeap.size() &gt; 1){
+      maxHeap.add(minHeap.poll());
     }
   }
-  return true;
+
+  if(minHeap.size() == maxHeap.size()){
+    return (maxHeap.element() + minHeap.element()) / 2.0;
+  }else{
+    return maxHeap.size() &gt; minHeap.size() ? 
+      maxHeap.element() : minHeap.element();
+  }
+}
+
+//solution
+//Time complexity: O(n + m)
+//Space complexity: O(1)
+public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    int index1 = 0;
+    int index2 = 0;
+    int med1 = 0;
+    int med2 = 0;
+    for (int i=0; i&lt;=(nums1.length+nums2.length)/2; i++) {
+        med1 = med2;
+        if (index1 == nums1.length) {
+            med2 = nums2[index2];
+            index2++;
+        } else if (index2 == nums2.length) {
+            med2 = nums1[index1];
+            index1++;
+        } else if (nums1[index1] &lt; nums2[index2] ) {
+            med2 = nums1[index1];
+            index1++;
+        }  else {
+            med2 = nums2[index2];
+            index2++;
+        }
+    }
+    if ((nums1.length+nums2.length)%2 == 0) {
+        return (float)(med1+med2)/2;
+    }
+    return med2;
 }
 </code></pre>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
 </div>
-<div class="toc-container"><ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#1%E5%88%A4%E6%96%AD%E4%B8%80%E6%A3%B5%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91">1.判断一棵树是否为满二叉树</a></li>
-<li><a href="#2%E5%88%A4%E6%96%AD%E4%B8%80%E6%A3%B5%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91">2.判断一棵树是否为平衡二叉树</a></li>
-<li><a href="#3%E6%B1%82%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%A4%E8%8A%82%E7%82%B9%E9%97%B4%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%9D%E7%A6%BB">3.求二叉树两节点间的最大距离</a></li>
-<li><a href="#4%E5%88%A4%E6%96%AD%E4%B8%80%E6%A3%B5%E6%A0%91%E6%98%AF%E5%90%A6%E4%B8%BA%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91">4.判断一棵树是否为搜索二叉树</a>
-<ul>
-<li><a href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E6%96%B9%E6%B3%95">中序遍历方法</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
+<div class="toc-container"></div>
 </div>
 <div id="fullPage"><canvas id="canvas"></canvas></div>
 </article>
@@ -217,7 +145,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2020-04-24，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-04-24 17:04:23";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2020-05-28，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-05-28 14:19:36";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a href="https://stevenXu1992.github.io" style="margin:0;">Steven Xu</a>.</div>
