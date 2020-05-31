@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>字符串算法 | Steven Xu</title>
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>Leetcode-41 First Missing Positive | Steven Xu</title>
 <link href="https://stevenXu1992.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://stevenXu1992.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://stevenXu1992.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://stevenXu1992.github.io/post/zi-fu-chuan-suan-fa/" />
+<link rel="canonical" href="https://stevenXu1992.github.io/post/leetcode-41-first-missing-positive/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -23,219 +23,55 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>字符串算法</a></h2>
+<h2 class="post_title sm_margin"><a>Leetcode-41 First Missing Positive</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-05-24</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/tdy68R30P/" class="tag">字符串</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">738字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">5 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-05-31</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/bJyxrFhVO/" class="tag">Leetcode</a> | 	<a href="https://stevenXu1992.github.io/tag/0_XUcrMBO/" class="tag">数组</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">178字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">2 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
 </section>
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<h2 id="1-前缀树">1. 前缀树</h2>
-<pre><code class="language-java">public static class TrieNode{
-  public int pass;
-  public int end;
-  public TrieNode[] nexts;
-  
-  public TrieNode(){
-    pass = 0;
-    end = 0;
-    nexts = new TrieNode[26];
-  }
-}
-
-public static class Trie{
-  private TrieNode root;
-  public Trie(){
-    root = new TrieNode();
-  }
-  
-  //加入单词
-  public static void insert(String word){
-    if(word == null){
-      return;
-    }
-    char[] chars = word.toCharArray();
-    TrieNode node = root;
-    node.pass++;
-    int index = 0;
-    for(int i = 0; i &lt; chars.length; i++){
-      index = chars[i] - 'a';
-      if(node.nexts[index] == null){
-        node.nexts[index] = new TrieNode();
-      }
-      node = node.nexts[index];
-      node.pass++;
-    }
-    node.end++;
-  }
-  
-  //查询某单词加过几次
-  public static int search(String word){
-    if(word == null){
-      return 0;
-    }
-    char[] chars = word.toCharArray();
-    TrieNode node = root;
-    int index = 0;
-    for(int i = 0; i &lt; chars.length; i++){
-      index = chars[i] - 'a';
-      if(node.nexts[index] == null){
-        return 0;
-      }
-      node = node.nexts[index];
-    }
-    return node.end;
-  }
-  
-  //查询某前缀加过几次
-  public static int searchPrefix(String word){
-    if(word == null){
-      return 0;
-    }
-    char[] chars = word.toCharArray();
-    TrieNode node = root;
-    int index = 0;
-    for(int i = 0; i &lt; chars.length; i++){
-      index = chars[i] - 'a';
-      if(node.nexts[index] == null){
-        return 0;
-      }
-      node = node.nexts[index];
-    }
-    return node.pass;
-  }
-  
-  //删除单词
-  public static void delete(String word){
-    if(search(word) == 0){
-      return;
-    }
-    char[] chars = word.toCharArray();
-    TrieNode node = root;
-    node.pass--;
-    int index = 0;
-    for(int i = 0; i &lt; chars.length; i++){
-      index = chars[i] - 'a';
-      if(--node.nexts[index].pass == 0){
-        node.nexts[index] == null;
-        return;
-      }
-    }
-    node.end--;
-  }
-  
-}
+<p>Given an unsorted integer array, find the smallest missing positive integer.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: [1,2,0]
+Output: 3
 </code></pre>
-<h2 id="2-kmp">2. KMP</h2>
-<pre><code class="language-java">public static int KMP(String str1, String str2){
-  if(str1 == null || str2 == null || 
-     str2.length &gt; str1.length || str2.length() &lt; 1){
-    return -1;
-  }
-  char[] char1 = str1.toCharArray();
-  char[] char2 = str2.toCharArray();
-  int[] next = getNext(char2);
-  int i1 = 0;
-  int i2 = 0;
-  
-  while(i1 &lt; char1.length &amp;&amp; i2 &lt; char2.length){
-    if(char1[i1] == char2[i2]){
-      i1++;
-      i2++;
-    }else if(i2 == 0){
-      i1++;
-    }else{
-      i2 = next[i2];
-    }
-  }
-  return i2 == char2.length ? i1 - i2 : -1;
-}
-
-//获取每个字符之前的最大相同前缀后缀的长度
-public static int[] getNext(char[] chars){
-  if(chars.length == 1){
-    return new int[]{-1};
-  }
-  
-  int[] next = new int[chars.length];
-  next[0] = -1;
-  next[1] = 0;
-  int index = 2;
-  int cn = 0;
-  
-  while(index &lt; next.length){
-    if(chars[index - 1] == chars[cn]){
-      next[index++] = cn++;
-    }else(cn &gt; 0){
-      cn = next[cn];
-    }else{
-      next[index++] = 0;
-    }
-  }
-  return next;
-}
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: [3,4,-1,1]
+Output: 2
 </code></pre>
-<h2 id="3-manacher">3. Manacher</h2>
-<pre><code class="language-java">public static int manacher(String str){
-  if(str == null || str.length == 1){
-    return 0;
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: [7,8,9,11,12]
+Output: 1
+</code></pre>
+<p><strong>Note:</strong></p>
+<p>Your algorithm should run in <em>O</em>(<em>n</em>) time and uses constant extra space.</p>
+<pre><code class="language-java">//solution
+public int firstMissingPositive(int[] A) {
+  int i = 0;
+  //遍历数组并将每个数n放到n-1位置A[A[i]-1] != A[i]
+  while(i &lt; A.length){
+    if(A[i] &gt;= 1 &amp;&amp; A[i] &lt;= A.length &amp;&amp; A[A[i]-1] != A[i]) {
+      swap(A, i, A[i]-1);
+    }else{ i++; }
   }
-  char[] chars = getManacherString(str);
-  int[] help = new int[chars.length];
-  int R = -1;	//R为已找到的最大回文区域的右边界
-  int C = -1;	//C为最大回文区域的中心点
-  int max = Integer.MIN_VALUE;
-  for(int i = 0; i != chars.length; i++){
-    
-    //情况1: i超出已知的最大回文区域右边界，正常向两边寻找回文区域
-    //情况2: i在已知的最大回文区域右边界内部
-    //	1）i'的回文区域不超过最大回文区域的左边界：与i相同
-    //	2）i'的回文区域超过最大回文区域的左边界：与R-i相同
-    //	3）i'的回文区域正好在最大回文区域的左边界上：在R-i的基础上正常向两边寻找回文区域
-    //2 * C - i 为 i'
-    help[i] = R &gt; i ? Math.min(help[2 * C - i], R - i) : 1;
-    while(i + help[i] &lt; chars.length &amp;&amp; i - help[i] &gt; -1){
-      if(chars[i + help[i]] == chars[i - help[i]]){
-        help[i]++;
-      }else{
-        break;
-      }
-    }
-    //更新R和C
-     if(i + help[i] &gt; R){
-        R = i + help[i];
-        C = i;
-      }
-      max = Math.max(max, help[i]);
-  }
-  return max - 1;
+  //放好位置后再次遍历，第一次遇到 A[i] != i + 1 时就是答案
+  for(int i = 0; i &lt; A.length; i++) 
+    if( A[i] != i + 1 ){return i + 1; }
+  return A.length + 1;
 }
 
-public static char[] getManacherString(String str){
-  char[] chars = str.toCharArray();
-  char[] res = new char[str.length * 2 - 1];
-  int index = 0;
-  for(int i = 0; i &lt; chars.length; i++){
-    res[i] = (i &amp; 1) == 0 ? '#' : chars[index++];
-  }
-  return res;
+private void swap(int[] A, int i, int j){
+    int temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
 }
 </code></pre>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
 </div>
-<div class="toc-container"><ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#1-%E5%89%8D%E7%BC%80%E6%A0%91">1. 前缀树</a></li>
-<li><a href="#2-kmp">2. KMP</a></li>
-<li><a href="#3-manacher">3. Manacher</a></li>
-</ul>
-</li>
-</ul>
-</div>
+<div class="toc-container"></div>
 </div>
 <div id="fullPage"><canvas id="canvas"></canvas></div>
 </article>
@@ -252,7 +88,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2020-05-24，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-05-24 01:17:10";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2020-05-31，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-05-31 18:57:05";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a href="https://stevenXu1992.github.io" style="margin:0;">Steven Xu</a>.</div>
