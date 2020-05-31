@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-05-31T11:40:40.536Z</updated>
+    <updated>2020-05-31T15:13:22.618Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,95 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-134 Gas Station]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-134-gas-station/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-134-gas-station/">
+        </link>
+        <updated>2020-05-31T15:12:33.000Z</updated>
+        <content type="html"><![CDATA[<p>There are <em>N</em> gas stations along a circular route, where the amount of gas at station <em>i</em> is <code>gas[i]</code>.</p>
+<p>You have a car with an unlimited gas tank and it costs <code>cost[i]</code> of gas to travel from station <em>i</em> to its next station (<em>i</em>+1). You begin the journey with an empty tank at one of the gas stations.</p>
+<p>Return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>If there exists a solution, it is guaranteed to be unique.</li>
+<li>Both input arrays are non-empty and have the same length.</li>
+<li>Each element in the input arrays is a non-negative integer.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: 
+gas  = [1,2,3,4,5]
+cost = [3,4,5,1,2]
+
+Output: 3
+
+Explanation:
+Start at station 3 (index 3) and fill up with 4 unit of gas. Your tank = 0 + 4 = 4
+Travel to station 4. Your tank = 4 - 1 + 5 = 8
+Travel to station 0. Your tank = 8 - 2 + 1 = 7
+Travel to station 1. Your tank = 7 - 3 + 2 = 6
+Travel to station 2. Your tank = 6 - 4 + 3 = 5
+Travel to station 3. The cost is 5. Your gas is just enough to travel back to station 3.
+Therefore, return 3 as the starting index.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: 
+gas  = [2,3,4]
+cost = [3,4,3]
+
+Output: -1
+
+Explanation:
+You can't start at station 0 or 1, as there is not enough gas to travel to the next station.
+Let's start at station 2 and fill up with 4 unit of gas. Your tank = 0 + 4 = 4
+Travel to station 0. Your tank = 4 - 3 + 2 = 3
+Travel to station 1. Your tank = 3 - 3 + 3 = 3
+You cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.
+Therefore, you can't travel around the circuit once no matter where you start.
+</code></pre>
+<pre><code class="language-java">//my submission
+public class GasNode{
+    int gas;
+    int cost;
+    int index;
+    GasNode next;
+    public GasNode(int gas, int cost, int index){
+      this.gas = gas;
+      this.cost = cost;
+      this.index = index;
+    }
+}
+
+public int canCompleteCircuit(int[] gas, int[] cost) {
+        
+    //generate GasNode List
+    GasNode head = new GasNode(gas[0], cost[0], 0);
+    GasNode cur = head;
+    for(int j = 1; j &lt; gas.length; j++){
+      cur.next = new GasNode(gas[j], cost[j], j);
+      cur = cur.next;
+    }
+    cur.next = head;
+
+    //start from every station
+    for(int i = 0; i &lt; gas.length; i++){
+      GasNode node = head;
+      int restGas = node.gas;
+      while(restGas &gt;= node.cost){
+        restGas -= node.cost;
+        node = node.next;
+        restGas += node.gas;
+        if(node == head){
+          return head.index;
+        }
+      }   
+      head = head.next; 
+    }
+    return -1;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-299 Bulls and Cows]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-299-bulls-and-cows/</id>
@@ -558,58 +647,6 @@ public int lengthOfLongestSubstring(String s) {
       }
     }
     return ans;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-2 Add Two Numbers]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-2-add-two-numbers/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-2-add-two-numbers/">
-        </link>
-        <updated>2020-05-27T14:27:20.000Z</updated>
-        <content type="html"><![CDATA[<p>You are given two <strong>non-empty</strong> linked lists representing two non-negative integers. The digits are stored in <strong>reverse order</strong> and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
-<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
-<p><strong>Example:</strong></p>
-<pre><code>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)
-Output: 7 -&gt; 0 -&gt; 8
-Explanation: 342 + 465 = 807.
-</code></pre>
-<pre><code class="language-java">//solution
-//Time complexity: O(Max(m, n))
-//Space complexity: O(Max(m, n))
-public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-    ListNode dummyHead = new ListNode(0);
-    ListNode p = l1;
-    ListNode q = l2;
-    ListNode cur = dummyHead;
-    int carry = 0; 
-    while(p != null || q != null){
-      //若两链表不等长，多出来的按0计算
-      int x = p == null ? 0 : p.val;
-      int y = q == null ? 0 : q.val;
-      
-      //carry表示进位
-      //若sum小于10, carry = sum / 10 = 0
-      //若sum大于10，carry = sum / 10 = 1
-      int sum = carry + x + y;
-      carry = sum / 10;
-      
-     	//若sum小于10, sum % 10 = sum
-      //若sum大于10，sum % 10 = sum - 10
-      cur.next = new ListNode(sum % 10);
-      cur = cur.next;
-      if(p != null){
-        p = p.next;
-      }
-      if(q != null){
-        q = q.next;
-      }
-    }
-    if(carry &gt; 0){
-      cur.next = new ListNode(carry);
-    }
-    return dummyHead.next;
 }
 </code></pre>
 ]]></content>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>Leetcode-5 Longest Palindromic Substring | Steven Xu</title>
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>Leetcode-134 Gas Station | Steven Xu</title>
 <link href="https://stevenXu1992.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://stevenXu1992.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://stevenXu1992.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://stevenXu1992.github.io/post/leetcode-5-longest-palindromic-substring/" />
+<link rel="canonical" href="https://stevenXu1992.github.io/post/leetcode-134-gas-station/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -23,98 +23,93 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>Leetcode-5 Longest Palindromic Substring</a></h2>
+<h2 class="post_title sm_margin"><a>Leetcode-134 Gas Station</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-05-28</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/bJyxrFhVO/" class="tag">Leetcode</a> | 	<a href="https://stevenXu1992.github.io/tag/tdy68R30P/" class="tag">字符串</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">331字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">2 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-05-31</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/bJyxrFhVO/" class="tag">Leetcode</a> | 	<a href="https://stevenXu1992.github.io/tag/6Vb34yWKJ/" class="tag">链表</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">448字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">3 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
 </section>
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<p>Given a string <strong>s</strong>, find the longest palindromic substring in <strong>s</strong>. You may assume that the maximum length of <strong>s</strong> is 1000.</p>
+<p>There are <em>N</em> gas stations along a circular route, where the amount of gas at station <em>i</em> is <code>gas[i]</code>.</p>
+<p>You have a car with an unlimited gas tank and it costs <code>cost[i]</code> of gas to travel from station <em>i</em> to its next station (<em>i</em>+1). You begin the journey with an empty tank at one of the gas stations.</p>
+<p>Return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>If there exists a solution, it is guaranteed to be unique.</li>
+<li>Both input arrays are non-empty and have the same length.</li>
+<li>Each element in the input arrays is a non-negative integer.</li>
+</ul>
 <p><strong>Example 1:</strong></p>
-<pre><code>Input: &quot;babad&quot;
-Output: &quot;bab&quot;
-Note: &quot;aba&quot; is also a valid answer.
+<pre><code>Input: 
+gas  = [1,2,3,4,5]
+cost = [3,4,5,1,2]
+
+Output: 3
+
+Explanation:
+Start at station 3 (index 3) and fill up with 4 unit of gas. Your tank = 0 + 4 = 4
+Travel to station 4. Your tank = 4 - 1 + 5 = 8
+Travel to station 0. Your tank = 8 - 2 + 1 = 7
+Travel to station 1. Your tank = 7 - 3 + 2 = 6
+Travel to station 2. Your tank = 6 - 4 + 3 = 5
+Travel to station 3. The cost is 5. Your gas is just enough to travel back to station 3.
+Therefore, return 3 as the starting index.
 </code></pre>
 <p><strong>Example 2:</strong></p>
-<pre><code>Input: &quot;cbbd&quot;
-Output: &quot;bb&quot;
+<pre><code>Input: 
+gas  = [2,3,4]
+cost = [3,4,3]
+
+Output: -1
+
+Explanation:
+You can't start at station 0 or 1, as there is not enough gas to travel to the next station.
+Let's start at station 2 and fill up with 4 unit of gas. Your tank = 0 + 4 = 4
+Travel to station 0. Your tank = 4 - 3 + 2 = 3
+Travel to station 1. Your tank = 3 - 3 + 3 = 3
+You cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.
+Therefore, you can't travel around the circuit once no matter where you start.
 </code></pre>
 <pre><code class="language-java">//my submission
-public String longestPalindrome(String s) {
-    if(s.length() &lt; 2){
-      return s.length() == 1 ? s : &quot;&quot;;
+public class GasNode{
+    int gas;
+    int cost;
+    int index;
+    GasNode next;
+    public GasNode(int gas, int cost, int index){
+      this.gas = gas;
+      this.cost = cost;
+      this.index = index;
     }
-
-    //生成Manacher最长回文半径数组
-    int[] manacher = manacher(s);
-    char[] chars = getManacherString(s);
-    int max = Integer.MIN_VALUE;
-    int maxIndex = 0;
-    for(int i = 0; i &lt; manacher.length; i++){
-      if(manacher[i] &gt; max){
-        max = manacher[i];
-        maxIndex = i;
-      }
-    }
-
-    String res = &quot;&quot;;
-    max--;
-    for(int j = maxIndex - max; j &lt;= maxIndex + max; j++){
-      res += chars[j];
-    }
-  	//去除特殊符号
-    res = restore(res, '#');
-    return res;
-}
-    
-public static int[] manacher(String s){
-    char[] chars = getManacherString(s);
-    int R = -1;
-    int C = -1;
-    int[] manacher = new int[chars.length];
-
-    for(int i = 0; i != chars.length; i++){
-      
-      //先算出不需要重复扩充的半径区域
-      manacher[i] = R &gt; i ? Math.min(manacher[2*C-i],R-i) : 1;
-      
-      //扩充过程
-      while(i-manacher[i]&gt;-1 &amp;&amp; i+manacher[i] &lt; chars.length){
-        if(chars[i + manacher[i]] == chars[i - manacher[i]]){
-          manacher[i]++;
-        }else {break;}
-      }
-      
-      //更新最大回文区域的右边界
-      if(i + manacher[i] &gt; R){
-        R = i + manacher[i];
-        C = i;
-      }
-    }
-  
-    return manacher;
-}
-    
-public static char[] getManacherString(String s){
-    char[] chars = s.toCharArray();
-    char[] res = new char[s.length() * 2 + 1];
-    int index = 0;
-    for(int i = 0; i != res.length; i++){
-      res[i] = (i &amp; 1) == 0 ? '#' : chars[index++];
-    }
-    return res;
 }
 
-public static String restore(String s, char r){
-    String res = &quot;&quot;;
-    for(int i = 0; i &lt; s.length(); i++){
-      if(s.charAt(i) != r){
-        res += s.charAt(i);
-      }
+public int canCompleteCircuit(int[] gas, int[] cost) {
+        
+    //generate GasNode List
+    GasNode head = new GasNode(gas[0], cost[0], 0);
+    GasNode cur = head;
+    for(int j = 1; j &lt; gas.length; j++){
+      cur.next = new GasNode(gas[j], cost[j], j);
+      cur = cur.next;
     }
-    return res;
+    cur.next = head;
+
+    //start from every station
+    for(int i = 0; i &lt; gas.length; i++){
+      GasNode node = head;
+      int restGas = node.gas;
+      while(restGas &gt;= node.cost){
+        restGas -= node.cost;
+        node = node.next;
+        restGas += node.gas;
+        if(node == head){
+          return head.index;
+        }
+      }   
+      head = head.next; 
+    }
+    return -1;
 }
 </code></pre>
 
@@ -138,7 +133,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2020-05-28，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-05-28 17:18:58";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2020-05-31，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-05-31 23:12:33";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a href="https://stevenXu1992.github.io" style="margin:0;">Steven Xu</a>.</div>
