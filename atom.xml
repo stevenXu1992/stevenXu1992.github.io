@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-05-31T10:57:43.954Z</updated>
+    <updated>2020-05-31T11:40:40.536Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,62 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-299 Bulls and Cows]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-299-bulls-and-cows/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-299-bulls-and-cows/">
+        </link>
+        <updated>2020-05-31T11:39:12.000Z</updated>
+        <content type="html"><![CDATA[<p>You are playing the following <a href="https://en.wikipedia.org/wiki/Bulls_and_Cows">Bulls and Cows</a> game with your friend: You write down a number and ask your friend to guess what the number is. Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called &quot;bulls&quot;) and how many digits match the secret number but locate in the wrong position (called &quot;cows&quot;). Your friend will use successive guesses and hints to eventually derive the secret number.</p>
+<p>Write a function to return a hint according to the secret number and friend's guess, use <code>A</code> to indicate the bulls and <code>B</code> to indicate the cows.</p>
+<p>Please note that both secret number and friend's guess may contain duplicate digits.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: secret = &quot;1807&quot;, guess = &quot;7810&quot;
+
+Output: &quot;1A3B&quot;
+
+Explanation: 1 bull and 3 cows. The bull is 8, the cows are 0, 1 and 7.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: secret = &quot;1123&quot;, guess = &quot;0111&quot;
+
+Output: &quot;1A1B&quot;
+
+Explanation: The 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow.
+</code></pre>
+<p><strong>Note:</strong> You may assume that the secret number and your friend's guess only contain digits, and their lengths are always equal.</p>
+<pre><code class="language-java">//solution
+public String getHint(String secret, String guess) {
+  int[] record = new int[10];
+  int A = 0;
+  int B = 0;
+
+  //使用record数组记录已出现过的数字（范围0～9）
+  //在同位置的iSecret != iGuess的情况下，出现过的iSecret使record数组对应位置的数字+1
+  //出现过的iGuess使record数组对应位置的数字-1
+  //因此若发现 record[iSecret] &lt; 0 则表示此数字被发现过但还未使用过，record[iGuess] &gt; 0 同理。
+  for(int i = 0; i &lt; secret.length(); i++){
+    int iSecret = Character.getNumericValue(secret.charAt(i));
+    int iGuess = Character.getNumericValue(guess.charAt(i));
+    if(iSecret == iGuess){
+      A++;
+    }else{
+      if(record[iSecret] &lt; 0 ){
+        B++;
+      }
+      if(record[iGuess] &gt; 0){
+        B++;
+      }
+      record[iSecret]++;
+      record[iGuess]--;
+    }
+  }
+  String ans = A + &quot;A&quot; + B + &quot;B&quot;;
+  return ans;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-41 First Missing Positive]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-41-first-missing-positive/</id>
@@ -554,62 +610,6 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
       cur.next = new ListNode(carry);
     }
     return dummyHead.next;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-1 Two Sum]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-1-two-sum/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-1-two-sum/">
-        </link>
-        <updated>2020-05-27T14:24:42.000Z</updated>
-        <content type="html"><![CDATA[<p>Given an array of integers, return <strong>indices</strong> of the two numbers such that they add up to a specific target.</p>
-<p>You may assume that each input would have *<strong>exactly*</strong> one solution, and you may not use the <em>same</em> element twice.</p>
-<p><strong>Example:</strong></p>
-<pre><code>Given nums = [2, 7, 11, 15], target = 9,
-Because nums[0] + nums[1] = 2 + 7 = 9,
-return [0, 1].
-</code></pre>
-<pre><code class="language-java">//my submission 
-//Time complexity: O(n^2)
-//Space complexity: O(1)
-public int[] twoSum(int[] nums, int target) {
-    if(nums == null || nums.length == 0){
-      return null;
-    }
-    int[] res = new int[2];        
-    for(int i = 0; i &lt; nums.length; i++){
-      for(int j = 0; j &lt; nums.length; j++){
-        if(nums[i] + nums[j] == target &amp;&amp; i != j){
-          res[0] = i;
-          res[1] = j;
-        }
-      }
-    }   
-    return res;
-}
-
-//solution
-//Time complexity: O(n)
-//Space complexity: O(n)
-public int[] twoSum(int[] nums, int target) {
-    if(nums == null || nums.length == 0){
-      return null;
-    }
-    int[] res = new int[2];
-    HashMap&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
-    for(int i = 0; i &lt; nums.length; i++){
-      map.put(nums[i], i);
-    }
-    for(int j = 0; j &lt; nums.length; j++){
-      int rest = target - nums[j];
-      if(map.containsKey(rest) &amp;&amp; map.get(rest) != j){
-        res[0] = j;
-        res[1] = map.get(rest);
-      }
-    }
-    return res;
 }
 </code></pre>
 ]]></content>
