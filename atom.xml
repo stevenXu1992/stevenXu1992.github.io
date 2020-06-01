@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-05-31T15:13:22.618Z</updated>
+    <updated>2020-06-01T06:45:55.197Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,194 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-55 Jump Game]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-55-jump-game/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-55-jump-game/">
+        </link>
+        <updated>2020-06-01T06:45:22.000Z</updated>
+        <content type="html"><![CDATA[<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.</p>
+<p>Each element in the array represents your maximum jump length at that position.</p>
+<p>Determine if you are able to reach the last index.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: nums = [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: nums = [3,2,1,0,4]
+Output: false
+Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 3 * 10^4</code></li>
+<li><code>0 &lt;= nums[i][j] &lt;= 10^5</code></li>
+</ul>
+<pre><code class="language-java">//暴力递归
+//Time complexity: O(2^n)
+//Space complexity: O(n)
+public boolean canJump(int[] nums) {
+  	return process(nums, 0);
+}
+
+public boolean process(int[] nums, int index){
+    if(index == nums.length - 1){
+      return true;
+    }
+
+    int maxDis = Math.min(index + nums[index], nums.length - 1);
+    for(int i = index + 1; i &lt;= maxDis; i++){
+      if(process(nums, i)){
+        return true;
+      }
+    }
+    return false;
+}
+
+//记忆化搜索
+//Time complexity: O(n^2)
+//Space complexity: O(n)
+public boolean canJump(int[] nums) {
+    int[] dp = new int[nums.length + 1];
+    int res = process(nums, 0, dp);
+    return res == 1 ? true : false;
+}
+
+public int process(int[] nums, int index, int[] dp){
+    if(dp[index] != 0){
+      return dp[index];
+    }
+    if(index == nums.length - 1){
+      dp[index] = 1;
+      return dp[index];
+    }
+    int maxDis = Math.min(index+nums[index], nums.length-1);
+    for(int i = index + 1; i &lt;= maxDis; i++){
+      dp[index] = process(nums, i, dp);
+      if(dp[index] == 1){
+        return dp[index];
+      }
+    }
+    dp[index] = -1;
+    return dp[index];
+}
+
+//严格表结构动态规划
+//Time complexity: O(n^2)
+//Space complexity: O(n)
+public boolean canJump(int[] nums) {
+    int res = process(nums);
+    return res == 1 ? true : false;
+}
+
+public int process(int[] nums){
+    int[] dp = new int[nums.length];
+    dp[nums.length - 1] = 1;
+    for(int index = nums.length - 2; index &gt;= 0; index--){
+      int maxDis = Math.min(index+nums[index], nums.length-1);
+      for(int i = index + 1; i &lt;= maxDis; i++){
+        if(dp[i] == 1){
+          dp[index] = 1;
+          break;
+        }
+      }
+    }
+    return dp[0];
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-275 H-Index II]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-275-h-index-ii/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-275-h-index-ii/">
+        </link>
+        <updated>2020-06-01T06:44:30.000Z</updated>
+        <content type="html"><![CDATA[<p>Given an array of citations <strong>sorted in ascending order</strong> (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index.</p>
+<p>According to the <a href="https://en.wikipedia.org/wiki/H-index">definition of h-index on Wikipedia</a>: &quot;A scientist has index <em>h</em> if <em>h</em> of his/her <em>N</em> papers have <strong>at least</strong> <em>h</em> citations each, and the other <em>N − h</em> papers have <strong>no more than</strong> <em>h</em> citations each.&quot;</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: citations = [0,1,3,5,6]
+Output: 3 
+Explanation: [0,1,3,5,6] means the researcher has 5 papers in total and each of them had 
+             received 0, 1, 3, 5, 6 citations respectively. 
+             Since the researcher has 3 papers with at least 3 citations each and the remaining 
+             two with no more than 3 citations each, her h-index is 3.
+</code></pre>
+<p><strong>Note:</strong></p>
+<p>If there are several possible values for <em>h</em>, the maximum one is taken as the h-index.</p>
+<p><strong>Follow up:</strong></p>
+<ul>
+<li>This is a follow up problem to <a href="https://leetcode.com/problems/h-index/description/">H-Index</a>, where <code>citations</code> is now guaranteed to be sorted in ascending order.</li>
+<li>Could you solve it in logarithmic time complexity?</li>
+</ul>
+<pre><code class="language-java">//solution
+public int hIndex(int[] citations) {
+    if(citations.length == 0){
+      return 0;
+    }
+
+    int N = citations.length;
+    int H = 0;
+    for(int i = N - 1; i &gt;= 0; i--){
+      int num = N - i;
+      if(citations[i] &gt;= num){
+        H = num;
+      }
+    }
+    return H;
+}
+</code></pre>
+<p>注：</p>
+<p>定义变量  num表示每个数在citations中对应的比自己大的数的个数（引用论文次数大于等于自己被引用的次数     的总的篇数），比如0对应的num就是5，因为比0大或等的数的个数为5。因此，citations对应的num为：</p>
+<p>citations：0    1     3     5      6</p>
+<p>num:         5     4     3     2       1</p>
+<p>“代表他（她）的 N 篇论文中至多有 h 篇论文，分别被引用了至少 h 次“，仔细分析这句话”至多有 h 篇论文“表示的是num[i]对就的数，”分别被引用了至少 h 次“表示的是citations[i]，则num[i]&lt;=citations[i]才满足条件。此处满足条件的是citations=[3,5,6]，对应的num=[3,2,1]。而我们只需要取num的最大值就可以了。<br>
+————————————————<br>
+版权声明：本文为CSDN博主「lear_scu」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>
+原文链接：https://blog.csdn.net/qq_36327328/java/article/details/83117379</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-274 H-Index]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-274-h-index/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-274-h-index/">
+        </link>
+        <updated>2020-06-01T06:43:53.000Z</updated>
+        <content type="html"><![CDATA[<p>Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index.</p>
+<p>According to the <a href="https://en.wikipedia.org/wiki/H-index">definition of h-index on Wikipedia</a>: &quot;A scientist has index <em>h</em> if <em>h</em> of his/her <em>N</em>papers have <strong>at least</strong> <em>h</em> citations each, and the other <em>N − h</em> papers have <strong>no more than</strong> <em>h</em> citations each.&quot;</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: citations = [3,0,6,1,5]
+Output: 3 
+Explanation: [3,0,6,1,5] means the researcher has 5 papers in total and each of them had 
+             received 3, 0, 6, 1, 5 citations respectively. 
+             Since the researcher has 3 papers with at least 3 citations each and the remaining 
+             two with no more than 3 citations each, her h-index is 3.
+</code></pre>
+<p><strong>Note:</strong> If there are several possible values for <em>h</em>, the maximum one is taken as the h-index.</p>
+<pre><code class="language-java">//solution
+public int hIndex(int[] citations) {
+    int n = citations.length;
+    int[] buckets = new int[n+1];
+    for(int c : citations) {
+        if(c &gt;= n) {
+            buckets[n]++;
+        } else {
+            buckets[c]++;
+        }
+    }
+    int count = 0;
+    for(int i = n; i &gt;= 0; i--) {
+        count += buckets[i];
+        if(count &gt;= i) {
+            return i;
+        }
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-134 Gas Station]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-134-gas-station/</id>
@@ -386,267 +574,6 @@ public static void swap(int[] arr, int a, int b){
     int temp = arr[a];
     arr[a] = arr[b];
     arr[b] = temp;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-5 Longest Palindromic Substring]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-5-longest-palindromic-substring/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-5-longest-palindromic-substring/">
-        </link>
-        <updated>2020-05-28T09:18:58.000Z</updated>
-        <content type="html"><![CDATA[<p>Given a string <strong>s</strong>, find the longest palindromic substring in <strong>s</strong>. You may assume that the maximum length of <strong>s</strong> is 1000.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: &quot;babad&quot;
-Output: &quot;bab&quot;
-Note: &quot;aba&quot; is also a valid answer.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: &quot;cbbd&quot;
-Output: &quot;bb&quot;
-</code></pre>
-<pre><code class="language-java">//my submission
-public String longestPalindrome(String s) {
-    if(s.length() &lt; 2){
-      return s.length() == 1 ? s : &quot;&quot;;
-    }
-
-    //生成Manacher最长回文半径数组
-    int[] manacher = manacher(s);
-    char[] chars = getManacherString(s);
-    int max = Integer.MIN_VALUE;
-    int maxIndex = 0;
-    for(int i = 0; i &lt; manacher.length; i++){
-      if(manacher[i] &gt; max){
-        max = manacher[i];
-        maxIndex = i;
-      }
-    }
-
-    String res = &quot;&quot;;
-    max--;
-    for(int j = maxIndex - max; j &lt;= maxIndex + max; j++){
-      res += chars[j];
-    }
-  	//去除特殊符号
-    res = restore(res, '#');
-    return res;
-}
-    
-public static int[] manacher(String s){
-    char[] chars = getManacherString(s);
-    int R = -1;
-    int C = -1;
-    int[] manacher = new int[chars.length];
-
-    for(int i = 0; i != chars.length; i++){
-      
-      //先算出不需要重复扩充的半径区域
-      manacher[i] = R &gt; i ? Math.min(manacher[2*C-i],R-i) : 1;
-      
-      //扩充过程
-      while(i-manacher[i]&gt;-1 &amp;&amp; i+manacher[i] &lt; chars.length){
-        if(chars[i + manacher[i]] == chars[i - manacher[i]]){
-          manacher[i]++;
-        }else {break;}
-      }
-      
-      //更新最大回文区域的右边界
-      if(i + manacher[i] &gt; R){
-        R = i + manacher[i];
-        C = i;
-      }
-    }
-  
-    return manacher;
-}
-    
-public static char[] getManacherString(String s){
-    char[] chars = s.toCharArray();
-    char[] res = new char[s.length() * 2 + 1];
-    int index = 0;
-    for(int i = 0; i != res.length; i++){
-      res[i] = (i &amp; 1) == 0 ? '#' : chars[index++];
-    }
-    return res;
-}
-
-public static String restore(String s, char r){
-    String res = &quot;&quot;;
-    for(int i = 0; i &lt; s.length(); i++){
-      if(s.charAt(i) != r){
-        res += s.charAt(i);
-      }
-    }
-    return res;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-4 Median of Two Sorted Arrays]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-4-median-of-two-sorted-arrays/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-4-median-of-two-sorted-arrays/">
-        </link>
-        <updated>2020-05-28T06:19:36.000Z</updated>
-        <content type="html"><![CDATA[<p>There are two sorted arrays <strong>nums1</strong> and <strong>nums2</strong> of size m and n respectively.</p>
-<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-<p>You may assume <strong>nums1</strong> and <strong>nums2</strong> cannot be both empty.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>nums1 = [1, 3]
-nums2 = [2]
-
-The median is 2.0
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>nums1 = [1, 2]
-nums2 = [3, 4]
-
-The median is (2 + 3)/2 = 2.5
-</code></pre>
-<pre><code class="language-java">//my submission
-public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-  int N1 = nums1.length;
-  int N2 = nums2.length;
-  if(N1 == 0){
-    return N2 % 2 == 0 ? 
-      (nums2[N2 / 2] + nums2[N2 / 2 - 1]) / 2.0 
-      : nums2[N2 / 2];
-  }else if(N2 == 0){
-    return N1 % 2 == 0 ? 
-  		(nums1[N1 / 2] + nums1[N1 / 2 - 1] ) / 2.0 
-      : nums1[N1 / 2];
-  }
-
-  Queue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;(); 
-  Queue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b-a );
-
-
-  for(int i = 0; i &lt; nums1.length / 2; i++){
-    maxHeap.add(nums1[i]);
-  }
-
-  for(int j = nums1.length - 1; j &gt;= nums1.length / 2; j--){
-    minHeap.add(nums1[j]);
-  }
-
-  for(int k = 0; k &lt; nums2.length; k++){
-    if(nums2[k] &gt; minHeap.element()){
-      minHeap.add(nums2[k]);
-    }else {
-      maxHeap.add(nums2[k]);
-    }
-
-    if(maxHeap.size() - minHeap.size() &gt; 1){
-      minHeap.add(maxHeap.poll());
-    }else if(minHeap.size() - maxHeap.size() &gt; 1){
-      maxHeap.add(minHeap.poll());
-    }
-  }
-
-  if(minHeap.size() == maxHeap.size()){
-    return (maxHeap.element() + minHeap.element()) / 2.0;
-  }else{
-    return maxHeap.size() &gt; minHeap.size() ? 
-      maxHeap.element() : minHeap.element();
-  }
-}
-
-//solution
-//Time complexity: O(n + m)
-//Space complexity: O(1)
-public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-    int index1 = 0;
-    int index2 = 0;
-    int med1 = 0;
-    int med2 = 0;
-    for (int i=0; i&lt;=(nums1.length+nums2.length)/2; i++) {
-        med1 = med2;
-        if (index1 == nums1.length) {
-            med2 = nums2[index2];
-            index2++;
-        } else if (index2 == nums2.length) {
-            med2 = nums1[index1];
-            index1++;
-        } else if (nums1[index1] &lt; nums2[index2] ) {
-            med2 = nums1[index1];
-            index1++;
-        }  else {
-            med2 = nums2[index2];
-            index2++;
-        }
-    }
-    if ((nums1.length+nums2.length)%2 == 0) {
-        return (float)(med1+med2)/2;
-    }
-    return med2;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-3 Longest Substring Without Repeating Characters]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-3-longest-substring-without-repeating-characters/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-3-longest-substring-without-repeating-characters/">
-        </link>
-        <updated>2020-05-27T14:29:39.000Z</updated>
-        <content type="html"><![CDATA[<p>Given a string, find the length of the <strong>longest substring</strong> without repeating characters.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: &quot;abcabcbb&quot;
-Output: 3 
-Explanation: The answer is &quot;abc&quot;, with the length of 3. 
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: &quot;bbbbb&quot;
-Output: 1
-Explanation: The answer is &quot;b&quot;, with the length of 1.
-</code></pre>
-<p><strong>Example 3:</strong></p>
-<pre><code>Input: &quot;pwwkew&quot;
-Output: 3
-Explanation: The answer is &quot;wke&quot;, with the length of 3. 
-             Note that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.
-</code></pre>
-<pre><code class="language-java">//my submission
-//Time complexity: O(n)
-public int lengthOfLongestSubstring(String s) {
-    if(s == null || s.length() == 0){
-      return 0;
-    }
-
-    char[] chars = s.toCharArray();
-    LinkedList&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
-    HashSet&lt;Character&gt; set = new HashSet&lt;&gt;();
-    int max = Integer.MIN_VALUE;
-
-    for(int i = 0; i &lt; chars.length; i++){
-      while(!queue.isEmpty() &amp;&amp; set.contains(chars[i])){
-        set.remove(chars[queue.pollFirst()]);
-      }
-      queue.addLast(i);
-      set.add(chars[i]);
-      max = Math.max(max, queue.size());
-    }
-    return max;
-}
-
-//solution
-public int lengthOfLongestSubstring(String s) {
-    int n = s.length();
-    Set&lt;Character&gt; set = new HashSet&lt;&gt;();
-    int ans = 0, i = 0, j = 0;
-    while (i &lt; n &amp;&amp; j &lt; n) {
-      // try to extend the range [i, j]
-      if (!set.contains(s.charAt(j))){
-        set.add(s.charAt(j++));
-        ans = Math.max(ans, j - i);
-      }
-      else {
-        set.remove(s.charAt(i++));
-      }
-    }
-    return ans;
 }
 </code></pre>
 ]]></content>
