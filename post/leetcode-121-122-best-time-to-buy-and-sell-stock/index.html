@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>二叉树的遍历 | Steven Xu</title>
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>Leetcode-121 122 Best Time to Buy and Sell Stock | Steven Xu</title>
 <link href="https://stevenXu1992.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://stevenXu1992.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://stevenXu1992.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://stevenXu1992.github.io/post/er-cha-shu-de-bian-li/" />
+<link rel="canonical" href="https://stevenXu1992.github.io/post/leetcode-121-122-best-time-to-buy-and-sell-stock/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -23,156 +23,76 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>二叉树的遍历</a></h2>
+<h2 class="post_title sm_margin"><a>Leetcode-121 122 Best Time to Buy and Sell Stock</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-04-19</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/dxJiV25Oq/" class="tag">二叉树</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">894字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">5 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-06-01</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/bJyxrFhVO/" class="tag">Leetcode</a> | 	<a href="https://stevenXu1992.github.io/tag/0_XUcrMBO/" class="tag">数组</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">422字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">3 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
 </section>
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<h2 id="1-递归遍历">1. 递归遍历</h2>
-<pre><code class="language-java">public static class Node{
-  public int value;
-  public Node left;
-  public Node right;
-  
-  public Node(int data){
-    this.value = data;
-  }
-}
-
-public static void f(Node head){
-  if(head == null){
-    return;
-  }
-  //先序遍历操作
-  f(head.left);
-  //中序遍历操作
-  f(head.right);
-  //后序遍历操作
+<h2 id="leetcode-121">leetcode-121</h2>
+<p>Say you have an array for which the <em>i</em>th element is the price of a given stock on day <em>i</em>.</p>
+<p>If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
+<p>Note that you cannot sell a stock before you buy one.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+             Not 7-1 = 6, as selling price needs to be larger than buying price.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://leetcode.com/media/original_images/121_profit_graph.png" alt="Profit Graph" loading="lazy"></figure>
+<pre><code class="language-java">//solution
+public int maxProfit(int prices[]) {
+    int minprice = Integer.MAX_VALUE;
+    int maxprofit = 0;
+    for (int i = 0; i &lt; prices.length; i++) {
+      if (prices[i] &lt; minprice)
+        minprice = prices[i];
+      else if (prices[i] - minprice &gt; maxprofit)
+        maxprofit = prices[i] - minprice;
+    }
+    return maxprofit;
 }
 </code></pre>
-<p>二叉树递归遍历的本质：通过树的完整递归序加工而成<br>
-完整递归序：1 -&gt; 2 -&gt; 2 -&gt; 2 -&gt; 1 -&gt; 3 -&gt; 3 -&gt; 3 -&gt; 1<br>
-先序：第一次来到节点时进行操作 1 -&gt; 2 -&gt; 3<br>
-中序：第二次来到节点时进行操作 2 -&gt; 1 -&gt; 3<br>
-后序：第三次来到节点时进行操作 2 -&gt; 3 -&gt; 1</p>
-<h2 id="2-非递归遍历">2. 非递归遍历</h2>
-<h3 id="21-先序遍历">2.1 先序遍历</h3>
-<p>遍历顺序：中 --&gt; 左 --&gt; 右，1 -&gt; 2 -&gt; 4 -&gt; 5 -&gt; 3 -&gt; 6 -&gt; 7</p>
-<ol>
-<li>建立栈结构，压入头节点</li>
-<li>从栈中弹出当前节点，并执行遍历操作</li>
-<li>先压入弹出节点的右子节点，再压左子节点，重复步骤2直到栈为空</li>
-</ol>
-<pre><code class="language-java">public static void preUnRecur(Node head){
-  if(head != null){
-    Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-    stack.add(head);
-    while(!stack.isEmpty()){
-      head = stack.pop();
-      //该处执行遍历操作
-      if(head.right != null){
-        stack.push(head.right);
-      }
-      if(head.left != null){
-        stack.push(head.left);
-      }
-    }
-  }
-}
+<h2 id="leetcode-122">leetcode-122</h2>
+<p>Say you have an array <code>prices</code> for which the <em>i</em>th element is the price of a given stock on day <em>i</em>.</p>
+<p>Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).</p>
+<p><strong>Note:</strong> You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: [7,1,5,3,6,4]
+Output: 7
+Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.
+             Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.
 </code></pre>
-<h3 id="22-中序遍历">2.2 中序遍历</h3>
-<p>遍历顺序：左 --&gt; 中 --&gt; 右，4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 6 -&gt; 3 -&gt; 7</p>
-<ol>
-<li>建立栈结构，压入头节点</li>
-<li>不断将当前节点的左子节点压栈，直到某节点的左子节点为空，此时从栈中弹出该节点并执行遍历操作</li>
-<li>若弹出节点的右子节点不为空，重复步骤2；若为空，则继续从栈中弹出下一节点直到栈为空</li>
-</ol>
-<pre><code class="language-java">public void inUnRecur(Node head){
-  if(head != null){
-    Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
-    Node cur = head;
-    while(!stack.isEmpty() || cur != null){
-      if(cur != null){
-        stack.push(cur);
-        cur = cur.left;
-      }else{
-        cur = stack.pop();
-        //此处执行遍历操作
-        cur = cur.right;
-      }
-    }
-  }
-}
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
+             engaging multiple transactions at the same time. You must sell before buying again.
 </code></pre>
-<h3 id="23-后序遍历">2.3 后序遍历</h3>
-<p>遍历顺序：左 --&gt; 右 --&gt; 中，4 -&gt; 5 -&gt; 2 -&gt; 6 -&gt; 7 -&gt; 3 -&gt; 1<br>
-类似于先序遍历，按照先左后右的顺序压栈。额外准备一个栈，将弹出节点压入，直到1号栈为空时，将节点依次从2号栈弹出并执行遍历操作。</p>
-<pre><code class="language-java">public static void postUnRecur(Node head){
-  if(head != null){
-    Stack&lt;Node&gt; s1 = new Stack&lt;&gt;();
-    Stack&lt;Node&gt; s2 = new Stack&lt;&gt;();
-    s1.push(head);
-    while(!s1.isEmpty()){
-      head = s1.pop();
-      s2.push(head);
-      if(head.left != null){
-        s1.push(head.left);
-      }
-      if(head.right != null){
-        s1.push(head.right);
-      }
+<pre><code class="language-java">//solution
+public int maxProfit(int[] prices) {
+    int i = 0;
+    int valley = prices[0];
+    int peak = prices[0];
+    int maxprofit = 0;
+    while (i &lt; prices.length - 1) {
+      while (i &lt; prices.length-1 &amp;&amp; prices[i] &gt;= prices[i+1])
+        i++;
+      valley = prices[i];
+      while (i &lt; prices.length-1 &amp;&amp; prices[i] &lt;= prices[i+1])
+        i++;
+      peak = prices[i];
+      maxprofit += peak - valley;
     }
-    while(!s2.isEmpty()){
-      head = s2.pop();
-      //此处执行遍历操作
-    }
-  }
-}
-</code></pre>
-<h2 id="3宽度优先遍历">3.宽度优先遍历</h2>
-<ol>
-<li>使用哈希表记录每个节点所在层数，使用队列进行宽度优先遍历</li>
-<li>每个节点都进入队列，其左右子节点层数+1进入哈希表</li>
-<li>从队列弹出时，比较该节点所在层数是否大于当前层数，若大于（说明已到了下一层），则将当前层宽度清零并更新当前层数；若不大于（说明还在同一层），则当前层宽度+1。每次对一个节点操作完成后都比较并更新最大宽度与当前层宽度的最大值。</li>
-</ol>
-<pre><code class="language-java">public static int getMaxWidth(Node head){
-  if(head ==null){
-    return 0;
-  }
-  int maxWidth = 0;
-  int curWidth = 0;
-  int curLevel = 0;
-  HashMap&lt;Node, Integer&gt; levelMap = new HashMap&lt;&gt;();
-  LinkedList&lt;Node&gt; queue = new LinkedList&lt;&gt;();
-  levelMap.put(head, 1);
-  queue.add(head);
-  Node cur = null;
-  Node left = null;
-  Node right = null;
-  while(!queue.isEmpty()){
-    cur = queue.poll();
-    left = cur.left;
-    right = cur.right;
-    if(left != null){
-      levelMap.put(left, levelMap.get(cur) + 1);
-      queue.add(left);
-    }
-    if(right != null){
-      levelMap.put(right, levelMap.get(cur) + 1);
-      queue.add(right);
-    }
-    if(levelMap.get(cur) &gt; curLevel){
-      curWidth = 0;
-      curLevel = levelMap.get(cur);
-    }else{
-      curWidth++;
-    }
-    maxWidth = Math.max(curWidth, maxWidth);
-  }
-  return maxWidth;
+    return maxprofit;
 }
 </code></pre>
 
@@ -182,15 +102,8 @@ public static void f(Node head){
 <div class="toc-container"><ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#1-%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86">1. 递归遍历</a></li>
-<li><a href="#2-%E9%9D%9E%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86">2. 非递归遍历</a>
-<ul>
-<li><a href="#21-%E5%85%88%E5%BA%8F%E9%81%8D%E5%8E%86">2.1 先序遍历</a></li>
-<li><a href="#22-%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86">2.2 中序遍历</a></li>
-<li><a href="#23-%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86">2.3 后序遍历</a></li>
-</ul>
-</li>
-<li><a href="#3%E5%AE%BD%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86">3.宽度优先遍历</a></li>
+<li><a href="#leetcode-121">leetcode-121</a></li>
+<li><a href="#leetcode-122">leetcode-122</a></li>
 </ul>
 </li>
 </ul>
@@ -211,7 +124,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2020-04-19，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-04-19 21:04:35";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2020-06-01，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-06-01 20:59:59";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a href="https://stevenXu1992.github.io" style="margin:0;">Steven Xu</a>.</div>

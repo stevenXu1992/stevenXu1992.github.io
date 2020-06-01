@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-06-01T09:09:46.115Z</updated>
+    <updated>2020-06-01T13:02:36.168Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,107 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-11 Container With Most Water]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-11-container-with-most-water/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-11-container-with-most-water/">
+        </link>
+        <updated>2020-06-01T13:01:17.000Z</updated>
+        <content type="html"><![CDATA[<p>Given <em>n</em> non-negative integers <em>a1</em>, <em>a2</em>, ..., <em>an</em> , where each represents a point at coordinate (<em>i</em>, <em>ai</em>). <em>n</em> vertical lines are drawn such that the two endpoints of line <em>i</em> is at (<em>i</em>, <em>ai</em>) and (<em>i</em>, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.</p>
+<p><strong>Note:</strong> You may not slant the container and <em>n</em> is at least 2.</p>
+<figure data-type="image" tabindex="1"><img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg" alt="img" loading="lazy"></figure>
+<p>The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: [1,8,6,2,5,4,8,3,7]
+Output: 49
+</code></pre>
+<pre><code class="language-java">//solution
+public int maxArea(int[] height) {
+    int max = 0;
+    for(int i = 0; i &lt; height.length; i++){
+      for(int j = 1; j &lt; height.length; j++){
+        if(Math.abs(j-i) * Math.min(height[i],height[j])&gt;max){
+          max = Math.abs(j-i) * Math.min(height[i],height[j]);
+        }
+      }
+    }
+    return max;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-121 122 Best Time to Buy and Sell Stock]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-121-122-best-time-to-buy-and-sell-stock/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-121-122-best-time-to-buy-and-sell-stock/">
+        </link>
+        <updated>2020-06-01T12:59:59.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="leetcode-121">leetcode-121</h2>
+<p>Say you have an array for which the <em>i</em>th element is the price of a given stock on day <em>i</em>.</p>
+<p>If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
+<p>Note that you cannot sell a stock before you buy one.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+             Not 7-1 = 6, as selling price needs to be larger than buying price.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://leetcode.com/media/original_images/121_profit_graph.png" alt="Profit Graph" loading="lazy"></figure>
+<pre><code class="language-java">//solution
+public int maxProfit(int prices[]) {
+    int minprice = Integer.MAX_VALUE;
+    int maxprofit = 0;
+    for (int i = 0; i &lt; prices.length; i++) {
+      if (prices[i] &lt; minprice)
+        minprice = prices[i];
+      else if (prices[i] - minprice &gt; maxprofit)
+        maxprofit = prices[i] - minprice;
+    }
+    return maxprofit;
+}
+</code></pre>
+<h2 id="leetcode-122">leetcode-122</h2>
+<p>Say you have an array <code>prices</code> for which the <em>i</em>th element is the price of a given stock on day <em>i</em>.</p>
+<p>Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).</p>
+<p><strong>Note:</strong> You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: [7,1,5,3,6,4]
+Output: 7
+Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.
+             Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
+             engaging multiple transactions at the same time. You must sell before buying again.
+</code></pre>
+<pre><code class="language-java">//solution
+public int maxProfit(int[] prices) {
+    int i = 0;
+    int valley = prices[0];
+    int peak = prices[0];
+    int maxprofit = 0;
+    while (i &lt; prices.length - 1) {
+      while (i &lt; prices.length-1 &amp;&amp; prices[i] &gt;= prices[i+1])
+        i++;
+      valley = prices[i];
+      while (i &lt; prices.length-1 &amp;&amp; prices[i] &lt;= prices[i+1])
+        i++;
+      peak = prices[i];
+      maxprofit += peak - valley;
+    }
+    return maxprofit;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-45 Jump Game II]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-45-jump-game-ii/</id>
@@ -501,82 +602,6 @@ public void reverse(int[] nums, int start, int end) {
       start++;
       end--;
     }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-80 Remove Duplicates from Sorted Array II]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-80-remove-duplicates-from-sorted-array-ii/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-80-remove-duplicates-from-sorted-array-ii/">
-        </link>
-        <updated>2020-05-28T13:16:18.000Z</updated>
-        <content type="html"><![CDATA[<p>Given a sorted array <em>nums</em>, remove the duplicates <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a> such that duplicates appeared at most <em>twice</em> and return the new length.</p>
-<p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm">in-place</a></strong> with O(1) extra memory.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Given nums = [1,1,1,2,2,3],
-
-Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3 respectively.
-
-It doesn't matter what you leave beyond the returned length.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Given nums = [0,0,1,1,1,1,2,3,3],
-
-Your function should return length = 7, with the first seven elements of nums being modified to 0, 0, 1, 1, 2, 3 and 3 respectively.
-
-It doesn't matter what values are set beyond the returned length.
-</code></pre>
-<pre><code class="language-java">//solution
-public int removeDuplicates(int[] nums) {
-    if(nums.length &lt; 3){
-      return nums.length;
-    }
-    int dif = 2;
-    for(int i = 2; i &lt; nums.length; i++){
-      if(nums[i] != nums[dif-2]){
-        nums[dif++] = nums[i];
-      }
-    }
-    return dif;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-26 Remove Duplicates from Sorted Array]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-26-remove-duplicates-from-sorted-array/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-26-remove-duplicates-from-sorted-array/">
-        </link>
-        <updated>2020-05-28T13:15:26.000Z</updated>
-        <content type="html"><![CDATA[<p>Given a sorted array <em>nums</em>, remove the duplicates <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a> such that each element appear only <em>once</em> and return the new length.</p>
-<p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm">in-place</a></strong> with O(1) extra memory.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Given nums = [1,1,2],
-
-Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.
-
-It doesn't matter what you leave beyond the returned length.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Given nums = [0,0,1,1,1,2,2,3,3,4],
-
-Your function should return length = 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively.
-
-It doesn't matter what values are set beyond the returned length.
-</code></pre>
-<pre><code class="language-java">//solution
-public static int f(int[] nums){
-  if(nums.length == 0){ return 0;}
-  int i = 0;
-  for(int j = 1; j &lt; nums.length; j++){
-    if(nums[i] != nums[j]){
-      i++;
-      nums[i] = nums[j];
-    }
-  }
-  return i + 1;
-  
 }
 </code></pre>
 ]]></content>
