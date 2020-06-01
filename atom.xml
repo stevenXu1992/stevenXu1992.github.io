@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-06-01T06:45:55.197Z</updated>
+    <updated>2020-06-01T09:09:46.115Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,63 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-45 Jump Game II]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-45-jump-game-ii/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-45-jump-game-ii/">
+        </link>
+        <updated>2020-06-01T09:09:02.000Z</updated>
+        <content type="html"><![CDATA[<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.</p>
+<p>Each element in the array represents your maximum jump length at that position.</p>
+<p>Your goal is to reach the last index in the minimum number of jumps.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: [2,3,1,1,4]
+Output: 2
+Explanation: The minimum number of jumps to reach the last index is 2.
+    Jump 1 step from index 0 to 1, then 3 steps to the last index.
+</code></pre>
+<p><strong>Note:</strong></p>
+<p>You can assume that you can always reach the last index.</p>
+<pre><code class="language-java">//暴力递归(超时未通过)
+ public int jump(int[] nums) {
+   r	eturn process(nums, 0, 0);
+ }
+
+public int process(int[] nums, int index, int step){
+    if(index == nums.length - 1){
+      return step;
+    }
+
+    int min = Integer.MAX_VALUE;
+    int maxDis = Math.min(index+nums[index], nums.length-1);
+    for(int i = index + 1; i &lt;= maxDis; i++){
+      min = Math.min(process(nums, i, step + 1), min);
+    }
+    return min;
+}
+
+//严格表结构动态规划
+public int jump(int[] nums) {
+  	return process(nums);
+}
+
+public int process(int[] nums){
+    int N = nums.length;
+    int[] dp = new int[N];
+    Arrays.fill(dp, Integer.MAX_VALUE / 2);
+    dp[N - 1] = 0;
+
+    for(int index = N - 2; index &gt;= 0; index--){
+      int maxDis = Math.min(index + nums[index], N - 1);
+      for(int i = maxDis; i &gt;= index + 1; i--){
+        dp[index] = Math.min(dp[index], dp[i] + 1);   
+      }
+    }
+    return dp[0];
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-55 Jump Game]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-55-jump-game/</id>
@@ -520,60 +577,6 @@ public static int f(int[] nums){
   }
   return i + 1;
   
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-27 Remove Element]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-27-remove-element/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-27-remove-element/">
-        </link>
-        <updated>2020-05-28T13:14:54.000Z</updated>
-        <content type="html"><![CDATA[<p>Given an array <em>nums</em> and a value <em>val</em>, remove all instances of that value <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a> and return the new length.</p>
-<p>Do not allocate extra space for another array, you must do this by <strong>modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm">in-place</a></strong> with O(1) extra memory.</p>
-<p>The order of elements can be changed. It doesn't matter what you leave beyond the new length.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Given nums = [3,2,2,3], val = 3,
-
-Your function should return length = 2, with the first two elements of nums being 2.
-
-It doesn't matter what you leave beyond the returned length.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Given nums = [0,1,2,2,3,0,4,2], val = 2,
-
-Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.
-
-Note that the order of those five elements can be arbitrary.
-
-It doesn't matter what values are set beyond the returned length.
-</code></pre>
-<pre><code class="language-java">//my submission
-public int removeElement(int[] nums, int val) {
-    if(nums.length == 0){
-      return 0;
-    }
-    if(nums.length == 1){
-      return nums[0] == val ? 0 : 1;
-    }
-
-    int zone = nums.length - 1;
-    int index = 0;
-    while(index &lt;= zone){
-      if(nums[index] == val){
-        swap(nums, index, zone--);
-      }else{
-        index++;
-      }
-    }
-    return zone + 1;
-}
-
-public static void swap(int[] arr, int a, int b){
-    int temp = arr[a];
-    arr[a] = arr[b];
-    arr[b] = temp;
 }
 </code></pre>
 ]]></content>
