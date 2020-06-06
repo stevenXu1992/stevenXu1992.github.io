@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-06-05T14:46:27.678Z</updated>
+    <updated>2020-06-06T14:56:06.600Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,91 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-383 Ransom Note]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-383-ransom-note/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-383-ransom-note/">
+        </link>
+        <updated>2020-06-06T14:55:11.000Z</updated>
+        <content type="html"><![CDATA[<p>Given an arbitrary ransom note string and another string containing letters from all the magazines, write a function that will return true if the ransom note can be constructed from the magazines ; otherwise, it will return false.</p>
+<p>Each letter in the magazine string can only be used once in your ransom note.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: ransomNote = &quot;a&quot;, magazine = &quot;b&quot;
+Output: false
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: ransomNote = &quot;aa&quot;, magazine = &quot;ab&quot;
+Output: false
+</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: ransomNote = &quot;aa&quot;, magazine = &quot;aab&quot;
+Output: true
+</code></pre>
+<pre><code class="language-java">//my submission
+public boolean canConstruct(String ransomNote, String magazine) {
+    int[] count = new int[26];
+    char[] cMagazi = magazine.toCharArray();
+    char[] cRansom = ransomNote.toCharArray();
+    for(int i = 0; i &lt; cMagazi.length; i++){
+      count[cMagazi[i] - 'a']++;
+    }
+
+    boolean res = true;
+    for(int j = 0; j &lt; cRansom.length; j++){
+      if(count[cRansom[j] - 'a'] &gt; 0){
+        count[cRansom[j] - 'a']--;
+      }else{
+        res = false;
+        break;
+      }
+    }
+    return res;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-384 First Unique Character in a String]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-384-first-unique-character-in-a-string/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-384-first-unique-character-in-a-string/">
+        </link>
+        <updated>2020-06-06T14:54:03.000Z</updated>
+        <content type="html"><![CDATA[<p>Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.</p>
+<p><strong>Examples:</strong></p>
+<pre><code>s = &quot;leetcode&quot;
+return 0.
+
+s = &quot;loveleetcode&quot;,
+return 2.
+</code></pre>
+<pre><code class="language-java">//my submission
+//Time complexity: O(n)
+//Space complexity: O(n)
+public int firstUniqChar(String s) {
+    HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+    char c = ' ';
+    for(int i = 0; i &lt; s.length(); i++){
+      c = s.charAt(i);
+      if(map.containsKey(c)){
+        map.put(c, map.get(c) + 1);
+      }else{
+        map.put(c, 1);
+      }
+    }
+
+    int res = -1;
+    for(int j = 0; j &lt; s.length(); j++){
+      c = s.charAt(j);
+      if(map.get(c) == 1){
+        res = j;
+        break;
+      }
+    }
+    return res;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-14 Longest Common Prefix]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-14-longest-common-prefix/</id>
@@ -526,106 +611,6 @@ public int canCompleteCircuit(int[] gas, int[] cost) {
       head = head.next; 
     }
     return -1;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-299 Bulls and Cows]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-299-bulls-and-cows/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-299-bulls-and-cows/">
-        </link>
-        <updated>2020-05-31T11:39:12.000Z</updated>
-        <content type="html"><![CDATA[<p>You are playing the following <a href="https://en.wikipedia.org/wiki/Bulls_and_Cows">Bulls and Cows</a> game with your friend: You write down a number and ask your friend to guess what the number is. Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called &quot;bulls&quot;) and how many digits match the secret number but locate in the wrong position (called &quot;cows&quot;). Your friend will use successive guesses and hints to eventually derive the secret number.</p>
-<p>Write a function to return a hint according to the secret number and friend's guess, use <code>A</code> to indicate the bulls and <code>B</code> to indicate the cows.</p>
-<p>Please note that both secret number and friend's guess may contain duplicate digits.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: secret = &quot;1807&quot;, guess = &quot;7810&quot;
-
-Output: &quot;1A3B&quot;
-
-Explanation: 1 bull and 3 cows. The bull is 8, the cows are 0, 1 and 7.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: secret = &quot;1123&quot;, guess = &quot;0111&quot;
-
-Output: &quot;1A1B&quot;
-
-Explanation: The 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow.
-</code></pre>
-<p><strong>Note:</strong> You may assume that the secret number and your friend's guess only contain digits, and their lengths are always equal.</p>
-<pre><code class="language-java">//solution
-public String getHint(String secret, String guess) {
-  int[] record = new int[10];
-  int A = 0;
-  int B = 0;
-
-  //使用record数组记录已出现过的数字（范围0～9）
-  //在同位置的iSecret != iGuess的情况下，出现过的iSecret使record数组对应位置的数字+1
-  //出现过的iGuess使record数组对应位置的数字-1
-  //因此若发现 record[iSecret] &lt; 0 则表示此数字被发现过但还未使用过，record[iGuess] &gt; 0 同理。
-  for(int i = 0; i &lt; secret.length(); i++){
-    int iSecret = Character.getNumericValue(secret.charAt(i));
-    int iGuess = Character.getNumericValue(guess.charAt(i));
-    if(iSecret == iGuess){
-      A++;
-    }else{
-      if(record[iSecret] &lt; 0 ){
-        B++;
-      }
-      if(record[iGuess] &gt; 0){
-        B++;
-      }
-      record[iSecret]++;
-      record[iGuess]--;
-    }
-  }
-  String ans = A + &quot;A&quot; + B + &quot;B&quot;;
-  return ans;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-41 First Missing Positive]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-41-first-missing-positive/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-41-first-missing-positive/">
-        </link>
-        <updated>2020-05-31T10:57:05.000Z</updated>
-        <content type="html"><![CDATA[<p>Given an unsorted integer array, find the smallest missing positive integer.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: [1,2,0]
-Output: 3
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: [3,4,-1,1]
-Output: 2
-</code></pre>
-<p><strong>Example 3:</strong></p>
-<pre><code>Input: [7,8,9,11,12]
-Output: 1
-</code></pre>
-<p><strong>Note:</strong></p>
-<p>Your algorithm should run in <em>O</em>(<em>n</em>) time and uses constant extra space.</p>
-<pre><code class="language-java">//solution
-public int firstMissingPositive(int[] A) {
-  int i = 0;
-  //遍历数组并将每个数n放到n-1位置A[A[i]-1] != A[i]
-  while(i &lt; A.length){
-    if(A[i] &gt;= 1 &amp;&amp; A[i] &lt;= A.length &amp;&amp; A[A[i]-1] != A[i]) {
-      swap(A, i, A[i]-1);
-    }else{ i++; }
-  }
-  //放好位置后再次遍历，第一次遇到 A[i] != i + 1 时就是答案
-  for(int i = 0; i &lt; A.length; i++) 
-    if( A[i] != i + 1 ){return i + 1; }
-  return A.length + 1;
-}
-
-private void swap(int[] A, int i, int j){
-    int temp = A[i];
-    A[i] = A[j];
-    A[j] = temp;
 }
 </code></pre>
 ]]></content>
