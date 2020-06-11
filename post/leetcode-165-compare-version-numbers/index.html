@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>Leetcode-5 Longest Palindromic Substring | Steven Xu</title>
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>Leetcode-165 Compare Version Numbers | Steven Xu</title>
 <link href="https://stevenXu1992.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://stevenXu1992.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://stevenXu1992.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://stevenXu1992.github.io/post/leetcode-5-longest-palindromic-substring/" />
+<link rel="canonical" href="https://stevenXu1992.github.io/post/leetcode-165-compare-version-numbers/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -23,98 +23,65 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>Leetcode-5 Longest Palindromic Substring</a></h2>
+<h2 class="post_title sm_margin"><a>Leetcode-165 Compare Version Numbers</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-05-28</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/bJyxrFhVO/" class="tag">Leetcode</a> | 	<a href="https://stevenXu1992.github.io/tag/tdy68R30P/" class="tag">字符串</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">331字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">2 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-06-11</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/7wN4clvjr/" class="tag">Math</a> | 	<a href="https://stevenXu1992.github.io/tag/bJyxrFhVO/" class="tag">Leetcode</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">302字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">2 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
 </section>
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<p>Given a string <strong>s</strong>, find the longest palindromic substring in <strong>s</strong>. You may assume that the maximum length of <strong>s</strong> is 1000.</p>
+<p>Compare two version numbers <em>version1</em> and <em>version2</em>.<br>
+If <code>*version1* &gt; *version2*</code> return <code>1;</code> if <code>*version1* &lt; *version2*</code> return <code>-1;</code>otherwise return <code>0</code>.</p>
+<p>You may assume that the version strings are non-empty and contain only digits and the <code>.</code> character.</p>
+<p>The <code>.</code> character does not represent a decimal point and is used to separate number sequences.</p>
+<p>For instance, <code>2.5</code> is not &quot;two and a half&quot; or &quot;half way to version three&quot;, it is the fifth second-level revision of the second first-level revision.</p>
+<p>You may assume the default revision number for each level of a version number to be <code>0</code>. For example, version number <code>3.4</code> has a revision number of <code>3</code> and <code>4</code> for its first and second level revision number. Its third and fourth level revision number are both <code>0</code>.</p>
 <p><strong>Example 1:</strong></p>
-<pre><code>Input: &quot;babad&quot;
-Output: &quot;bab&quot;
-Note: &quot;aba&quot; is also a valid answer.
+<pre><code>Input: version1 = &quot;0.1&quot;, version2 = &quot;1.1&quot;
+Output: -1
 </code></pre>
 <p><strong>Example 2:</strong></p>
-<pre><code>Input: &quot;cbbd&quot;
-Output: &quot;bb&quot;
+<pre><code>Input: version1 = &quot;1.0.1&quot;, version2 = &quot;1&quot;
+Output: 1
 </code></pre>
-<pre><code class="language-java">//my submission
-public String longestPalindrome(String s) {
-    if(s.length() &lt; 2){
-      return s.length() == 1 ? s : &quot;&quot;;
-    }
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: version1 = &quot;7.5.2.4&quot;, version2 = &quot;7.5.3&quot;
+Output: -1
+</code></pre>
+<p><strong>Example 4:</strong></p>
+<pre><code>Input: version1 = &quot;1.01&quot;, version2 = &quot;1.001&quot;
+Output: 0
+Explanation: Ignoring leading zeroes, both “01” and “001&quot; represent the same number “1”
+</code></pre>
+<pre><code class="language-java">//solution
+public int compareVersion(String version1, String version2) {
+    int p1 = 0;
+    int p2 = 0;
+    int N1 = version1.length();
+    int N2 = version2.length();
+    int temp1 = 0;
+    int temp2 = 0;
 
-    //生成Manacher最长回文半径数组
-    int[] manacher = manacher(s);
-    char[] chars = getManacherString(s);
-    int max = Integer.MIN_VALUE;
-    int maxIndex = 0;
-    for(int i = 0; i &lt; manacher.length; i++){
-      if(manacher[i] &gt; max){
-        max = manacher[i];
-        maxIndex = i;
+    while(p1 &lt; N1 || p2 &lt; N2){
+      temp1 = 0;
+      temp2 = 0;
+      while(p1 &lt; N1 &amp;&amp; version1.charAt(p1) != '.'){
+        temp1 = temp1 * 10 + (version1.charAt(p1++) - '0');
+      }
+      while(p2 &lt; N2 &amp;&amp; version2.charAt(p2) != '.'){
+        temp2 = temp2 * 10 + (version2.charAt(p2++) - '0');
+      }
+      if(temp1 &gt; temp2){
+        return 1;
+      }else if(temp1 &lt; temp2){
+        return -1;
+      }else{
+        p1++;
+        p2++;
       }
     }
-
-    String res = &quot;&quot;;
-    max--;
-    for(int j = maxIndex - max; j &lt;= maxIndex + max; j++){
-      res += chars[j];
-    }
-  	//去除特殊符号
-    res = restore(res, '#');
-    return res;
-}
-    
-public static int[] manacher(String s){
-    char[] chars = getManacherString(s);
-    int R = -1;
-    int C = -1;
-    int[] manacher = new int[chars.length];
-
-    for(int i = 0; i != chars.length; i++){
-      
-      //先算出不需要重复扩充的半径区域
-      manacher[i] = R &gt; i ? Math.min(manacher[2*C-i],R-i) : 1;
-      
-      //扩充过程
-      while(i-manacher[i]&gt;-1 &amp;&amp; i+manacher[i] &lt; chars.length){
-        if(chars[i + manacher[i]] == chars[i - manacher[i]]){
-          manacher[i]++;
-        }else {break;}
-      }
-      
-      //更新最大回文区域的右边界
-      if(i + manacher[i] &gt; R){
-        R = i + manacher[i];
-        C = i;
-      }
-    }
-  
-    return manacher;
-}
-    
-public static char[] getManacherString(String s){
-    char[] chars = s.toCharArray();
-    char[] res = new char[s.length() * 2 + 1];
-    int index = 0;
-    for(int i = 0; i != res.length; i++){
-      res[i] = (i &amp; 1) == 0 ? '#' : chars[index++];
-    }
-    return res;
-}
-
-public static String restore(String s, char r){
-    String res = &quot;&quot;;
-    for(int i = 0; i &lt; s.length(); i++){
-      if(s.charAt(i) != r){
-        res += s.charAt(i);
-      }
-    }
-    return res;
+    return 0;
 }
 </code></pre>
 
@@ -138,7 +105,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2020-05-28，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-05-28 17:18:58";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2020-06-11，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-06-11 18:01:03";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a href="https://stevenXu1992.github.io" style="margin:0;">Steven Xu</a>.</div>

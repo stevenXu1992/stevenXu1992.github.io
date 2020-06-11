@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-06-06T14:56:06.600Z</updated>
+    <updated>2020-06-11T10:04:10.521Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,343 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-67 Add Binary]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-67-add-binary/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-67-add-binary/">
+        </link>
+        <updated>2020-06-11T10:03:37.000Z</updated>
+        <content type="html"><![CDATA[<p>Given two binary strings, return their sum (also a binary string).</p>
+<p>The input strings are both <strong>non-empty</strong> and contains only characters <code>1</code> or <code>0</code>.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: a = &quot;11&quot;, b = &quot;1&quot;
+Output: &quot;100&quot;
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: a = &quot;1010&quot;, b = &quot;1011&quot;
+Output: &quot;10101&quot;
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>Each string consists only of <code>'0'</code> or <code>'1'</code> characters.</li>
+<li><code>1 &lt;= a.length, b.length &lt;= 10^4</code></li>
+<li>Each string is either <code>&quot;0&quot;</code> or doesn't contain any leading zero.</li>
+</ul>
+<pre><code class="language-java">//solution
+public String addBinary(String a, String b) {
+    StringBuilder sb = new StringBuilder();
+    int p1 = a.length() - 1;
+    int p2 = b.length() - 1;
+    int carry = 0;
+    while(p1 &gt;= 0 || p2 &gt;= 0){
+      int sum = carry;
+      if(p1 &gt;= 0){
+        sum += a.charAt(p1--) - '0';
+      }
+      if(p2 &gt;= 0){
+        sum += b.charAt(p2--) - '0';
+      }
+      sb.append(sum % 2);  //0%2 = 0, 1%2 = 1, 2%2 = 0
+      carry = sum / 2;  //0/2 = 0, 1/2 = 0, 2/2 = 1
+    }
+    if(carry != 0){
+      sb.append(carry);
+    }
+    return sb.reverse().toString();
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-258 Add Digits]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-258-add-digits/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-258-add-digits/">
+        </link>
+        <updated>2020-06-11T10:02:48.000Z</updated>
+        <content type="html"><![CDATA[<p>Given a non-negative integer <code>num</code>, repeatedly add all its digits until the result has only one digit.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Input: 38
+Output: 2 
+Explanation: The process is like: 3 + 8 = 11, 1 + 1 = 2. 
+             Since 2 has only one digit, return it.
+</code></pre>
+<pre><code class="language-java">// solution
+public int addDigits(int num) {
+    int digitalRoot = 0;
+    while(num &gt; 0){
+      digitalRoot += num % 10;
+      num /= 10;
+      if(num == 0 &amp;&amp; digitalRoot &gt; 9){ //还是大于10，重置参数
+        num = digitalRoot;
+        digitalRoot = 0;
+      }
+    }
+    return digitalRoot;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-8 String to Integer (atoi)]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-8-string-to-integer-atoi/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-8-string-to-integer-atoi/">
+        </link>
+        <updated>2020-06-11T10:02:01.000Z</updated>
+        <content type="html"><![CDATA[<p>Implement <code>atoi</code> which converts a string to an integer.</p>
+<p>The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.</p>
+<p>The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.</p>
+<p>If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.</p>
+<p>If no valid conversion could be performed, a zero value is returned.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>Only the space character <code>' '</code> is considered as whitespace character.</li>
+<li>Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231, 231 − 1]. If the numerical value is out of the range of representable values, INT_MAX (231 − 1) or INT_MIN (−231) is returned.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: &quot;42&quot;
+Output: 42
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: &quot;   -42&quot;
+Output: -42
+Explanation: The first non-whitespace character is '-', which is the minus sign.
+             Then take as many numerical digits as possible, which gets 42.
+</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: &quot;4193 with words&quot;
+Output: 4193
+Explanation: Conversion stops at digit '3' as the next character is not a numerical digit.
+</code></pre>
+<p><strong>Example 4:</strong></p>
+<pre><code>Input: &quot;words and 987&quot;
+Output: 0
+Explanation: The first non-whitespace character is 'w', which is not a numerical 
+             digit or a +/- sign. Therefore no valid conversion could be performed.
+</code></pre>
+<p><strong>Example 5:</strong></p>
+<pre><code>Input: &quot;-91283472332&quot;
+Output: -2147483648
+Explanation: The number &quot;-91283472332&quot; is out of the range of a 32-bit signed integer.
+             Thefore INT_MIN (−231) is returned.
+</code></pre>
+<pre><code class="language-java">//solution
+public int myAtoi(String str) {
+    str = str.trim();
+    if(str.isEmpty()) return 0;
+    int sign = 1;
+    int index = 0;
+    if(str.charAt(index) == '-' || str.charAt(index) == '+'){
+      sign = str.charAt(index) == '-' ? -1 : 1;
+      if(str.length() &lt; 2 || 
+        !Character.isDigit(str.charAt(++index))){
+        return 0;
+      }
+    }
+    int temp = 0;
+    while(index &lt; str.length()){
+      if(Character.isDigit(str.charAt(index))){
+        int num = str.charAt(index++) - '0';
+        if(temp &gt; (Integer.MAX_VALUE - num) / 10){
+          return sign == -1 ? 
+            Integer.MIN_VALUE : Integer.MAX_VALUE;
+        }
+        temp = temp * 10 + num;
+      }else{
+        break;
+      }
+    }
+    return temp * sign;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-165 Compare Version Numbers]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-165-compare-version-numbers/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-165-compare-version-numbers/">
+        </link>
+        <updated>2020-06-11T10:01:03.000Z</updated>
+        <content type="html"><![CDATA[<p>Compare two version numbers <em>version1</em> and <em>version2</em>.<br>
+If <code>*version1* &gt; *version2*</code> return <code>1;</code> if <code>*version1* &lt; *version2*</code> return <code>-1;</code>otherwise return <code>0</code>.</p>
+<p>You may assume that the version strings are non-empty and contain only digits and the <code>.</code> character.</p>
+<p>The <code>.</code> character does not represent a decimal point and is used to separate number sequences.</p>
+<p>For instance, <code>2.5</code> is not &quot;two and a half&quot; or &quot;half way to version three&quot;, it is the fifth second-level revision of the second first-level revision.</p>
+<p>You may assume the default revision number for each level of a version number to be <code>0</code>. For example, version number <code>3.4</code> has a revision number of <code>3</code> and <code>4</code> for its first and second level revision number. Its third and fourth level revision number are both <code>0</code>.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: version1 = &quot;0.1&quot;, version2 = &quot;1.1&quot;
+Output: -1
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: version1 = &quot;1.0.1&quot;, version2 = &quot;1&quot;
+Output: 1
+</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: version1 = &quot;7.5.2.4&quot;, version2 = &quot;7.5.3&quot;
+Output: -1
+</code></pre>
+<p><strong>Example 4:</strong></p>
+<pre><code>Input: version1 = &quot;1.01&quot;, version2 = &quot;1.001&quot;
+Output: 0
+Explanation: Ignoring leading zeroes, both “01” and “001&quot; represent the same number “1”
+</code></pre>
+<pre><code class="language-java">//solution
+public int compareVersion(String version1, String version2) {
+    int p1 = 0;
+    int p2 = 0;
+    int N1 = version1.length();
+    int N2 = version2.length();
+    int temp1 = 0;
+    int temp2 = 0;
+
+    while(p1 &lt; N1 || p2 &lt; N2){
+      temp1 = 0;
+      temp2 = 0;
+      while(p1 &lt; N1 &amp;&amp; version1.charAt(p1) != '.'){
+        temp1 = temp1 * 10 + (version1.charAt(p1++) - '0');
+      }
+      while(p2 &lt; N2 &amp;&amp; version2.charAt(p2) != '.'){
+        temp2 = temp2 * 10 + (version2.charAt(p2++) - '0');
+      }
+      if(temp1 &gt; temp2){
+        return 1;
+      }else if(temp1 &lt; temp2){
+        return -1;
+      }else{
+        p1++;
+        p2++;
+      }
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-7 Reverse Integer]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-7-reverse-integer/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-7-reverse-integer/">
+        </link>
+        <updated>2020-06-11T09:59:55.000Z</updated>
+        <content type="html"><![CDATA[<p>Given a 32-bit signed integer, reverse digits of an integer.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: 123
+Output: 321
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: -123
+Output: -321
+</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: 120
+Output: 21
+</code></pre>
+<p><strong>Note:</strong><br>
+Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231, 231 − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.</p>
+<pre><code class="language-java">//solution
+public int reverse(int x) {
+    final int max = Integer.MAX_VALUE;
+    final int min = Integer.MIN_VALUE;
+    int rev = 0;
+    while(x != 0){
+      int pop = x % 10;
+      x /= 10;
+      if(rev &gt; max / 10 || (rev == max / 10 &amp;&amp; pop &gt; 7)){
+        return 0;
+      }
+      if(rev &lt; min / 10 || (rev == min / 10 &amp;&amp; pop &lt; -8)){
+        return 0;
+      } 
+      rev = rev * 10 + pop;
+    }
+    return rev;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Leetcode-151 Reverse Words in a String]]></title>
+        <id>https://stevenXu1992.github.io/post/leetcode-151-reverse-words-in-a-string/</id>
+        <link href="https://stevenXu1992.github.io/post/leetcode-151-reverse-words-in-a-string/">
+        </link>
+        <updated>2020-06-11T09:59:08.000Z</updated>
+        <content type="html"><![CDATA[<p>Given an input string, reverse the string word by word.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: &quot;the sky is blue&quot;
+Output: &quot;blue is sky the&quot;
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>Input: &quot;  hello world!  &quot;
+Output: &quot;world! hello&quot;
+Explanation: Your reversed string should not contain leading or trailing spaces.
+</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>Input: &quot;a good   example&quot;
+Output: &quot;example good a&quot;
+Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string. 
+</code></pre>
+<p><strong>Note:</strong></p>
+<ul>
+<li>A word is defined as a sequence of non-space characters.</li>
+<li>Input string may contain leading or trailing spaces. However, your reversed string should not contain leading or trailing spaces.</li>
+<li>You need to reduce multiple spaces between two words to a single space in the reversed string.</li>
+</ul>
+<pre><code class="language-java">//solution
+public String reverseWords(String s) {
+    if(s.length() == 0){
+      return &quot;&quot;;
+    }
+    char[] c = s.toCharArray();
+    reverseAll(c, 0, c.length - 1);
+    reverseWord(c);
+    return cleanSpace(c);
+}
+
+public void reverseAll(char[] c, int a, int b){
+    while(a &lt; b){
+      char temp = c[a];
+      c[a++] = c[b];
+      c[b--] = temp;
+    }
+}
+
+public void reverseWord(char[] c){
+    int N = c.length;
+    int i = 0;
+    int j = 0;
+    while(i &lt; N){
+      while(i &lt; j || i &lt; N &amp;&amp; c[i] == ' '){
+        i++;
+      }
+      while(j &lt; i || j &lt; N &amp;&amp; c[j] != ' '){
+        j++;
+      }
+      reverseAll(c, i, j - 1);
+    }
+}
+
+public String cleanSpace(char[] c){
+    int N = c.length;
+    int i = 0;
+    int j = 0;
+    while(j &lt; N){
+      while(j &lt; N &amp;&amp; c[j] == ' '){
+        j++;
+      }
+      while(j &lt; N &amp;&amp; c[j] != ' '){
+        c[i++] = c[j++];
+      }
+      while(j &lt; N &amp;&amp; c[j] == ' '){
+        j++;
+      }
+      if(j &lt; N){
+        c[i++] = ' ';
+      }
+    }
+    return new String(c).substring(0, i);
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-383 Ransom Note]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-383-ransom-note/</id>
@@ -205,412 +542,6 @@ public int maxArea(int[] height) {
       }
     }
     return max;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-121 122 Best Time to Buy and Sell Stock]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-121-122-best-time-to-buy-and-sell-stock/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-121-122-best-time-to-buy-and-sell-stock/">
-        </link>
-        <updated>2020-06-01T12:59:59.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="leetcode-121">leetcode-121</h2>
-<p>Say you have an array for which the <em>i</em>th element is the price of a given stock on day <em>i</em>.</p>
-<p>If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p>
-<p>Note that you cannot sell a stock before you buy one.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: [7,1,5,3,6,4]
-Output: 5
-Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
-             Not 7-1 = 6, as selling price needs to be larger than buying price.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: [7,6,4,3,1]
-Output: 0
-Explanation: In this case, no transaction is done, i.e. max profit = 0.
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://leetcode.com/media/original_images/121_profit_graph.png" alt="Profit Graph" loading="lazy"></figure>
-<pre><code class="language-java">//solution
-public int maxProfit(int prices[]) {
-    int minprice = Integer.MAX_VALUE;
-    int maxprofit = 0;
-    for (int i = 0; i &lt; prices.length; i++) {
-      if (prices[i] &lt; minprice)
-        minprice = prices[i];
-      else if (prices[i] - minprice &gt; maxprofit)
-        maxprofit = prices[i] - minprice;
-    }
-    return maxprofit;
-}
-</code></pre>
-<h2 id="leetcode-122">leetcode-122</h2>
-<p>Say you have an array <code>prices</code> for which the <em>i</em>th element is the price of a given stock on day <em>i</em>.</p>
-<p>Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).</p>
-<p><strong>Note:</strong> You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: [7,1,5,3,6,4]
-Output: 7
-Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.
-             Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: [1,2,3,4,5]
-Output: 4
-Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
-             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
-             engaging multiple transactions at the same time. You must sell before buying again.
-</code></pre>
-<pre><code class="language-java">//solution
-public int maxProfit(int[] prices) {
-    int i = 0;
-    int valley = prices[0];
-    int peak = prices[0];
-    int maxprofit = 0;
-    while (i &lt; prices.length - 1) {
-      while (i &lt; prices.length-1 &amp;&amp; prices[i] &gt;= prices[i+1])
-        i++;
-      valley = prices[i];
-      while (i &lt; prices.length-1 &amp;&amp; prices[i] &lt;= prices[i+1])
-        i++;
-      peak = prices[i];
-      maxprofit += peak - valley;
-    }
-    return maxprofit;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-45 Jump Game II]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-45-jump-game-ii/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-45-jump-game-ii/">
-        </link>
-        <updated>2020-06-01T09:09:02.000Z</updated>
-        <content type="html"><![CDATA[<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.</p>
-<p>Each element in the array represents your maximum jump length at that position.</p>
-<p>Your goal is to reach the last index in the minimum number of jumps.</p>
-<p><strong>Example:</strong></p>
-<pre><code>Input: [2,3,1,1,4]
-Output: 2
-Explanation: The minimum number of jumps to reach the last index is 2.
-    Jump 1 step from index 0 to 1, then 3 steps to the last index.
-</code></pre>
-<p><strong>Note:</strong></p>
-<p>You can assume that you can always reach the last index.</p>
-<pre><code class="language-java">//暴力递归(超时未通过)
- public int jump(int[] nums) {
-   r	eturn process(nums, 0, 0);
- }
-
-public int process(int[] nums, int index, int step){
-    if(index == nums.length - 1){
-      return step;
-    }
-
-    int min = Integer.MAX_VALUE;
-    int maxDis = Math.min(index+nums[index], nums.length-1);
-    for(int i = index + 1; i &lt;= maxDis; i++){
-      min = Math.min(process(nums, i, step + 1), min);
-    }
-    return min;
-}
-
-//严格表结构动态规划
-public int jump(int[] nums) {
-  	return process(nums);
-}
-
-public int process(int[] nums){
-    int N = nums.length;
-    int[] dp = new int[N];
-    Arrays.fill(dp, Integer.MAX_VALUE / 2);
-    dp[N - 1] = 0;
-
-    for(int index = N - 2; index &gt;= 0; index--){
-      int maxDis = Math.min(index + nums[index], N - 1);
-      for(int i = maxDis; i &gt;= index + 1; i--){
-        dp[index] = Math.min(dp[index], dp[i] + 1);   
-      }
-    }
-    return dp[0];
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-55 Jump Game]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-55-jump-game/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-55-jump-game/">
-        </link>
-        <updated>2020-06-01T06:45:22.000Z</updated>
-        <content type="html"><![CDATA[<p>Given an array of non-negative integers, you are initially positioned at the first index of the array.</p>
-<p>Each element in the array represents your maximum jump length at that position.</p>
-<p>Determine if you are able to reach the last index.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: nums = [2,3,1,1,4]
-Output: true
-Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: nums = [3,2,1,0,4]
-Output: false
-Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
-</code></pre>
-<p><strong>Constraints:</strong></p>
-<ul>
-<li><code>1 &lt;= nums.length &lt;= 3 * 10^4</code></li>
-<li><code>0 &lt;= nums[i][j] &lt;= 10^5</code></li>
-</ul>
-<pre><code class="language-java">//暴力递归
-//Time complexity: O(2^n)
-//Space complexity: O(n)
-public boolean canJump(int[] nums) {
-  	return process(nums, 0);
-}
-
-public boolean process(int[] nums, int index){
-    if(index == nums.length - 1){
-      return true;
-    }
-
-    int maxDis = Math.min(index + nums[index], nums.length - 1);
-    for(int i = index + 1; i &lt;= maxDis; i++){
-      if(process(nums, i)){
-        return true;
-      }
-    }
-    return false;
-}
-
-//记忆化搜索
-//Time complexity: O(n^2)
-//Space complexity: O(n)
-public boolean canJump(int[] nums) {
-    int[] dp = new int[nums.length + 1];
-    int res = process(nums, 0, dp);
-    return res == 1 ? true : false;
-}
-
-public int process(int[] nums, int index, int[] dp){
-    if(dp[index] != 0){
-      return dp[index];
-    }
-    if(index == nums.length - 1){
-      dp[index] = 1;
-      return dp[index];
-    }
-    int maxDis = Math.min(index+nums[index], nums.length-1);
-    for(int i = index + 1; i &lt;= maxDis; i++){
-      dp[index] = process(nums, i, dp);
-      if(dp[index] == 1){
-        return dp[index];
-      }
-    }
-    dp[index] = -1;
-    return dp[index];
-}
-
-//严格表结构动态规划
-//Time complexity: O(n^2)
-//Space complexity: O(n)
-public boolean canJump(int[] nums) {
-    int res = process(nums);
-    return res == 1 ? true : false;
-}
-
-public int process(int[] nums){
-    int[] dp = new int[nums.length];
-    dp[nums.length - 1] = 1;
-    for(int index = nums.length - 2; index &gt;= 0; index--){
-      int maxDis = Math.min(index+nums[index], nums.length-1);
-      for(int i = index + 1; i &lt;= maxDis; i++){
-        if(dp[i] == 1){
-          dp[index] = 1;
-          break;
-        }
-      }
-    }
-    return dp[0];
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-275 H-Index II]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-275-h-index-ii/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-275-h-index-ii/">
-        </link>
-        <updated>2020-06-01T06:44:30.000Z</updated>
-        <content type="html"><![CDATA[<p>Given an array of citations <strong>sorted in ascending order</strong> (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index.</p>
-<p>According to the <a href="https://en.wikipedia.org/wiki/H-index">definition of h-index on Wikipedia</a>: &quot;A scientist has index <em>h</em> if <em>h</em> of his/her <em>N</em> papers have <strong>at least</strong> <em>h</em> citations each, and the other <em>N − h</em> papers have <strong>no more than</strong> <em>h</em> citations each.&quot;</p>
-<p><strong>Example:</strong></p>
-<pre><code>Input: citations = [0,1,3,5,6]
-Output: 3 
-Explanation: [0,1,3,5,6] means the researcher has 5 papers in total and each of them had 
-             received 0, 1, 3, 5, 6 citations respectively. 
-             Since the researcher has 3 papers with at least 3 citations each and the remaining 
-             two with no more than 3 citations each, her h-index is 3.
-</code></pre>
-<p><strong>Note:</strong></p>
-<p>If there are several possible values for <em>h</em>, the maximum one is taken as the h-index.</p>
-<p><strong>Follow up:</strong></p>
-<ul>
-<li>This is a follow up problem to <a href="https://leetcode.com/problems/h-index/description/">H-Index</a>, where <code>citations</code> is now guaranteed to be sorted in ascending order.</li>
-<li>Could you solve it in logarithmic time complexity?</li>
-</ul>
-<pre><code class="language-java">//solution
-public int hIndex(int[] citations) {
-    if(citations.length == 0){
-      return 0;
-    }
-
-    int N = citations.length;
-    int H = 0;
-    for(int i = N - 1; i &gt;= 0; i--){
-      int num = N - i;
-      if(citations[i] &gt;= num){
-        H = num;
-      }
-    }
-    return H;
-}
-</code></pre>
-<p>注：</p>
-<p>定义变量  num表示每个数在citations中对应的比自己大的数的个数（引用论文次数大于等于自己被引用的次数     的总的篇数），比如0对应的num就是5，因为比0大或等的数的个数为5。因此，citations对应的num为：</p>
-<p>citations：0    1     3     5      6</p>
-<p>num:         5     4     3     2       1</p>
-<p>“代表他（她）的 N 篇论文中至多有 h 篇论文，分别被引用了至少 h 次“，仔细分析这句话”至多有 h 篇论文“表示的是num[i]对就的数，”分别被引用了至少 h 次“表示的是citations[i]，则num[i]&lt;=citations[i]才满足条件。此处满足条件的是citations=[3,5,6]，对应的num=[3,2,1]。而我们只需要取num的最大值就可以了。<br>
-————————————————<br>
-版权声明：本文为CSDN博主「lear_scu」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>
-原文链接：https://blog.csdn.net/qq_36327328/java/article/details/83117379</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-274 H-Index]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-274-h-index/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-274-h-index/">
-        </link>
-        <updated>2020-06-01T06:43:53.000Z</updated>
-        <content type="html"><![CDATA[<p>Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index.</p>
-<p>According to the <a href="https://en.wikipedia.org/wiki/H-index">definition of h-index on Wikipedia</a>: &quot;A scientist has index <em>h</em> if <em>h</em> of his/her <em>N</em>papers have <strong>at least</strong> <em>h</em> citations each, and the other <em>N − h</em> papers have <strong>no more than</strong> <em>h</em> citations each.&quot;</p>
-<p><strong>Example:</strong></p>
-<pre><code>Input: citations = [3,0,6,1,5]
-Output: 3 
-Explanation: [3,0,6,1,5] means the researcher has 5 papers in total and each of them had 
-             received 3, 0, 6, 1, 5 citations respectively. 
-             Since the researcher has 3 papers with at least 3 citations each and the remaining 
-             two with no more than 3 citations each, her h-index is 3.
-</code></pre>
-<p><strong>Note:</strong> If there are several possible values for <em>h</em>, the maximum one is taken as the h-index.</p>
-<pre><code class="language-java">//solution
-public int hIndex(int[] citations) {
-    int n = citations.length;
-    int[] buckets = new int[n+1];
-    for(int c : citations) {
-        if(c &gt;= n) {
-            buckets[n]++;
-        } else {
-            buckets[c]++;
-        }
-    }
-    int count = 0;
-    for(int i = n; i &gt;= 0; i--) {
-        count += buckets[i];
-        if(count &gt;= i) {
-            return i;
-        }
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-134 Gas Station]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-134-gas-station/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-134-gas-station/">
-        </link>
-        <updated>2020-05-31T15:12:33.000Z</updated>
-        <content type="html"><![CDATA[<p>There are <em>N</em> gas stations along a circular route, where the amount of gas at station <em>i</em> is <code>gas[i]</code>.</p>
-<p>You have a car with an unlimited gas tank and it costs <code>cost[i]</code> of gas to travel from station <em>i</em> to its next station (<em>i</em>+1). You begin the journey with an empty tank at one of the gas stations.</p>
-<p>Return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1.</p>
-<p><strong>Note:</strong></p>
-<ul>
-<li>If there exists a solution, it is guaranteed to be unique.</li>
-<li>Both input arrays are non-empty and have the same length.</li>
-<li>Each element in the input arrays is a non-negative integer.</li>
-</ul>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: 
-gas  = [1,2,3,4,5]
-cost = [3,4,5,1,2]
-
-Output: 3
-
-Explanation:
-Start at station 3 (index 3) and fill up with 4 unit of gas. Your tank = 0 + 4 = 4
-Travel to station 4. Your tank = 4 - 1 + 5 = 8
-Travel to station 0. Your tank = 8 - 2 + 1 = 7
-Travel to station 1. Your tank = 7 - 3 + 2 = 6
-Travel to station 2. Your tank = 6 - 4 + 3 = 5
-Travel to station 3. The cost is 5. Your gas is just enough to travel back to station 3.
-Therefore, return 3 as the starting index.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: 
-gas  = [2,3,4]
-cost = [3,4,3]
-
-Output: -1
-
-Explanation:
-You can't start at station 0 or 1, as there is not enough gas to travel to the next station.
-Let's start at station 2 and fill up with 4 unit of gas. Your tank = 0 + 4 = 4
-Travel to station 0. Your tank = 4 - 3 + 2 = 3
-Travel to station 1. Your tank = 3 - 3 + 3 = 3
-You cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.
-Therefore, you can't travel around the circuit once no matter where you start.
-</code></pre>
-<pre><code class="language-java">//my submission
-public class GasNode{
-    int gas;
-    int cost;
-    int index;
-    GasNode next;
-    public GasNode(int gas, int cost, int index){
-      this.gas = gas;
-      this.cost = cost;
-      this.index = index;
-    }
-}
-
-public int canCompleteCircuit(int[] gas, int[] cost) {
-        
-    //generate GasNode List
-    GasNode head = new GasNode(gas[0], cost[0], 0);
-    GasNode cur = head;
-    for(int j = 1; j &lt; gas.length; j++){
-      cur.next = new GasNode(gas[j], cost[j], j);
-      cur = cur.next;
-    }
-    cur.next = head;
-
-    //start from every station
-    for(int i = 0; i &lt; gas.length; i++){
-      GasNode node = head;
-      int restGas = node.gas;
-      while(restGas &gt;= node.cost){
-        restGas -= node.cost;
-        node = node.next;
-        restGas += node.gas;
-        if(node == head){
-          return head.index;
-        }
-      }   
-      head = head.next; 
-    }
-    return -1;
 }
 </code></pre>
 ]]></content>
