@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://stevenXu1992.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="温故而知新"><meta charset="UTF-8"><title>有序表 | Steven Xu</title>
+<link href="https://stevenXu1992.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://stevenXu1992.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://stevenXu1992.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://stevenXu1992.github.io/post/you-xu-biao/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://stevenXu1992.github.io"><img alt="logo" style="display:inline-block;" src="https://stevenXu1992.github.io/images/avatar.png"/></a><h1 title="Steven Xu" class="weaklink"><a  href="/">Steven Xu</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1592911250322" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>有序表</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-06-23</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://stevenXu1992.github.io/tag/dxJiV25Oq/" class="tag">二叉树</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">1605字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">9 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h2 id="1-带有自平衡性的搜索二叉树">1. 带有自平衡性的搜索二叉树</h2>
+<h3 id="11-搜索二叉树的基本模版">1.1 搜索二叉树的基本模版</h3>
+<pre><code class="language-java">public class AbstractBinarySearchTree{
+  
+  public Node root;
+  protected int size;
+  
+  public static class Node{
+    public Integer value;
+		public Node parent;
+		public Node left;
+		public Node right;
+    public Node(Integer value, Node parent, 
+                Node left, Node right) {
+			super();
+			this.value = value;
+			this.parent = parent;
+			this.left = left;
+			this.right = right;
+		}
+
+		public boolean isLeaf() {
+			return left == null &amp;&amp; right == null;
+		}
+  }
+  
+  //创建新的节点实例
+  protected Node createNode(int value, Node parent, 
+                            Node left, Node right) {
+		return new Node(value, parent, left, right);
+	}
+  
+  //搜索元素，没找到返回null
+  public Node search(int element){
+    Node node = root;
+    while(node != null &amp;&amp; node.value != null 
+          &amp;&amp; node.value != element){
+      if(element &lt; node.value) node = node.left;
+      else node = node.right;
+    }
+    return node;
+  }
+  
+  //添加元素
+  public Node insert(int element){
+    //如没有根节点，则新建一个树
+    if(root == null){
+      root = createNode(element, null, null, null);
+			size++;
+			return root;
+    }
+    
+    //parentNode：新建节点的父节点，tempNode：用于定位新建节点的位置
+    Node parentNode = null;
+    Node tempNode = root;
+    while(tempNode != null &amp;&amp; tempNode.value != null){
+      parentNode = tempNode;
+      if(element &lt; tempNode) tempNode = tempNode.left;
+      else tempNode = tempNode.right;
+    }
+    
+    //若父节点为叶节点，再判断新建节点放左树还是右树
+    Node newNode = creatNode(element, parentNode, null, null);
+    if(parent.value &gt; newNode.value)parentNode.left = newNode;
+    else parentNode.right = newNode;
+    size++;
+    return newNode;
+  }
+  
+  //根据节点删除
+  // 1.节点无子树-直接删
+  // 2.节点有一个子树-该子树直接嫁接上来
+  // 3.有两个子树-将右树上的最小值或左树上的最大值successor嫁接上来，而原本successor的子树向上补即可
+  protected Node delete(Node target) {
+		if (target != null) {
+			Node nodeToReturn = null;
+			if (target != null) {
+				if (target.left == null) {
+					nodeToReturn = transplant(target, target.right);
+				} else if (target.right == null) {
+					nodeToReturn = transplant(target, target.left);
+				} else {
+					Node successor = getMinimum(target.right);
+					if (successor.parent != target) {
+						transplant(successor, successor.right);
+						successor.right = target.right;
+						successor.right.parent = successor;
+					}
+					transplant(target, successor);
+					successor.left = target.left;
+					successor.left.parent = successor;
+					nodeToReturn = successor;
+				}
+				size--;
+			}
+			return nodeToReturn;
+		}
+		return null;
+    
+  //根据元素删除
+  public Node delete(int element) {
+		Node deleteNode = search(element);
+		if (deleteNode != null) return delete(deleteNode);	
+		else return null;
+	}
+    
+  //嫁接节点，用节点newNode替换节点replaceNode
+  private Node transplant(Node replaceNode, Node newNode) {
+		if (replaceNode.parent == null) {
+			this.root = newNode;
+		} else if (replaceNode == replaceNode.parent.left) {
+			replaceNode.parent.left = newNode;
+		} else {
+			replaceNode.parent.right = newNode;
+		}
+		if (newNode != null) {
+			newNode.parent = replaceNode.parent;
+		}
+		return newNode;
+	}
+  
+  //获取带有最小值的节点
+  protected Node getMinimum(Node node) {
+		while (node.left != null) {
+			node = node.left;
+		}
+		return node;
+	}
+
+  //获取带有最大值的节点
+	protected Node getMaximum(Node node) {
+		while (node.right != null) {
+			node = node.right;
+		}
+		return node;
+	}
+    
+  //是否含有某元素
+  public boolean contains(int element) {
+		return search(element) != null;
+	}
+    
+  //返回后继节点
+  protected Node getSuccessor(Node node) {
+		if (node.right != null) {
+			return getMinimum(node.right);
+		} else { 
+			Node current = node;
+			Node parent = node.parent;
+			while (parent != null &amp;&amp; current == parent.right) {
+				current = parent;
+				parent = parent.parent;
+			}
+			return parent;
+		}
+	}
+}
+</code></pre>
+<h3 id="12-带有自平衡功能的搜索二叉树左旋右旋">1.2 带有自平衡功能的搜索二叉树（左旋，右旋）</h3>
+<pre><code class="language-java">public abstract class AbstractSelfBalancingBinarySearchTree extends AbstractBinarySearchTree{
+  
+  //左旋：node 旋到 node.left 的位置, node.right 到 node 的位置
+  // node.right.left 到 node.left.right的位置
+  // node.left 和 node.right.right不变
+  protected Node rotateLeft(Node node){
+  	Node temp = node.right;
+    temp.parent = node.parent;
+    node.right = temp.left;
+    if (node.right != null) node.right.parent = node;
+    temp.left = node;
+    node.parent = temp;
+    //node下方接好后，接上方的节点
+    if (temp.parent != null) {
+      if (node == temp.parent.left) temp.parent.left = temp;
+      else temp.parent.right = temp;
+    } else root = temp;
+    return temp;
+  }
+  
+  //右旋同理
+  protected Node rotateRight(Node node){
+    Node temp = node.left;
+    temp.parent = node.parent;
+    node.left = temp.right;
+    if (node.left != null) node.left.parent = node;
+    temp.right = node;
+    node.parent = temp;
+    if (temp.parent != null) {
+      if (node == temp.parent.left) temp.parent.left = temp;
+      else temp.parent.right = temp;
+    } else root = temp;
+    return temp;
+  }
+}
+</code></pre>
+<h2 id="2-avl树">2. AVL树</h2>
+<pre><code class="language-java">/**
+In computer science, an AVL tree is a self-balancing binary search tree, and it was the first such data structure to be invented. 
+In an AVL tree, the heights of the two child subtrees of any node differ by at most one. Lookup,insertion, and deletion all take O(log n) time in both the average and worst cases, where n is the number of nodes in the tree prior to the operation.
+Insertions and deletions may require the tree to be rebalanced by one or more
+ * 
+ */
+public class AVLTree extends AbstractSelfBalancingBinarySearchTree {
+  
+  protected static class AVLNode extends Node {
+    public int height;
+		public AVLNode(int value, Node parent, 
+                   Node left, Node right) {
+      super(value, parent, left, right);
+    }
+  }
+  
+  //自平衡调整
+  //每次添加或删除节点后，向上检查每个头节点的平衡性
+  private void rebalance(AVLNode node) {
+    while (node != null) {
+			Node parent = node.parent;
+			int leftHeight = (node.left == null) ? 
+        -1 : ((AVLNode) node.left).height;
+      int rightHeight = (node.right == null) ? 
+        -1 : ((AVLNode) node.right).height;
+      int nodeBalance = rightHeight - leftHeight;
+      //-2 means left subtree outgrow, 2 means right subtree)
+      if (nodeBalance == 2) {
+        if (node.right.right != null) { //RR 左旋
+          node = (AVLNode)avlRotateLeft(node);
+          break;
+        } else { //RL 先右旋再左旋
+          node = (AVLNode)doubleRotateRightLeft(node);
+          break;
+        }
+      } else if (nodeBalance == -2) {
+        if (node.left.left != null) { //LL 右旋
+          node = (AVLNode)avlRotateRight(node);
+          break;
+        } else { //LR 先左旋再右旋
+          node = (AVLNode)doubleRotateLeftRight(node);
+          break;
+        }
+      } else {
+        updateHeight(node);
+      }
+      node = (AVLNode)parent;
+    }
+  }
+}
+</code></pre>
+<h2 id="3-sb树">3. SB树</h2>
+<pre><code class="language-java">//  size balance tree
+//  size(node.left) &gt; 
+//	Math.max(size(node.right.left), size(node.right.right))
+public static class SBTNode&lt;K extends Comparable&lt;K&gt;, V&gt; {
+		public K key;
+		public V value;
+		public SBTNode&lt;K, V&gt; l;
+		public SBTNode&lt;K, V&gt; r;
+		public int size;
+		public SBTNode(K key, V value) {
+			this.key = key;
+			this.value = value;
+			size = 1;
+	  }
+}
+
+public static class SizeBalancedTreeMap&lt;K extends Comparable&lt;K&gt;, V&gt; {
+  //sb树的自平衡调整，旋转后递归调整所有子树变化了的节点
+  private SBTNode&lt;K, V&gt; matain(SBTNode&lt;K, V&gt; cur) {
+        if (cur == null) {
+            return null;
+        }
+        if (cur.l != null &amp;&amp; cur.l.l != null &amp;&amp; cur.r != null &amp;&amp; cur.l.l.size &gt; cur.r.size) {	//LL
+            cur = rightRotate(cur);
+            cur.r = matain(cur.r);
+            cur = matain(cur);
+        } else if (cur.l != null &amp;&amp; cur.l.r != null &amp;&amp; cur.r != null &amp;&amp; cur.l.r.size &gt; cur.r.size) {	//LR
+            cur.l = leftRotate(cur.l);
+            cur = rightRotate(cur);
+            cur.l = matain(cur.l);
+            cur.r = matain(cur.r);
+            cur = matain(cur);
+        } else if (cur.r != null &amp;&amp; cur.r.r != null &amp;&amp; cur.l != null &amp;&amp; cur.r.r.size &gt; cur.l.size) {	//RR
+            cur = leftRotate(cur);
+            cur.l = matain(cur.l);
+            cur = matain(cur);
+        } else if (cur.r != null &amp;&amp; cur.r.l != null &amp;&amp; cur.l != null &amp;&amp; cur.r.l.size &gt; cur.l.size) {	//RL
+            cur.r = rightRotate(cur.r);
+            cur = leftRotate(cur);
+            cur.l = matain(cur.l);
+            cur.r = matain(cur.r);
+            cur = matain(cur);
+        }
+        return cur;
+    }
+}
+</code></pre>
+<h2 id="4-红黑树">4. 红黑树</h2>
+<p>红黑树保证平衡性的条件：</p>
+<ol>
+<li>每个节点的枚举元素必须是红或黑</li>
+<li>头节点和叶节点为黑（叶节点指树底层的null节点）</li>
+<li>红节点不相邻</li>
+<li>任何一个头部节点，到叶节点的路径上，黑节点数量一样</li>
+</ol>
+<h2 id="5-跳表">5. 跳表</h2>
+<p>跳表通过概率的方式为每个元素设定一个高度，每次查找或删除从最高层开始进行，达到加速的目的</p>
+<pre><code class="language-java">public static class SkipListMap&lt;K extends Comparable&lt;K&gt;, V&gt; {
+  public void put(K key, V value) {
+    if (key == null) {
+      return;
+    }
+    SkipListNode&lt;K, V&gt; less = mostRightLessNodeInTree(key);
+    SkipListNode&lt;K, V&gt; find = less.nextNodes.get(0);
+    if (find != null &amp;&amp; find.isKeyEqual(key)) {
+      find.val = value;
+    } else {
+      size++;
+      int newNodeLevel = 0;
+      while (Math.random() &lt; PROBABILITY) {
+        newNodeLevel++;
+      }
+      while (newNodeLevel &gt; maxLevel) {
+        head.nextNodes.add(null);
+        maxLevel++;
+      }
+      SkipListNode&lt;K, V&gt; newNode = new SkipListNode&lt;K, V&gt;(key, value);
+      for (int i = 0; i &lt;= newNodeLevel; i++) {
+        newNode.nextNodes.add(null);
+      }
+      int level = maxLevel;
+      SkipListNode&lt;K, V&gt; pre = head;
+      while (level &gt;= 0) {
+        pre = mostRightLessNodeInLevel(key, pre, level);
+        if (level &lt;= newNodeLevel) {
+          newNode.nextNodes.set(level, pre.nextNodes.get(level));
+          pre.nextNodes.set(level, newNode);
+        }
+        level--;
+      }
+    }
+  }
+}
+</code></pre>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-%E5%B8%A6%E6%9C%89%E8%87%AA%E5%B9%B3%E8%A1%A1%E6%80%A7%E7%9A%84%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91">1. 带有自平衡性的搜索二叉树</a>
+<ul>
+<li><a href="#11-%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A8%A1%E7%89%88">1.1 搜索二叉树的基本模版</a></li>
+<li><a href="#12-%E5%B8%A6%E6%9C%89%E8%87%AA%E5%B9%B3%E8%A1%A1%E5%8A%9F%E8%83%BD%E7%9A%84%E6%90%9C%E7%B4%A2%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E6%97%8B%E5%8F%B3%E6%97%8B">1.2 带有自平衡功能的搜索二叉树（左旋，右旋）</a></li>
+</ul>
+</li>
+<li><a href="#2-avl%E6%A0%91">2. AVL树</a></li>
+<li><a href="#3-sb%E6%A0%91">3. SB树</a></li>
+<li><a href="#4-%E7%BA%A2%E9%BB%91%E6%A0%91">4. 红黑树</a></li>
+<li><a href="#5-%E8%B7%B3%E8%A1%A8">5. 跳表</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-06-23，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-06-23 19:18:41";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a href="https://stevenXu1992.github.io" style="margin:0;">Steven Xu</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>15</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://stevenXu1992.github.io/media/js/prism.js"></script>
+</body>
+</html>

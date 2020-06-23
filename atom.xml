@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-06-23T04:21:43.519Z</updated>
+    <updated>2020-06-23T11:20:53.835Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,356 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[有序表]]></title>
+        <id>https://stevenXu1992.github.io/post/you-xu-biao/</id>
+        <link href="https://stevenXu1992.github.io/post/you-xu-biao/">
+        </link>
+        <updated>2020-06-23T11:18:41.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-带有自平衡性的搜索二叉树">1. 带有自平衡性的搜索二叉树</h2>
+<h3 id="11-搜索二叉树的基本模版">1.1 搜索二叉树的基本模版</h3>
+<pre><code class="language-java">public class AbstractBinarySearchTree{
+  
+  public Node root;
+  protected int size;
+  
+  public static class Node{
+    public Integer value;
+		public Node parent;
+		public Node left;
+		public Node right;
+    public Node(Integer value, Node parent, 
+                Node left, Node right) {
+			super();
+			this.value = value;
+			this.parent = parent;
+			this.left = left;
+			this.right = right;
+		}
+
+		public boolean isLeaf() {
+			return left == null &amp;&amp; right == null;
+		}
+  }
+  
+  //创建新的节点实例
+  protected Node createNode(int value, Node parent, 
+                            Node left, Node right) {
+		return new Node(value, parent, left, right);
+	}
+  
+  //搜索元素，没找到返回null
+  public Node search(int element){
+    Node node = root;
+    while(node != null &amp;&amp; node.value != null 
+          &amp;&amp; node.value != element){
+      if(element &lt; node.value) node = node.left;
+      else node = node.right;
+    }
+    return node;
+  }
+  
+  //添加元素
+  public Node insert(int element){
+    //如没有根节点，则新建一个树
+    if(root == null){
+      root = createNode(element, null, null, null);
+			size++;
+			return root;
+    }
+    
+    //parentNode：新建节点的父节点，tempNode：用于定位新建节点的位置
+    Node parentNode = null;
+    Node tempNode = root;
+    while(tempNode != null &amp;&amp; tempNode.value != null){
+      parentNode = tempNode;
+      if(element &lt; tempNode) tempNode = tempNode.left;
+      else tempNode = tempNode.right;
+    }
+    
+    //若父节点为叶节点，再判断新建节点放左树还是右树
+    Node newNode = creatNode(element, parentNode, null, null);
+    if(parent.value &gt; newNode.value)parentNode.left = newNode;
+    else parentNode.right = newNode;
+    size++;
+    return newNode;
+  }
+  
+  //根据节点删除
+  // 1.节点无子树-直接删
+  // 2.节点有一个子树-该子树直接嫁接上来
+  // 3.有两个子树-将右树上的最小值或左树上的最大值successor嫁接上来，而原本successor的子树向上补即可
+  protected Node delete(Node target) {
+		if (target != null) {
+			Node nodeToReturn = null;
+			if (target != null) {
+				if (target.left == null) {
+					nodeToReturn = transplant(target, target.right);
+				} else if (target.right == null) {
+					nodeToReturn = transplant(target, target.left);
+				} else {
+					Node successor = getMinimum(target.right);
+					if (successor.parent != target) {
+						transplant(successor, successor.right);
+						successor.right = target.right;
+						successor.right.parent = successor;
+					}
+					transplant(target, successor);
+					successor.left = target.left;
+					successor.left.parent = successor;
+					nodeToReturn = successor;
+				}
+				size--;
+			}
+			return nodeToReturn;
+		}
+		return null;
+    
+  //根据元素删除
+  public Node delete(int element) {
+		Node deleteNode = search(element);
+		if (deleteNode != null) return delete(deleteNode);	
+		else return null;
+	}
+    
+  //嫁接节点，用节点newNode替换节点replaceNode
+  private Node transplant(Node replaceNode, Node newNode) {
+		if (replaceNode.parent == null) {
+			this.root = newNode;
+		} else if (replaceNode == replaceNode.parent.left) {
+			replaceNode.parent.left = newNode;
+		} else {
+			replaceNode.parent.right = newNode;
+		}
+		if (newNode != null) {
+			newNode.parent = replaceNode.parent;
+		}
+		return newNode;
+	}
+  
+  //获取带有最小值的节点
+  protected Node getMinimum(Node node) {
+		while (node.left != null) {
+			node = node.left;
+		}
+		return node;
+	}
+
+  //获取带有最大值的节点
+	protected Node getMaximum(Node node) {
+		while (node.right != null) {
+			node = node.right;
+		}
+		return node;
+	}
+    
+  //是否含有某元素
+  public boolean contains(int element) {
+		return search(element) != null;
+	}
+    
+  //返回后继节点
+  protected Node getSuccessor(Node node) {
+		if (node.right != null) {
+			return getMinimum(node.right);
+		} else { 
+			Node current = node;
+			Node parent = node.parent;
+			while (parent != null &amp;&amp; current == parent.right) {
+				current = parent;
+				parent = parent.parent;
+			}
+			return parent;
+		}
+	}
+}
+</code></pre>
+<h3 id="12-带有自平衡功能的搜索二叉树左旋右旋">1.2 带有自平衡功能的搜索二叉树（左旋，右旋）</h3>
+<pre><code class="language-java">public abstract class AbstractSelfBalancingBinarySearchTree extends AbstractBinarySearchTree{
+  
+  //左旋：node 旋到 node.left 的位置, node.right 到 node 的位置
+  // node.right.left 到 node.left.right的位置
+  // node.left 和 node.right.right不变
+  protected Node rotateLeft(Node node){
+  	Node temp = node.right;
+    temp.parent = node.parent;
+    node.right = temp.left;
+    if (node.right != null) node.right.parent = node;
+    temp.left = node;
+    node.parent = temp;
+    //node下方接好后，接上方的节点
+    if (temp.parent != null) {
+      if (node == temp.parent.left) temp.parent.left = temp;
+      else temp.parent.right = temp;
+    } else root = temp;
+    return temp;
+  }
+  
+  //右旋同理
+  protected Node rotateRight(Node node){
+    Node temp = node.left;
+    temp.parent = node.parent;
+    node.left = temp.right;
+    if (node.left != null) node.left.parent = node;
+    temp.right = node;
+    node.parent = temp;
+    if (temp.parent != null) {
+      if (node == temp.parent.left) temp.parent.left = temp;
+      else temp.parent.right = temp;
+    } else root = temp;
+    return temp;
+  }
+}
+</code></pre>
+<h2 id="2-avl树">2. AVL树</h2>
+<pre><code class="language-java">/**
+In computer science, an AVL tree is a self-balancing binary search tree, and it was the first such data structure to be invented. 
+In an AVL tree, the heights of the two child subtrees of any node differ by at most one. Lookup,insertion, and deletion all take O(log n) time in both the average and worst cases, where n is the number of nodes in the tree prior to the operation.
+Insertions and deletions may require the tree to be rebalanced by one or more
+ * 
+ */
+public class AVLTree extends AbstractSelfBalancingBinarySearchTree {
+  
+  protected static class AVLNode extends Node {
+    public int height;
+		public AVLNode(int value, Node parent, 
+                   Node left, Node right) {
+      super(value, parent, left, right);
+    }
+  }
+  
+  //自平衡调整
+  //每次添加或删除节点后，向上检查每个头节点的平衡性
+  private void rebalance(AVLNode node) {
+    while (node != null) {
+			Node parent = node.parent;
+			int leftHeight = (node.left == null) ? 
+        -1 : ((AVLNode) node.left).height;
+      int rightHeight = (node.right == null) ? 
+        -1 : ((AVLNode) node.right).height;
+      int nodeBalance = rightHeight - leftHeight;
+      //-2 means left subtree outgrow, 2 means right subtree)
+      if (nodeBalance == 2) {
+        if (node.right.right != null) { //RR 左旋
+          node = (AVLNode)avlRotateLeft(node);
+          break;
+        } else { //RL 先右旋再左旋
+          node = (AVLNode)doubleRotateRightLeft(node);
+          break;
+        }
+      } else if (nodeBalance == -2) {
+        if (node.left.left != null) { //LL 右旋
+          node = (AVLNode)avlRotateRight(node);
+          break;
+        } else { //LR 先左旋再右旋
+          node = (AVLNode)doubleRotateLeftRight(node);
+          break;
+        }
+      } else {
+        updateHeight(node);
+      }
+      node = (AVLNode)parent;
+    }
+  }
+}
+</code></pre>
+<h2 id="3-sb树">3. SB树</h2>
+<pre><code class="language-java">//  size balance tree
+//  size(node.left) &gt; 
+//	Math.max(size(node.right.left), size(node.right.right))
+public static class SBTNode&lt;K extends Comparable&lt;K&gt;, V&gt; {
+		public K key;
+		public V value;
+		public SBTNode&lt;K, V&gt; l;
+		public SBTNode&lt;K, V&gt; r;
+		public int size;
+		public SBTNode(K key, V value) {
+			this.key = key;
+			this.value = value;
+			size = 1;
+	  }
+}
+
+public static class SizeBalancedTreeMap&lt;K extends Comparable&lt;K&gt;, V&gt; {
+  //sb树的自平衡调整，旋转后递归调整所有子树变化了的节点
+  private SBTNode&lt;K, V&gt; matain(SBTNode&lt;K, V&gt; cur) {
+        if (cur == null) {
+            return null;
+        }
+        if (cur.l != null &amp;&amp; cur.l.l != null &amp;&amp; cur.r != null &amp;&amp; cur.l.l.size &gt; cur.r.size) {	//LL
+            cur = rightRotate(cur);
+            cur.r = matain(cur.r);
+            cur = matain(cur);
+        } else if (cur.l != null &amp;&amp; cur.l.r != null &amp;&amp; cur.r != null &amp;&amp; cur.l.r.size &gt; cur.r.size) {	//LR
+            cur.l = leftRotate(cur.l);
+            cur = rightRotate(cur);
+            cur.l = matain(cur.l);
+            cur.r = matain(cur.r);
+            cur = matain(cur);
+        } else if (cur.r != null &amp;&amp; cur.r.r != null &amp;&amp; cur.l != null &amp;&amp; cur.r.r.size &gt; cur.l.size) {	//RR
+            cur = leftRotate(cur);
+            cur.l = matain(cur.l);
+            cur = matain(cur);
+        } else if (cur.r != null &amp;&amp; cur.r.l != null &amp;&amp; cur.l != null &amp;&amp; cur.r.l.size &gt; cur.l.size) {	//RL
+            cur.r = rightRotate(cur.r);
+            cur = leftRotate(cur);
+            cur.l = matain(cur.l);
+            cur.r = matain(cur.r);
+            cur = matain(cur);
+        }
+        return cur;
+    }
+}
+</code></pre>
+<h2 id="4-红黑树">4. 红黑树</h2>
+<p>红黑树保证平衡性的条件：</p>
+<ol>
+<li>每个节点的枚举元素必须是红或黑</li>
+<li>头节点和叶节点为黑（叶节点指树底层的null节点）</li>
+<li>红节点不相邻</li>
+<li>任何一个头部节点，到叶节点的路径上，黑节点数量一样</li>
+</ol>
+<h2 id="5-跳表">5. 跳表</h2>
+<p>跳表通过概率的方式为每个元素设定一个高度，每次查找或删除从最高层开始进行，达到加速的目的</p>
+<pre><code class="language-java">public static class SkipListMap&lt;K extends Comparable&lt;K&gt;, V&gt; {
+  public void put(K key, V value) {
+    if (key == null) {
+      return;
+    }
+    SkipListNode&lt;K, V&gt; less = mostRightLessNodeInTree(key);
+    SkipListNode&lt;K, V&gt; find = less.nextNodes.get(0);
+    if (find != null &amp;&amp; find.isKeyEqual(key)) {
+      find.val = value;
+    } else {
+      size++;
+      int newNodeLevel = 0;
+      while (Math.random() &lt; PROBABILITY) {
+        newNodeLevel++;
+      }
+      while (newNodeLevel &gt; maxLevel) {
+        head.nextNodes.add(null);
+        maxLevel++;
+      }
+      SkipListNode&lt;K, V&gt; newNode = new SkipListNode&lt;K, V&gt;(key, value);
+      for (int i = 0; i &lt;= newNodeLevel; i++) {
+        newNode.nextNodes.add(null);
+      }
+      int level = maxLevel;
+      SkipListNode&lt;K, V&gt; pre = head;
+      while (level &gt;= 0) {
+        pre = mostRightLessNodeInLevel(key, pre, level);
+        if (level &lt;= newNodeLevel) {
+          newNode.nextNodes.set(level, pre.nextNodes.get(level));
+          pre.nextNodes.set(level, newNode);
+        }
+        level--;
+      }
+    }
+  }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[动态规划]]></title>
         <id>https://stevenXu1992.github.io/post/dong-tai-gui-hua/</id>
@@ -1898,130 +2248,6 @@ public static void heapify(int[] arr, int index, int size){
 </tr>
 </tbody>
 </table>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[二叉树的常见算法]]></title>
-        <id>https://stevenXu1992.github.io/post/er-cha-shu-chang-jian-ti-mu/</id>
-        <link href="https://stevenXu1992.github.io/post/er-cha-shu-chang-jian-ti-mu/">
-        </link>
-        <updated>2020-05-12T09:22:58.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1判断是否为完全二叉树">1.判断是否为完全二叉树</h2>
-<p>判断标准：宽度优先遍历时 1）若某节点有右节点无左节点，则不为完全二叉树 2）某节点左右节点不全，后续都必须为叶节点，否则不是完全二叉树(用一个布尔值记录状态)</p>
-<pre><code class="language-java">public static boolean heapTree(Node head){
-  if(head == null){
-    return true;
-  }
-  LinkedList&lt;Node&gt;() queue = new LinkedList&lt;&gt;();
-  queue.add(head);
-  boolean leaf = false;
-  Node right = null;
-  Node left = null;
-  while(!queue.isEmpty()){
-    head = queue.poll();
-    right = head.right;
-    left = head.left;
-    if( (right != null &amp;&amp; left == null) //条件1
-       || (leaf &amp;&amp; (right != null || left != null))){ //条件2
-      return false;
-    }
-    if(right != null){
-      queue.add(right);
-    }
-    if(left != null){
-      queue.add(left);
-    }
-    if(right == null || left == null){
-      leaf = true; //左右子树有一个为空，开启叶节点的记录状态
-    }
-  }
-  return true;
-} 
-</code></pre>
-<h2 id="2查找两个节点的最低公共祖先节点">2.查找两个节点的最低公共祖先节点</h2>
-<p>设两个节点为n1,n2， 递归函数中：</p>
-<ol>
-<li>若头节点为n1或n2,返回自己（为空则返回空 ）</li>
-<li>递归黑盒求出左右子树的返回值</li>
-<li>若左右子树返回值都不为空，返回自己（已找到公共祖先）</li>
-<li>左右子树一个为空一个不为空，返回不为空的一项</li>
-</ol>
-<pre><code class="language-java">public static Node process(Node head, Node n1, Node n2){
-  if(head == null || head == n1 || head == n2){
-    return head;
-  }
-  Node left = process(head.left, n1, n2);
-  Node right = process(head.right, n1, n2);
-  if(left != null &amp;&amp; right != null){
-    return head;
-  }
-  return left == null ? right : left;
-}
-</code></pre>
-<h2 id="3查找某节点的后继节点">3.查找某节点的后继节点</h2>
-<p>后继节点：某节点在中序遍历中的下一个节点</p>
-<pre><code class="language-java">public static Node find(Node node){
-  if(node == null){
-    return node;
-  }
-  if(node.right != null){ //有右树
-    return process(node.right); //则中继为右树上最左的节点
-  }else{ 	//	无右树
-    Node parent = node.parent;
-    //若node = parent.left, 则直接返回parent
-    //否则继续向上寻找，直到node = parent.node
-    //最后，若一直未找到则返回null(最右节点的中继为null)
-    while(parent != null &amp;&amp; node != parent.left){
-      node = parent;
-      parent = node.parent;
-    }
-    return parent;
-  }
-} 
-
-public static Node process(Node node){
-  if(node == null){
-    return node;
-  }
-  while(node.left != null){
-    node = node.left;
-  }
-  return node;
-}
-</code></pre>
-<h2 id="4序列化与反序列化">4.序列化与反序列化</h2>
-<pre><code class="language-java">// '#'表示null, '_'用于分隔
-public static String serial(Node node){
-  if(node == null){
-    return '#_';
-  }
-  String res = node.data + '_';
-  //按照先序遍历的顺序将树序列化成字符串
-  res += serial(node.left);
-  res += serial(node.right);
-  return res;
-}
-
-public static Node recon(String str){
-  String[] arr = str.split('_');
-  Queue&lt;String&gt; queue = new LinkedList&lt;String&gt;();
-  for(int i = 0; i != arr.length; i++){
-    queue.offer(arr[i]);
-  }
-  return reconProcess(queue);
-}
-
-public static Node reconProcess(Queue&lt;String&gt; queue){
-  String str = queue.poll();
-  if(str.equals('#')){
-    return null;
-  }
-  Node head = new Node(Integer.valueOf(str));
-  head.left = reconProcess(queue);
-  head.right = reconProcess(queue);
-  return head;
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
