@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-06-12T14:00:06.506Z</updated>
+    <updated>2020-06-23T04:19:18.817Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[测试]]></title>
+        <id>https://stevenXu1992.github.io/post/ce-shi/</id>
+        <link href="https://stevenXu1992.github.io/post/ce-shi/">
+        </link>
+        <updated>2020-06-23T04:18:24.000Z</updated>
+        <content type="html"><![CDATA[<p>Leetcode-100<br>
+Leetcode-1000<br>
+Leetcode-999</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Leetcode-113 Path Sum II]]></title>
         <id>https://stevenXu1992.github.io/post/leetcode-113-path-sum-ii/</id>
@@ -423,53 +434,6 @@ public String multiply(String num1, String num2) {
       sb.deleteCharAt(0);
     }
     return sb.length() == 0 ? &quot;0&quot; : sb.toString();
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-67 Add Binary]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-67-add-binary/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-67-add-binary/">
-        </link>
-        <updated>2020-06-11T10:03:37.000Z</updated>
-        <content type="html"><![CDATA[<p>Given two binary strings, return their sum (also a binary string).</p>
-<p>The input strings are both <strong>non-empty</strong> and contains only characters <code>1</code> or <code>0</code>.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: a = &quot;11&quot;, b = &quot;1&quot;
-Output: &quot;100&quot;
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: a = &quot;1010&quot;, b = &quot;1011&quot;
-Output: &quot;10101&quot;
-</code></pre>
-<p><strong>Constraints:</strong></p>
-<ul>
-<li>Each string consists only of <code>'0'</code> or <code>'1'</code> characters.</li>
-<li><code>1 &lt;= a.length, b.length &lt;= 10^4</code></li>
-<li>Each string is either <code>&quot;0&quot;</code> or doesn't contain any leading zero.</li>
-</ul>
-<pre><code class="language-java">//solution
-public String addBinary(String a, String b) {
-    StringBuilder sb = new StringBuilder();
-    int p1 = a.length() - 1;
-    int p2 = b.length() - 1;
-    int carry = 0;
-    while(p1 &gt;= 0 || p2 &gt;= 0){
-      int sum = carry;
-      if(p1 &gt;= 0){
-        sum += a.charAt(p1--) - '0';
-      }
-      if(p2 &gt;= 0){
-        sum += b.charAt(p2--) - '0';
-      }
-      sb.append(sum % 2);  //0%2 = 0, 1%2 = 1, 2%2 = 0
-      carry = sum / 2;  //0/2 = 0, 1/2 = 0, 2/2 = 1
-    }
-    if(carry != 0){
-      sb.append(carry);
-    }
-    return sb.reverse().toString();
 }
 </code></pre>
 ]]></content>
