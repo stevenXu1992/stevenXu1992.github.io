@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2020-06-23T04:19:18.817Z</updated>
+    <updated>2020-06-23T04:21:43.519Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -11,429 +11,2015 @@
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Steven Xu</rights>
     <entry>
-        <title type="html"><![CDATA[测试]]></title>
-        <id>https://stevenXu1992.github.io/post/ce-shi/</id>
-        <link href="https://stevenXu1992.github.io/post/ce-shi/">
+        <title type="html"><![CDATA[动态规划]]></title>
+        <id>https://stevenXu1992.github.io/post/dong-tai-gui-hua/</id>
+        <link href="https://stevenXu1992.github.io/post/dong-tai-gui-hua/">
         </link>
-        <updated>2020-06-23T04:18:24.000Z</updated>
-        <content type="html"><![CDATA[<p>Leetcode-100<br>
-Leetcode-1000<br>
-Leetcode-999</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-113 Path Sum II]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-113-path-sum-ii/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-113-path-sum-ii/">
-        </link>
-        <updated>2020-06-12T13:59:17.000Z</updated>
-        <content type="html"><![CDATA[<p>Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.</p>
-<p><strong>Note:</strong> A leaf is a node with no children.</p>
-<p><strong>Example:</strong></p>
-<p>Given the below binary tree and <code>sum = 22</code>,</p>
-<pre><code>      5
-     / \
-    4   8
-   /   / \
-  11  13  4
- /  \    / \
-7    2  5   1
-</code></pre>
-<p>Return:</p>
-<pre><code>[
-   [5,4,11,2],
-   [5,8,4,5]
-]
-</code></pre>
-<pre><code class="language-java">//my submission
-public List&lt;List&lt;Integer&gt;&gt; pathSum(TreeNode root, int sum) {
-    List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();
-    process(root, sum, new ArrayList&lt;Integer&gt;(), res);
-    return res;
-}
-
-public void process(TreeNode node, int rest, List&lt;Integer&gt; path, List&lt;List&lt;Integer&gt;&gt; list){
-    if(node == null) return;
-    path.add(node.val);
-    if(node.left == null &amp;&amp; node.right == null 
-       &amp;&amp; rest - node.val == 0){
-      list.add(new ArrayList&lt;Integer&gt;(path));
-    }else{
-      process(node.left, rest - node.val, path, list);
-      process(node.right, rest - node.val, path, list);
-    }
-    path.remove(path.size() - 1);
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-112 Path Sum]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-112-path-sum/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-112-path-sum/">
-        </link>
-        <updated>2020-06-12T13:58:36.000Z</updated>
-        <content type="html"><![CDATA[<p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.</p>
-<p><strong>Note:</strong> A leaf is a node with no children.</p>
-<p><strong>Example:</strong></p>
-<p>Given the below binary tree and <code>sum = 22</code>,</p>
-<pre><code>      5
-     / \
-    4   8
-   /   / \
-  11  13  4
- /  \      \
-7    2      1
-</code></pre>
-<p>return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code> which sum is 22.</p>
-<pre><code class="language-java">//my submission
-public boolean hasPathSum(TreeNode root, int sum) {
-    if(root == null) return false;
-    return process(root, sum);
-}
-
-public boolean process(TreeNode node, int rest){
-    if(rest - node.val == 0 &amp;&amp; node.right == null &amp;&amp; node.left == null) return true;
-    boolean left = false;
-    boolean right = false;
-    if(node.left != null){
-      left = process(node.left, rest - node.val);
-    }
-    if(node.right != null){
-      right = process(node.right, rest - node.val);
-    }
-    return left || right;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-257 Binary Tree Paths]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-257-binary-tree-paths/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-257-binary-tree-paths/">
-        </link>
-        <updated>2020-06-12T13:57:47.000Z</updated>
-        <content type="html"><![CDATA[<p>Given a binary tree, return all root-to-leaf paths.</p>
-<p><strong>Note:</strong> A leaf is a node with no children.</p>
-<p><strong>Example:</strong></p>
-<pre><code>Input:
-
-   1
- /   \
-2     3
- \
-  5
-
-Output: [&quot;1-&gt;2-&gt;5&quot;, &quot;1-&gt;3&quot;]
-
-Explanation: All root-to-leaf paths are: 1-&gt;2-&gt;5, 1-&gt;3
-</code></pre>
-<pre><code class="language-java">// my submission
-public List&lt;String&gt; binaryTreePaths(TreeNode root) {
-    List&lt;String&gt; res = new ArrayList&lt;&gt;();
-    if(root != null) process(root, &quot;&quot;, res);
-    return res;
-}
-
-public void process(TreeNode node, String path, List&lt;String&gt; list){
-    if(node.left == null &amp;&amp; node.right == null){
-      list.add(path + node.val);
-    } 
-    if(node.left != null){
-      process(node.left, path + node.val + &quot;-&gt;&quot;, list);
-    }
-    if(node.right != null){
-      process(node.right, path + node.val + &quot;-&gt;&quot;, list);
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-226 Invert Binary Tree]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-226-invert-binary-tree/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-226-invert-binary-tree/">
-        </link>
-        <updated>2020-06-12T13:57:03.000Z</updated>
-        <content type="html"><![CDATA[<p>Invert a binary tree.</p>
-<pre><code class="language-java">//Recursive
-public TreeNode invert1(TreeNode root){
-    if(root == null) return null;
-    TreeNode right = invert1(root.right);
-    TreeNode left = invert1(root.left);
-    root.left = right;
-    root.right = left;
-    return root;
-}
-
-//Iterative
-public TreeNode invertTree(TreeNode root) {
-    if(root == null) return null;
-    LinkedList&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
-    queue.add(root);
-    while(!queue.isEmpty()){
-      TreeNode cur = queue.poll();
-      TreeNode temp = cur.left;
-      cur.left = cur.right;
-      cur.right = temp;
-      if(cur.left != null) queue.add(cur.left);
-      if(cur.right != null) queue.add(cur.right);
-    }
-    return root;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-101 Symmetric Tree]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-101-symmetric-tree/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-101-symmetric-tree/">
-        </link>
-        <updated>2020-06-12T13:56:09.000Z</updated>
-        <content type="html"><![CDATA[<p>Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).</p>
-<p>For example, this binary tree <code>[1,2,2,3,4,4,3]</code> is symmetric:</p>
-<pre><code>    1
-   / \
-  2   2
- / \ / \
-3  4 4  3
-</code></pre>
-<p>But the following <code>[1,2,2,null,3,null,3]</code> is not:</p>
-<pre><code>    1
-   / \
-  2   2
-   \   \
-   3    3
-</code></pre>
-<p><strong>Follow up:</strong> Solve it both recursively and iteratively.</p>
-<pre><code class="language-java">//Recursive
-public boolean isSymmetric(TreeNode root) {
-    return isMirror(root, root);
-}
-
-public boolean isMirror(TreeNode t1, TreeNode t2) {
-    if (t1 == null &amp;&amp; t2 == null) return true;
-    if (t1 == null || t2 == null) return false;
-    return (t1.val == t2.val)
-        &amp;&amp; isMirror(t1.right, t2.left)
-        &amp;&amp; isMirror(t1.left, t2.right);
-}
-
-//Iterative
-public boolean isSymmetric(TreeNode root) {
-    if(root == null) return true;
-    LinkedList&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
-    queue.add(root.left);
-    queue.add(root.right);
-    while(!queue.isEmpty()){
-      TreeNode n1 = queue.poll();
-      TreeNode n2 = queue.poll();
-      if(n1 == null &amp;&amp; n2 == null) continue;
-      if(n1 == null || n2 == null) return false;
-      if(n1.val != n2.val) return false;
-      queue.add(n1.left);
-      queue.add(n2.right);
-      queue.add(n1.right);
-      queue.add(n2.left);
-    }
-    return true;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-69 Sqrt(x)]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-69-sqrtx/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-69-sqrtx/">
-        </link>
-        <updated>2020-06-12T13:55:19.000Z</updated>
-        <content type="html"><![CDATA[<p>Implement <code>int sqrt(int x)</code>.</p>
-<p>Compute and return the square root of <em>x</em>, where <em>x</em> is guaranteed to be a non-negative integer.</p>
-<p>Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: 4
-Output: 2
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: 8
-Output: 2
-Explanation: The square root of 8 is 2.82842..., and since 
-             the decimal part is truncated, 2 is returned.
-</code></pre>
-<pre><code class="language-java">//solution
-public static int mySqrt(int x) {  //牛顿迭代法
-    if(x == 0) return 0;
-    double a = 0;  // b和a是相邻两次迭代结果
-    double b = 1;      // 在1附近开始找，迭代逼近目标值
-    while(Math.abs(b-a) &gt; 0.1)  // 判断条件为abs(b-a) &gt; 0.1
-    {
-      a = b;
-      b = (b + x/b)/2.0;
-    }
-    return (int)b;  // 返回值要求为int，需强制转换
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-50 Pow(x, n)]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-50-powx-n/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-50-powx-n/">
-        </link>
-        <updated>2020-06-12T13:54:30.000Z</updated>
-        <content type="html"><![CDATA[<p>Implement <a href="http://www.cplusplus.com/reference/valarray/pow/">pow(<em>x</em>, <em>n</em>)</a>, which calculates <em>x</em> raised to the power <em>n</em> (xn).</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: 2.00000, 10
-Output: 1024.00000
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: 2.10000, 3
-Output: 9.26100
-</code></pre>
-<p><strong>Example 3:</strong></p>
-<pre><code>Input: 2.00000, -2
-Output: 0.25000
-Explanation: 2-2 = 1/22 = 1/4 = 0.25
-</code></pre>
-<p><strong>Note:</strong></p>
-<ul>
-<li>-100.0 &lt; <em>x</em> &lt; 100.0</li>
-<li><em>n</em> is a 32-bit signed integer, within the range [−231, 231 − 1]</li>
-</ul>
-<pre><code class="language-java">//solution
-public double myPow(double x, int n) {
-    if(n &lt; 0) return 1 / pow(x, -n);
-    return pow(x, n);
-}
-
-public double pow(double x, int n){
-    if(n == 0) return 1;
-    double half = pow(x, n / 2);
-    if(n % 2 == 0){
-      return half * half;
-    }else{
-      return x * half * half;
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-29 Divide Two Integers]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-29-divide-two-integers/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-29-divide-two-integers/">
-        </link>
-        <updated>2020-06-12T13:53:36.000Z</updated>
-        <content type="html"><![CDATA[<p>Given two integers <code>dividend</code> and <code>divisor</code>, divide two integers without using multiplication, division and mod operator.</p>
-<p>Return the quotient after dividing <code>dividend</code> by <code>divisor</code>.</p>
-<p>The integer division should truncate toward zero, which means losing its fractional part. For example, <code>truncate(8.345) = 8</code> and <code>truncate(-2.7335) = -2</code>.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: dividend = 10, divisor = 3
-Output: 3
-Explanation: 10/3 = truncate(3.33333..) = 3.
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: dividend = 7, divisor = -3
-Output: -2
-Explanation: 7/-3 = truncate(-2.33333..) = -2.
-</code></pre>
-<p><strong>Note:</strong></p>
-<ul>
-<li>Both dividend and divisor will be 32-bit signed integers.</li>
-<li>The divisor will never be 0.</li>
-<li>Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1]. For the purpose of this problem, assume that your function <strong>returns 231 − 1 when the division result overflows</strong>.</li>
-</ul>
-<pre><code class="language-java">//solution
-public int divide(int dividend, int divisor) {
-    //Reduce the problem to positive long integer to make it easier.
-    //Use long to avoid integer overflow cases.
-    int sign = 1;
-    if ((dividend &gt; 0 &amp;&amp; divisor &lt; 0) || 
-        (dividend &lt; 0 &amp;&amp; divisor &gt; 0))
-      sign = -1;
-    long ldividend = Math.abs((long) dividend);
-    long ldivisor = Math.abs((long) divisor);
-
-    //Take care the edge cases.
-    if (ldivisor == 0) return Integer.MAX_VALUE;
-    if ((ldividend == 0) || (ldividend &lt; ldivisor))	return 0;
-
-    long lans = ldivide(ldividend, ldivisor);
-
-    int ans;
-    if (lans &gt; Integer.MAX_VALUE){ //Handle overflow.
-      ans = (sign == 1)? 
-        Integer.MAX_VALUE : Integer.MIN_VALUE;
-    } else {
-      ans = (int) (sign * lans);
-    }
-    return ans;
-}
-
-private long ldivide(long ldividend, long ldivisor) {
-  // Recursion exit condition
-  if (ldividend &lt; ldivisor) return 0;
-
-  //  Find the largest multiple so that (divisor * multiple &lt;= dividend), 
-  //  whereas we are moving with stride 1, 2, 4, 8, 16...2^n for performance reason.
-  //  Think this as a binary search.
-  long sum = ldivisor;
-  long multiple = 1;
-  while ((sum+sum) &lt;= ldividend) {
-    sum += sum;
-    multiple += multiple;
+        <updated>2020-05-26T16:15:07.000Z</updated>
+        <content type="html"><![CDATA[<p>暴力递归 --&gt; 动态规划步骤：</p>
+<p>1)找到什么可变参数可以代表一个递归状态，也就是哪些参数一旦确定，返回值就确定了</p>
+<p>2)把可变参数的所有组合映射成一张表，有1个可变参数就是一维表，2个可变参数就 是二维</p>
+<p>3)最终答案要的是表中的哪个位置，在表中标出</p>
+<p>4)根据递归过程的 base case，把这张表的最简单不需要依赖其他位置的那些位置填好值</p>
+<p>5)根据递归过程非base case的部分，也就是分析表中的普遍位置需要怎么计算得到，那 么这张表的填写顺序也就确定了</p>
+<p>6)综上确定计算顺序，填好表，返回最终答案在表中位置的值</p>
+<h2 id="1-机器人达到指定位置">1. 机器人达到指定位置</h2>
+<p>假设有排成一行的 N 个位置，记为 1~N，N 一定大于或等于 2。开始时机器人在其中的 M 位 置上(M 一定是 1~N 中的一个)，机器人可以往左走或者往右走，如果机器人来到 1 位置， 那 么下一步只能往右来到 2 位置;如果机器人来到 N 位置，那么下一步只能往左来到 N-1 位置。 规定机器人必须走 K 步，最终能来到 P 位置(P 也一定是 1~N 中的一个)的方法有多少种。给 定四个参数 N、M、K、P，返回方法数。</p>
+<pre><code class="language-java">public static int robot(int N, int S, int E, int K){
+  // N:	共N个位置
+  // S:	起点
+  // E: 终点
+  // K: 可以走的步数
+  if(N &lt; 2 || K &lt; 1 || S &lt; 1 || S &gt; N || E &lt; 1 || E &gt; N){
+    return 0;
   }
-  //Look for additional value for the multiple from the reminder (dividend - sum) recursively.
-  return multiple + ldivide(ldividend - sum, ldivisor);
+  
+  //暴力递归
+  int res = process1(N, S, E, K);
+  
+  //记忆化搜索
+  int[][] dp = new int[K + 1][N + 1];
+  for(int i = 0; i &lt; K; i++){
+    for(int j = 0; j &lt; N; j++){
+      dp[i][j] = -1;
+    }
+  }
+  int res = process2(N, S, E, K, dp);
+  
+  //严格表结构动态规划
+  int res = process(N, S, E, K);
+  
 }
+
+//暴力递归
+public static int process1(int N, int index, int E, int rest){
+  // index: 当前位置
+  // rest: 还剩rest步
+  if(rest == 0){
+    return index == E ? 1 : 0;
+  }
+  if(index == 1){
+    return process(N, 2, E, rest - 1);
+  }
+  if(index == N){
+    return process(N, N - 1, E, rest - 1);
+  }
+  return process(N, index + 1, E, rest - 1) 
+        +  process(N, index - 1, E, rest - 1);
+}
+
+//记忆化搜索
+public static int process2(int N, int index, int E, int rest, int[][] dp){
+  if(dp[index][rest] != -1){
+    return dp[index][rest];
+  }
+  
+  if(rest == 0){
+    dp[index][rest] = E ? 1 : 0;
+  }else if(index == 1){
+    dp[index][rest] = process(N, 2, E, rest - 1);
+  }else if(index == N){
+    dp[index][rest] = process(N, N - 1, E, rest - 1);
+  }else{
+    dp[index][rest] = process(N, index + 1, E, rest - 1) 
+                         + process(N, index - 1, E, rest - 1);
+  }
+  return dp[index][rest];
+}
+
+//严格表结构动态规划
+public static int process3(int N, int index, int E, int rest){
+  int[][] dp = new int[index + 1][rest + 1];
+  dp[E][0] = 1;
+  for(int i = 1; i &lt; index; i++){
+    for(int j = 1; j &lt; rest; j++){
+      if(i == 1){
+        dp[i][j] = dp[2][ j - 1];
+      }
+      if(i == N){
+       dp[i][j] = dp[N - 1][j - 1]; 
+      }
+  		dp[i][j] = dp[i + 1][j - 1] + dp[i - 1][j - 1]
+    }
+  }
+  return dp[index][rest];
+}
+
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Leetcode-43 Multiply Strings]]></title>
-        <id>https://stevenXu1992.github.io/post/leetcode-43-multiply-strings/</id>
-        <link href="https://stevenXu1992.github.io/post/leetcode-43-multiply-strings/">
-        </link>
-        <updated>2020-06-12T13:52:33.000Z</updated>
-        <content type="html"><![CDATA[<p>Given two non-negative integers <code>num1</code> and <code>num2</code> represented as strings, return the product of <code>num1</code> and <code>num2</code>, also represented as a string.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: num1 = &quot;2&quot;, num2 = &quot;3&quot;
-Output: &quot;6&quot;
-</code></pre>
-<p><strong>Example 2:</strong></p>
-<pre><code>Input: num1 = &quot;123&quot;, num2 = &quot;456&quot;
-Output: &quot;56088&quot;
-</code></pre>
-<p><strong>Note:</strong></p>
-<ol>
-<li>The length of both <code>num1</code> and <code>num2</code> is &lt; 110.</li>
-<li>Both <code>num1</code> and <code>num2</code> contain only digits <code>0-9</code>.</li>
-<li>Both <code>num1</code> and <code>num2</code> do not contain any leading zero, except the number 0 itself.</li>
-<li>You <strong>must not use any built-in BigInteger library</strong> or <strong>convert the inputs to integer</strong> directly.</li>
-</ol>
-<pre><code class="language-java">//solution
-public String multiply(String num1, String num2) {
-    int n1 = num1.length(), n2 = num2.length();
-    int[] products = new int[n1 + n2];
-    for (int i = n1 - 1; i &gt;= 0; i--) {
-      for (int j = n2 - 1; j &gt;= 0; j--) {
-        int d1 = num1.charAt(i) - '0';
-        int d2 = num2.charAt(j) - '0';
-        products[i + j + 1] += d1 * d2;
+<h2 id="2-换钱的最少货币数">2. 换钱的最少货币数</h2>
+<p>给定数组 arr，arr 中所有的值都为正数且不重复。每个值代表一种面值的货币，每种面值的货币可以使用任意张，再给定一个整数 aim，代表要找的钱数，求组成 aim 的最少货币数。</p>
+<pre><code class="language-java">public static int minCoin(int[] arr, int aim){
+  if(arr.length == 0 || arr == null || aim &lt; 0){
+    return -1;
+  }
+  
+  //暴力递归
+  int res = process1(arr, 0, aim);
+  
+  //记忆化搜索
+  int[][] dp = new int[arr.length + 1][aim + 1];
+  for(int i = 0; i &lt;= arr.length; i++){
+    for(int j = 0; j &lt;= aim; j++){
+      dp[i][j] = -2;
+    }
+  }
+  int res = process2(arr, 0, aim, dp);
+  
+  
+  //严格表结构动态规划
+  int res = process3(arr, 0, aim);
+}
+
+//暴力递归
+public static int process1(int[] arr, int index, int rest){
+  if(rest &lt; 0){
+    return -1;
+  }
+  if(rest == 0){
+    return 0;
+  }
+  if(index == arr.length){
+    return -1;
+  }
+  int p1 = process1(arr, index + 1, rest);
+  int p2 = process1(arr, index + 1, rest - arr[index]);
+  
+  if(p1 == -1 &amp;&amp; p2 == -1){
+    return -1;
+  }
+  if(p1 == -1){
+    return p2 + 1;
+  }
+  if(p2 == -1){
+    return p1;
+  }
+  return Math.min(p1, p2 + 1);
+}
+
+
+//记忆化搜索
+public static int process2(int[] arr, int index, int rest, int[][] dp){
+  if(rest &lt; 0){
+    return -1;
+  }
+  if(dp[index][rest] != -2){
+    return dp[index][rest];
+  }
+  
+  if(rest == 0){
+    dp[index][rest] = 0;
+  }else if(index == arr.length){
+    dp[index][rest] = -1;
+  }else {
+    int p1 = process1(arr, index + 1, rest);
+  	int p2 = process1(arr, index + 1, rest - arr[index]);
+    if(p1 == -1 &amp;&amp; p2 == -1){
+    	dp[index][rest] = -1;
+  	}else{
+    	if(p1 == -1){
+    		dp[index][rest] = p2 + 1;
+  		}else if(p2 == -1){
+    		dp[index][rest] = p1;
+  		}else{
+        dp[index][rest] = Math.min(p1, p2 + 1);  
       }
     }
-    int carry = 0;
-    for (int i = products.length - 1; i &gt;= 0; i--) {
-      int tmp = (products[i] + carry) % 10;
-      carry = (products[i] + carry) / 10;
-      products[i] = tmp;
+  }
+  return dp[index][rest];
+}
+
+//严格表结构动态规划
+public static int process3(int[] arr, int index, int rest){
+  int[][] dp = new int[arr.length + 1][rest + 1];
+  for(int i = 0; i &lt;= arr.length; i++){
+    dp[i][0] = 0;
+  }
+  for(int j = 1; j &lt;= rest; j++){
+    dp[arr.length][j] = -1;
+  }
+  
+  for(int i = arr.length - 1; i &gt;= 0; i--){
+    for(int j = 1; j &lt;= rest; j++){
+      int p1 = dp[i + 1][j];
+      int p2 = -1;
+      if(j - arr[i] &gt;= 0){
+        p2 = dp[i + 1][j - arr[j]];
+      }
+      if(p1 == -1 &amp;&amp; p2 == -1){
+        dp[i][j] = -1;
+      }
+      if(p1 == -1){
+        dp[i][j] = p2 + 1;
+      }
+      if(p2 == -1){
+        dp[i][j] = p1;
+      }
+      dp[i][j] = Math.min(p1, p2 + 1);
     }
-    StringBuilder sb = new StringBuilder();
-    for (int num : products) sb.append(num);
-    while(sb.length()!=0 &amp;&amp; sb.charAt(0)=='0'){
-      sb.deleteCharAt(0);
+  }
+  return dp[index][rest];
+}
+
+</code></pre>
+<h2 id="3-取纸牌问题">3. 取纸牌问题</h2>
+<p>给定一个整型数组arr，代表数值不同的纸牌排成一条线。玩家A和玩家B依次拿走每张纸 牌，规定玩家A先拿，玩家B后拿，但是每个玩家每次只能拿走最左或最右的纸牌，玩家A 和玩家B都绝顶聪明。请返回最后获胜者的分数。</p>
+<pre><code class="language-java">//暴力递归
+public static int maxWinSorce1(int[] arr){
+  if(arr == null){
+    return 0;
+  }
+  return Math.max(
+    firstHand(arr, 0, arr.length - 1),
+    secondHand(arr, 0, arr.length - 1));
+}
+
+public static int firstHand(int[] arr, int left, int right){
+  if(left == right){
+    return arr[left];
+  }
+  Math.max(
+    arr[left] + secondHand(arr, left + 1, right),
+  	arr[right] + secondHand(arr, left, right -1)
+  );
+}
+
+public static int secondHand(int[] arr, int left, int right){
+  if(left == right){
+    return 0;
+  }
+  Math.min(
+    firstHand(arr, left + 1, right),
+  	firstHand(arr, left, right -1)
+  );
+}
+
+//动态规划
+public static int maxWinScorce2(int[] arr){
+  if(arr == null || arr.length = 0){
+    return 0;
+  }
+  
+  int N = arr.length;
+  int[][] dpF = new int[N][N];
+  int[][] dpS = new int[N][N];
+  
+  for(int left = 0; left &lt; N; left++){
+    dpF[left][left] = arr[left];
+    for(int right = left - 1; right &gt;= 0; right--){
+      dpF[left][right] = Math.max(
+        arr[left] + dpS[left + 1][right],
+      	arr[right] + dpS[left][right - 1]);
+       dpS[left][right] = Math.min(
+        dpF[left + 1][right],
+        dpF[left][right - 1]);
     }
-    return sb.length() == 0 ? &quot;0&quot; : sb.toString();
+  }
+  return Math.max(dpF[0][N - 1], dpS[0][N - 1]);
+}
+
+
+</code></pre>
+<h2 id="4象棋中马的跳法">4.象棋中马的跳法</h2>
+<p>请同学们自行搜索或者想象一个象棋的棋盘，然后把整个棋盘放入第一象限，棋盘的最左下 角是(0,0)位置。那么整个棋盘就是横坐标上9条线、纵坐标上10条线的一个区域。给你三个 参数，x，y，k，返回如果“马”从(0,0)位置出发，必须走k步，最后落在(x,y)上的方法数 有多少种?</p>
+<pre><code class="language-java">//暴力递归
+public static int process1(int x, int y, int k){
+  if(x &lt; 0 || x &gt; 8 || y &lt; 0 || y &gt; 9){
+    return 0;
+  }
+  //剩余步数为零时，所在位置(x,y)距终点的相对距离为(0,0)时找到一种跳法
+  if(k == 0){
+    return (x == 0 &amp;&amp; y == 0) ? 1 : 0;
+  }
+  int res = process1(x - 1, y + 2, k - 1)
+				+ process1(x + 1, y + 2, k - 1)
+				+ process1(x + 2, y + 1, k - 1)
+				+ process1(x + 2, y - 1, k - 1)
+				+ process1(x + 1, y - 2, k - 1)
+				+ process1(x - 1, y - 2, k - 1)
+				+ process1(x - 2, y - 1, k - 1)
+				+ process1(x - 2, y + 1, k - 1);
+  return res;
+}
+
+//动态规划
+public static int process2(int x, int y, int k){
+  if(x &lt; 0 || x &gt; 8 || y &lt; 0 || y &gt; 9){
+    return 0;
+  }
+  
+  //x,y,k为立方体的长宽高, k层的数据取决于k-1层，因此从下往上填
+  int[][][] dp = new int[9][10][k + 1];
+  dp[0][0][0] = 1;
+  for(int height = 1; height &lt;= k; height++){
+    for(int len = 0; len &lt; 9; len++){
+      for(int wid = 0; wid &lt; 10; wid++){
+        dp[len][wid][height] =
+          getValue(dp, len - 1, wid + 2, height - 1)
+				+ getValue(dp, len + 1, wid + 2, height - 1)
+				+ getValue(dp, len + 2, wid + 1, height - 1)
+				+ getValue(dp, len + 2, wid - 1, height - 1)
+				+ getValue(dp, len + 1, wid - 2, height - 1)
+				+ getValue(dp, len - 1, wid - 2, height - 1)
+				+ getValue(dp, len - 2, wid - 1, height - 1)
+				+ getValue(dp, len - 2, wid + 1, height - 1);
+      }
+    }
+  }
+  return dp[x][y][k];
+}
+
+public static int getValue(int[][][] dp, int height, int len, int wid){
+  if(len &lt; 0 || len &gt; 8 || wid &lt; 0 || wid &gt; 9){
+    return 0;
+  }
+  return dp[len][wid][height];
+}
+
+</code></pre>
+<h2 id="5-bob的生存概率">5. Bob的生存概率</h2>
+<p>给定五个参数n,m,i,j,k。表示在一个N*M的区域，Bob处在(i,j)点，每次Bob等概率的向上、 下、左、右四个方向移动一步，Bob必须走K步。如果走完之后，Bob还停留在这个区域上， 就算Bob存活，否则就算Bob死亡。请求解Bob的生存概率，返回字符串表示分数的方式。</p>
+<pre><code class="language-java">//暴力递归
+public static String bob(int n, int m, int i, int j, int k){
+  long all = (long)Math.pow(4, k);
+  long live = process1(n, m, i, j, k);
+  long gc = gcd(all, live);
+  return String.valueOf((live / gc) + &quot;/&quot; + (all / gc));
+  
+}
+
+//返回可以存活的走法数
+public static long process1(int N, int M, int i, int j, 
+                           int rest){
+  if(i &lt; 0 || i &gt; N || j &lt; 0 || j &gt; M){
+    return 0;
+  }
+  if(rest == 0){
+    return 1;
+  }
+  long live = process1(N, M, i + 1, j, rest - 1)
+    				+ process1(N, M, i, j + 1, rest - 1)
+    				+ process1(N, M, i - 1, j, rest - 1)
+    				+ process1(N, M, i, j - 1, rest - 1);
+}
+
+//动态规划
+public static long process2(int N, int M, int i, int j, 
+                           int K){
+  int[][][] dp = new int[N + 1][M + 1][K + 1];
+  for(int len = 0; len &lt;= N; len++){
+    for(int wid = 0; wid &lt;= M; wid++){
+      dp[len][wid][0] = 1;
+    }
+  }
+  for(int height = 1; height &lt;= K; height++){
+    for(int len = 0; len &lt;= N; len++){
+      for(int wid = 0; wid &lt;= M; wid++){
+        dp[len][wid][height] = 
+        			dp[len + 1][wid][height - 1]
+    				+ dp[len - 1][wid][height - 1]
+    				+ dp[len][wid + 1][height - 1]
+    				+ dp[len][wid - 1][height - 1];
+      }
+    }
+  }
+  return dp[i][j][K];
+}
+
+
+public static long gcd(long m, long n){
+  return n == 0 ? m : gcd(n, m % n);
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Morris遍历]]></title>
+        <id>https://stevenXu1992.github.io/post/morris-bian-li/</id>
+        <link href="https://stevenXu1992.github.io/post/morris-bian-li/">
+        </link>
+        <updated>2020-05-25T08:14:24.000Z</updated>
+        <content type="html"><![CDATA[<p>Morris遍历细节 假设来到当前节点cur，开始时cur来到头节点位置</p>
+<p>1)如果cur没有左孩子，cur向右移动(cur = cur.right)</p>
+<p>2)如果cur有左孩子，找到左子树上最右的节点mostRight:</p>
+<p>​	a.如果mostRight的右指针指向空，让其指向cur， 然后cur向左移动(cur = cur.left)</p>
+<p>​	b.如果mostRight的右指针指向cur，让其指向null， 然后cur向右移动(cur = cur.right)</p>
+<p>3)cur为空时遍历停止</p>
+<h2 id="1morris自然序遍历">1.Morris自然序遍历</h2>
+<p>Morris序： 1 -&gt; 2 -&gt; 4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 3 -&gt; 6 -&gt; 3 -&gt; 7</p>
+<pre><code class="language-java">public static void morrisClassical(Node head){
+  if(head == null){
+    return;
+  }
+  
+  Node cur = head;
+  Node mostR = null;
+  while(cur != null){
+    mostR = cur.left;
+    //cur有左树，找到左树上最右的节点
+    if(mostR != null){
+      while(mostR.right != null &amp;&amp; mostR.right != cur){
+        mostR = mostR.right;
+      }
+      //此时mostR已到达cur左树上最右的节点处
+      if(mostR.right == null){
+        //若发现mostR右树为空，则是第一次到达该点
+        mostR.right = cur;
+        //先序操作
+        //将mostR.right指向cur后，cur继续往下走执行外部while循环
+        cur = cur.left;
+        continue;
+      }else{
+        //若发现mostR.right指向cur，则是第二次到达该点，还原指针
+        mostR.right = null;
+        //edgeR(cur.left); 后序操作
+      }
+    }//else{先序操作}
+    //cur无左树，cur向右移动（通过之前修改的mostR.right指针返回父节点）,继续执行外部的while循环
+    //中序操作
+    cur = cur.right;
+  }
+  //edgeR（head); 后序操作
+}
+</code></pre>
+<h2 id="2先序遍历">2.先序遍历</h2>
+<p>先序： 1 -&gt; 2 -&gt; 4 -&gt; 5 -&gt; 3 -&gt; 6 -&gt; 7</p>
+<p>首次到达时进行操作，见1自然序注释</p>
+<h2 id="3中序遍历">3.中序遍历</h2>
+<p>先序： 4 -&gt; 2 -&gt; 5 -&gt; 1 -&gt; 6 -&gt; 3 -&gt; 7</p>
+<p>叶节点直接操作，其他节点第二次达到时操作，见1自然序注释</p>
+<h2 id="4后序遍历">4.后序遍历</h2>
+<p>后序： 4 -&gt; 5 -&gt; 2 -&gt; 6 -&gt; 7 -&gt; 3 -&gt; 1</p>
+<p>发现第二次到达时，逆序操作cur左树的右边界，遍历完成后逆序操作整棵树的右边界，见1自然序注释</p>
+<pre><code class="language-java">public static void edgeR(Node head){
+  Node tail = reverseEdge(head);
+  Node cur = tail;
+  while(cur != null){
+    //遍历操作
+    cur = cur.right;
+  }
+  reverseEdge(tail);
+}
+
+public static Node reverseEdge(Node from){
+  Node pre = null;
+  Node next = next;
+  while(from != null){
+    next = from.right;
+    from.right = pre;
+    pre = from;
+    from = next;
+  }
+  return pre;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[特殊结构]]></title>
+        <id>https://stevenXu1992.github.io/post/te-shu-jie-gou/</id>
+        <link href="https://stevenXu1992.github.io/post/te-shu-jie-gou/">
+        </link>
+        <updated>2020-05-25T06:33:08.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1滑动窗口">1.滑动窗口</h2>
+<pre><code class="language-java">//窗口结构（最大值）
+public static class WindowMax{
+  private int L;
+  private int R;
+  private int[] arr;
+  //队列中存放数组的下标，peekfirst最大值
+  private LinkedList&lt;Integer&gt; queue; 
+  
+  //初始化窗口
+  public WindowMax(int[] arr){
+    this.arr = arr;
+    L = -1;
+    R = 0;
+    queue = new LinkedList&lt;&gt;(); 
+  }
+  
+  //窗口右边界移动
+  public void shiftRight(){
+    if(R == arr.length){
+      return;
+    }
+    while(!queue.isEmpty() &amp;&amp; arr[queue.peekLast()]&lt;=arr[R]){
+      queue.pollLast();
+    }
+    queue.addLast(R);
+    R++;
+  }
+  
+  //窗口左边界移动
+  public void shiftLeft(){
+    if(L &gt; R - 1){
+      return;
+    }
+    L++;
+    if(queue.peekFirst() == L){
+      queue.pollFirst();
+    }
+  }
+  
+  //获取窗口内最大值
+  public int getMax(){
+    if(!queue.isEmpty()){
+      return arr[queue.peekFirst()];
+    }
+    return null;
+  }
+}
+
+//请实现一个函数。 输入:整型数组arr，窗口大小为w。 输出:一个长度为n-w+1的数组res，res[i]表示每一种窗口状态下的最大值
+public static int[] getMaxInWindow(int[] arr, int w){
+  if(arr == null || w &lt; 1 || arr.length &lt; w){
+    return null;
+  }
+  LinkedList&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+  int[] res = new int[arr.length - w + 1];
+  int index = 0;
+  for(int i = 0; i &lt; arr.length; i++){
+    //窗口右边界向右滑动
+    while(!queue.isEmpty() &amp;&amp; arr[queue.peekLast()] &lt;=arr[i]){
+      queue.pollLast();
+    }
+  	queue.addLast(i);
+    //窗口左边界向右滑动
+    if(queue.peekFirst() == i - w){ 
+      //i-w：过期的点，刚从窗口中出来的点，判断该点是否是队列的first
+      queue.pollFirst();
+    }
+    //保存最大值信息
+    if(i &gt;= w - 1){
+      res[index++] = queue.peekFirst();
+    }
+  }
+  return res;
+}
+</code></pre>
+<h2 id="2单调栈">2.单调栈</h2>
+<p>在数组中想找到一个数，左边和右边比这个数小、且离这个数最近的位置。如果对每一个数都想求这样的信息，能不能整体代价达到O(N)?</p>
+<pre><code class="language-java">public static int[][] monotonousStack1(int[] arr){
+  if(arr == null || arr.length &lt; 1){
+    return null;
+  }
+  int[][] res = new int[arr.length][2];
+  //单调栈顶为最大值,栈内存储数组的下标
+  Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+  for(int i = 0; i &lt; arr.length; i++){
+    //若新加元素小于栈顶，则弹出栈顶元素并记录结果
+    while(!stack.isEmpty() &amp;&amp; arr[stack.peek()] &gt; arr[i]){
+      int popIndex = stack.pop();
+      int leftIndex = stack.isEmpty() ? -1 : stack.peek();
+      res[popIndex][0] = leftIndex;
+      res[popIndex][1] = i;
+    }
+    stack.push(i);
+  }
+  //加完全部元素并记录了结果后，弹出剩下的元素并记录
+  while(!stack.isEmpty()){
+    int popIndex = stack.pop();
+    int leftIndex = stack.isEmpty() ? -1 : stack.peek();
+    res[popIndex][0] = leftIndex;
+    res[popIndex][1] = -1;
+  }
+  return res;
+}
+
+//数组中有重复的元素
+public static int[][] monotonousStack2(int[] arr){
+  Stack&lt;List&lt;Integer&gt;&gt; stack = new Stack&lt;&gt;();
+  int[][] res = new int[arr.length][2];
+  for(int i = 0; i &lt; arr.length; i++){
+    //新加元素小于栈顶
+    	while(!stack.isEmpty() &amp;&amp; arr[i] &lt; arr[stack.peek()]){
+        int popIndex = stack.pop();
+        int leftIndex = stack.isEmpty() ? 
+          -1 : stack.peek().get(stack.peek().size() - 1);
+        res[popIndex][0] = leftIndex;
+        res[popIndex][1] = i;
+      }
+    //新加元素等于栈顶
+    if(arr[i] == arr[stack.peek().get(0)]{
+      stack.peek().add(Integer.valueOf(i));
+    }else{
+      //新加元素大于栈顶
+      ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+      list.add(i);
+      stack.push(list);
+    }
+  }
+  //加完全部元素并记录了结果后，弹出剩下的元素并记录
+  while(!stack.isEmpty()){
+    List&lt;Integer&gt; restList = stack.pop();
+    int leftIndex = stack.isEmpty() ? 
+      -1 : stack.peek().get(stack.peek().size() - 1);
+    for(Integer i : restList){
+      res[i][0] = leftIndex;
+      res[i][1] = -1;
+    }
+  }
+  return res;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[字符串算法]]></title>
+        <id>https://stevenXu1992.github.io/post/zi-fu-chuan-suan-fa/</id>
+        <link href="https://stevenXu1992.github.io/post/zi-fu-chuan-suan-fa/">
+        </link>
+        <updated>2020-05-23T17:17:10.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-前缀树">1. 前缀树</h2>
+<pre><code class="language-java">public static class TrieNode{
+  public int pass;
+  public int end;
+  public TrieNode[] nexts;
+  
+  public TrieNode(){
+    pass = 0;
+    end = 0;
+    nexts = new TrieNode[26];
+  }
+}
+
+public static class Trie{
+  private TrieNode root;
+  public Trie(){
+    root = new TrieNode();
+  }
+  
+  //加入单词
+  public static void insert(String word){
+    if(word == null){
+      return;
+    }
+    char[] chars = word.toCharArray();
+    TrieNode node = root;
+    node.pass++;
+    int index = 0;
+    for(int i = 0; i &lt; chars.length; i++){
+      index = chars[i] - 'a';
+      if(node.nexts[index] == null){
+        node.nexts[index] = new TrieNode();
+      }
+      node = node.nexts[index];
+      node.pass++;
+    }
+    node.end++;
+  }
+  
+  //查询某单词加过几次
+  public static int search(String word){
+    if(word == null){
+      return 0;
+    }
+    char[] chars = word.toCharArray();
+    TrieNode node = root;
+    int index = 0;
+    for(int i = 0; i &lt; chars.length; i++){
+      index = chars[i] - 'a';
+      if(node.nexts[index] == null){
+        return 0;
+      }
+      node = node.nexts[index];
+    }
+    return node.end;
+  }
+  
+  //查询某前缀加过几次
+  public static int searchPrefix(String word){
+    if(word == null){
+      return 0;
+    }
+    char[] chars = word.toCharArray();
+    TrieNode node = root;
+    int index = 0;
+    for(int i = 0; i &lt; chars.length; i++){
+      index = chars[i] - 'a';
+      if(node.nexts[index] == null){
+        return 0;
+      }
+      node = node.nexts[index];
+    }
+    return node.pass;
+  }
+  
+  //删除单词
+  public static void delete(String word){
+    if(search(word) == 0){
+      return;
+    }
+    char[] chars = word.toCharArray();
+    TrieNode node = root;
+    node.pass--;
+    int index = 0;
+    for(int i = 0; i &lt; chars.length; i++){
+      index = chars[i] - 'a';
+      if(--node.nexts[index].pass == 0){
+        node.nexts[index] == null;
+        return;
+      }
+    }
+    node.end--;
+  }
+  
+}
+</code></pre>
+<h2 id="2-kmp">2. KMP</h2>
+<pre><code class="language-java">public static int KMP(String str1, String str2){
+  if(str1 == null || str2 == null || 
+     str2.length &gt; str1.length || str2.length() &lt; 1){
+    return -1;
+  }
+  char[] char1 = str1.toCharArray();
+  char[] char2 = str2.toCharArray();
+  int[] next = getNext(char2);
+  int i1 = 0;
+  int i2 = 0;
+  
+  while(i1 &lt; char1.length &amp;&amp; i2 &lt; char2.length){
+    if(char1[i1] == char2[i2]){
+      i1++;
+      i2++;
+    }else if(i2 == 0){
+      i1++;
+    }else{
+      i2 = next[i2];
+    }
+  }
+  return i2 == char2.length ? i1 - i2 : -1;
+}
+
+//获取每个字符之前的最大相同前缀后缀的长度
+public static int[] getNext(char[] chars){
+  if(chars.length == 1){
+    return new int[]{-1};
+  }
+  
+  int[] next = new int[chars.length];
+  next[0] = -1;
+  next[1] = 0;
+  int index = 2;
+  int cn = 0;
+  
+  while(index &lt; next.length){
+    if(chars[index - 1] == chars[cn]){
+      next[index++] = ++cn;
+    }else(cn &gt; 0){
+      cn = next[cn];
+    }else{
+      next[index++] = 0;
+    }
+  }
+  return next;
+}
+</code></pre>
+<h2 id="3-manacher">3. Manacher</h2>
+<pre><code class="language-java">public static int manacher(String str){
+  if(str == null || str.length == 1){
+    return 0;
+  }
+  char[] chars = getManacherString(str);
+  int[] help = new int[chars.length];
+  int R = -1;	//R为已找到的最大回文区域的右边界
+  int C = -1;	//C为最大回文区域的中心点
+  int max = Integer.MIN_VALUE;
+  for(int i = 0; i != chars.length; i++){
+    
+    //情况1: i超出已知的最大回文区域右边界，正常向两边寻找回文区域
+    //情况2: i在已知的最大回文区域右边界内部
+    //	1）i'的回文区域不超过最大回文区域的左边界：与i相同
+    //	2）i'的回文区域超过最大回文区域的左边界：与R-i相同
+    //	3）i'的回文区域正好在最大回文区域的左边界上：在R-i的基础上正常向两边寻找回文区域
+    //2 * C - i 为 i'
+    help[i] = R &gt; i ? Math.min(help[2 * C - i], R - i) : 1;
+    while(i + help[i] &lt; chars.length &amp;&amp; i - help[i] &gt; -1){
+      if(chars[i + help[i]] == chars[i - help[i]]){
+        help[i]++;
+      }else{
+        break;
+      }
+    }
+    //更新R和C
+     if(i + help[i] &gt; R){
+        R = i + help[i];
+        C = i;
+      }
+      max = Math.max(max, help[i]);
+  }
+  return max - 1;
+}
+
+public static char[] getManacherString(String str){
+  char[] chars = str.toCharArray();
+  char[] res = new char[str.length * 2 - 1];
+  int index = 0;
+  for(int i = 0; i &lt; chars.length; i++){
+    res[i] = (i &amp; 1) == 0 ? '#' : chars[index++];
+  }
+  return res;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[并查集]]></title>
+        <id>https://stevenXu1992.github.io/post/bing-cha-ji/</id>
+        <link href="https://stevenXu1992.github.io/post/bing-cha-ji/">
+        </link>
+        <updated>2020-05-23T06:56:01.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-并查集结构">1. 并查集结构</h2>
+<pre><code class="language-java">public class UnionFind{
+  
+  //并查集元素
+  public static class Element&lt;V&gt;{
+    public V value;
+    public Element(V value){
+      this.value = value;
+    }
+  } 
+  
+  //并查集初始化
+  public static class UnionSet{
+    HashMap&lt;V, Element&lt;V&gt;&gt; elementMap;
+    HashMap&lt;Element&lt;V&gt;, Element&lt;V&gt;&gt; fatherMap;
+    HashMap&lt;Element&lt;V&gt;, Integer&gt; sizeMap;
+    
+    public UnionSet&lt;V&gt;(List&lt;V&gt; list){
+      elementMap = new HashMap&lt;&gt;();
+      fatherMap = new HashMap&lt;&gt;();
+      sizeMap = new HashMap&lt;&gt;();
+      for(V v: list){
+        Element&lt;V&gt; e = new Element&lt;&gt;(v);
+        elementMap.put(v, e);
+        fatherMap.put(e, e);
+        sizeMap.put(e, 1);
+      }
+    }
+  }
+  
+  //判断是否属于同一集合
+  public static boolean same(V v1, V v2){
+    if( elementMap.containsKey(v1)
+     &amp;&amp; elementMap.containsKey(v2)){
+      	return findHead(elementMap.get(v1)) 
+          ==  findHead(elementMap.get(v2));	
+    	}
+    return false;
+  }
+  
+  
+  //集合合并
+  public static void union(V v1, V v2){
+    if(elementMap.containsKey(v1)
+     &amp;&amp; elementMap.containsKey(v2)){
+      Element&lt;V&gt; head1 = findHead(elementMap.get(v1));
+      Element&lt;V&gt; head2 = findHead(elementMap.get(v2));
+      if(head1 != head2){
+        Element&lt;V&gt; big = 
+          sizeMap.get(head1) &gt;= sizeMap.get(head2) ?
+          head1 : head2;
+        Element&lt;V&gt; small = big == head1 ? head2 : head1:
+        fatherMap.put(small, big);
+        sizeMap.put(big,sizeMap.get(big)+sizeMap.get(small));
+        sizeMap.remove(small);
+      }
+    }
+  }
+  
+  
+  //查找头元素
+  private static Element&lt;V&gt; findHead(Element&lt;V&gt; e){
+    Stack&lt;Element&lt;V&gt;&gt; stack = new Stack&lt;&gt;();
+    while(e != fatherMap.get(e)){
+      stack.push(e);
+      e = fatherMap.get(e);
+    }
+    while(!stack.isEmpty()){
+      fatherMap.put(stack.pop(), e);
+    }
+    return e;
+  }  
+  
+}
+</code></pre>
+<h2 id="2kruskal最小生成树">2.Kruskal最小生成树</h2>
+<pre><code class="language-java">//优先级队列的比较器，权重小的边先出
+public static class myComparator implements Comparator&lt;edge&gt;{
+  public int compare(Edge o1, Edge o2){
+    return o1.weight - o1.weight;
+  }
+}
+
+public static Set&lt;Edge&gt; kruskal(Graph graph){
+  List&lt;Node&gt; list = (List&lt;Node&gt;)graph.nodes.values();
+  UnionSet&lt;Node&gt; unionSet = new unionSet&lt;&gt;(List);
+  PriorityQueue&lt;Edge&gt; queue = 
+    new PriorityQueue&lt;&gt;(new myComparator());
+  for(Edge e : graph.edges){
+    queue.add(e);
+  }
+  
+  HashSet&lt;Edge&gt; res = new HashSet&lt;&gt;();
+  while(!queue.isEmpty()){
+    Edge e = queue.poll();
+    if(!unionSet.same(e.from, e.to)){
+      res.add(e);
+      unionSet.union(e.from, e.to);
+    }
+  }
+  return res;
+  
+}
+</code></pre>
+<h2 id="3-岛问题的并行算法设计">3. 岛问题的并行算法设计</h2>
+<pre><code class="language-java">public static int island(int[][] matrix){
+  if(matrix == null || matrix[0] == null){
+    return 0;
+  }
+  
+  int length = matrix.length;
+  int width = matrix[0].length;
+  int res = 0;
+  
+  for(int i = 0; i &lt; length; i++){
+    for(int j = 0; j &lt; width; j++){
+      if(matrix[i][j] == 1){
+        res++;
+        infect(matrix, i, j, length, width);
+      }
+    }
+  }
+}
+
+public static void infect(int[] matrix, int i, int j, int length, int width){
+  if(i &lt; 0 || i &gt;= length || j &lt; 0 || j &gt;= width 
+     || matrix[i][j] != 1){
+    return;
+  }
+  	matrix[i][j] = 2;
+    infect(matrix, i + 1, j, length, width);
+    infect(matrix, i - 1, j, length, width);
+    infect(matrix, i, j + 1, length, width);
+    infect(matrix, i, j - 1, length, width);
+  
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[暴力递归]]></title>
+        <id>https://stevenXu1992.github.io/post/bao-li-di-gui/</id>
+        <link href="https://stevenXu1992.github.io/post/bao-li-di-gui/">
+        </link>
+        <updated>2020-05-21T09:31:45.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-汉诺塔">1. 汉诺塔</h2>
+<pre><code class="language-java">public static void hannoi(int n){
+  process(n, &quot;from&quot;, &quot;to&quot;, &quot;help&quot;);
+} 
+
+public static void process(int n, String from, String to, String help){
+  if(n == 1){
+    System.out.println(&quot;move&quot; + from + &quot;to&quot; + to);
+  }else{
+    process(n - 1, from, help, to);
+    process(1, from, to, help);
+    process(n - 1, help, to, from);
+  }
+}
+</code></pre>
+<h2 id="2-字符串子序列">2. 字符串子序列</h2>
+<pre><code class="language-java">public static List&lt;String&gt; subSequence(String str){
+  List&lt;String&gt; res = new ArrayList&lt;&gt;();
+  if(str == null){
+    return res;
+  }
+  if(str.length() == 0){
+    res.add(&quot;&quot;);
+    return res;
+  }
+  
+  char[] chars = str.toCharArray();
+  process(res, chars, &quot;&quot;, 0);
+}
+
+public static List&lt;String&gt; process(List&lt;String&gt; list, char[] chars, String path, int index){
+  if(index == chars.length){
+    list.add(path);
+  }else{
+    process(list, chars, path, index + 1);
+    process(list, chars, path + String.valueOf(chars[index]), index + 1);
+  }
+}
+</code></pre>
+<h2 id="3字符串全排列">3.字符串全排列</h2>
+<pre><code class="language-java">public static List&lt;String&gt; allArray(String str){
+  List&lt;String&gt; res = new ArrayList&lt;&gt;();
+  ArrayList&lt;String&gt; set = new ArrayList&lt;&gt;();
+  char[] chars = str.toCharArray();
+  for(char c : chars){
+    set.add(c);
+  }
+  process(set, &quot;&quot;, res);
+  return res;
+}
+
+public static void process(ArrayList&lt;String&gt; set, String path, List&lt;String&gt; list){
+  if(set.isEmpty()){
+    list.add(path);
+  }
+  HashSet&lt;Character&gt; picked = new HashSet&lt;&gt;();
+  for(int i = 0; i &lt; set.size(); i++){
+    if(!picked.contains(set.get(i))){
+      picked.add(set.get(i));
+      String newPath = path + set.get(i);
+      ArrayList&lt;String&gt; next = new ArrayList&lt;&gt;(set);
+      next.remove(i);
+      process(next, newPath, list);
+    }
+  }
+}
+</code></pre>
+<h2 id="4背包问题">4.背包问题</h2>
+<pre><code class="language-java">public static int backpack(int[] weights, int[] values, int index, int weighted, int bagLimit){
+  if(weighted &gt; bagLimit){
+    return 0;
+  }
+  if(index &gt; weights.length){
+    return 0;
+  }
+  Math.max(
+    backpack(weights, values, index + 1, weighted, bagLimit),
+  	backpack(weights, values, index + 1, weighted + weights[index], bagLimit) + values[index]
+  );
+}
+</code></pre>
+<h2 id="5纸牌问题">5.纸牌问题</h2>
+<pre><code class="language-java">public static int maxWinSorce(int[] arr){
+  if(arr == null){
+    return 0;
+  }
+  return Math.max(
+    firstHand(arr, 0, arr.length - 1),)
+    secondHand(arr, 0, arr.length - 1);
+}
+
+public static int firstHand(int[] arr, int left, int right){
+  if(left == right){
+    return arr[left];
+  }
+  Math.max(
+    arr[left] + secondHand(arr, left + 1, right),
+  	arr[right] + secondHand(arr, left, right -1)
+  );
+}
+
+public static int secondHand(int[] arr, int left, int right){
+  if(left == right){
+    return 0;
+  }
+  Math.min(
+    firstHand(arr, left + 1, right),
+  	firstHand(arr, left, right -1)
+  );
+}
+</code></pre>
+<h2 id="6n皇后">6.N皇后</h2>
+<pre><code class="language-java">public static int NQueen(int n){
+  if(n &lt; 1){
+    return 0;
+  }
+  return process(0, new int[n], n);
+}
+
+public static int process(int index, int[] record, int n){
+  if(index == n){
+    return 1;
+  }
+  int res = 0;
+  for(int j = 0; j &lt; n; j++){
+    if(valid(record, index, j)){
+      record[index] = j;
+      res += process(index + 1, record, n);
+    }
+  }
+  return res;
+}
+
+public static boolean valid(int[] record, int index, int j){
+  for(int k = 0; k &lt; index; k++){
+    if(record[k] == j || Math.abs(record[k] - j) == Math.abs(i - k)){return false;}
+  }
+  return true;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[图的经典算法]]></title>
+        <id>https://stevenXu1992.github.io/post/tu-de-jing-dian-suan-fa/</id>
+        <link href="https://stevenXu1992.github.io/post/tu-de-jing-dian-suan-fa/">
+        </link>
+        <updated>2020-05-18T06:00:45.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-模版">1. 模版</h2>
+<pre><code class="language-java">public class Graph{
+  public HashMap&lt;Integer, Node&gt; nodes;
+  public HashSet&lt;Edge&gt; edges;
+  public Graph(){
+    nodes = new HashMap&lt;&gt;();
+    edges = new HashSet&lt;&gt;();
+  }
+}
+
+public class Node{
+  public int value;
+  public int in;
+  public int out;
+  public ArrayList&lt;Node&gt; nexts;
+  public ArrayList&lt;Edge&gt; edges;
+  public Node(int data){
+    this.value = data;
+    in = 0;
+    out = 0;
+    nexts = new ArrayList&lt;&gt;();
+    edges = new ArrayList&lt;&gt;();
+  }
+}
+
+public class Edge{
+  public int weight;
+  public Node from;
+  public Node to;
+  public Edge(int weight, Node from, Node to){
+    this.weight = weight;
+    this.from = from;
+    this.to = to;
+  }
+}
+</code></pre>
+<h2 id="2-图的遍历">2. 图的遍历</h2>
+<h3 id="21-宽度优先遍历">2.1 宽度优先遍历</h3>
+<pre><code class="language-java">public static void BFS(Node node){
+  if(node == null){
+    return;
+  }
+  LinkedList&lt;Node&gt; queue = new LinkedList&lt;&gt;();
+  HashSet&lt;Node&gt; set = new HashSet&lt;&gt;();
+  queue.add(node);
+  set.add(node);
+  while(!queue.isEmpty()){
+    Node cur = queue.poll();
+    //具体遍历操作
+    for(Node n : cur.nexts){
+      if(!set.contains(n)){
+        queue.add(n);
+        set.add(n);
+      }
+    }
+  }
+}
+</code></pre>
+<h3 id="22-深度优先遍历">2.2 深度优先遍历</h3>
+<pre><code class="language-java">public static void DFS(Node node){
+  if(node == null){
+    return;
+  }
+  Stack&lt;Node&gt; stack = new Stack&lt;&gt;();
+  HashSet&lt;Node&gt; set = new HashSet&lt;&gt;();
+  stack.push(node);
+  set.add(node);
+  //具体遍历操作
+  while(!stack.isEmpty()){
+    Node cur = stack.pop();
+    for(Node n : cur.nexts){
+      if(!set.contains(n)){
+        stack.push(cur);
+        stack.push(n);
+        set.add(n);
+        //具体遍历操作
+        break;
+      }
+    }
+  }
+}
+</code></pre>
+<h2 id="3拓扑排序">3.拓扑排序</h2>
+<pre><code class="language-java">public static List&lt;Node&gt; topologySort(Graph graph){
+  HashMap&lt;Node, Integer&gt; map = new HashMap&lt;&gt;();
+  LinkedList&lt;Node&gt; queue = new LinkedList&lt;&gt;();
+  ArrayList&lt;Node&gt; list = new ArrayList&lt;&gt;();
+  
+  for(Node n : graph.nodes.values()){
+    map.put(n, n.in);
+    if(n.in == 0){
+      queue.add(n);
+    }
+  }
+  
+  while(!queue.isEmpty()){
+    Node cur = queue.pop();
+    list.add(cur);
+    for(Node n : cur.nexts){
+      map.put(n, map.get(n) - 1);
+      if(map.get(n) == 0){
+        queue.add(n);
+      }
+    }
+  }
+  return list;
+}
+</code></pre>
+<h2 id="4-prim算法">4. Prim算法</h2>
+<pre><code class="language-java">public static class EdgeComparator implements Comparator&lt;Edge&gt;{
+  public int compare(Edge o1, Edge o2){
+    //自定义比较器:
+    // o1 - o2 &lt; 0 : o1 --&gt; o2
+    // o2 - o1 &lt; 0 : o2 --&gt; o1       
+    return o1.weight - o2.weight;
+  }
+}
+
+public static Set&lt;Edge&gt; prim(Graph graph){
+  PriorityQueue&lt;Edge&gt; queue = new PriorityQueue&lt;&gt;();
+  HashSet&lt;Node&gt; set = new HashSet&lt;Node&gt;();
+  HashSet&lt;Edge&gt; res = new HashSet&lt;Edge&gt;();
+  
+  for(Node node : graph.nodes.values()){
+    if(!set.contains(node)){
+      set.add(node);
+      for(Edge edge : node.edges){
+        queue.add(edge);
+      }
+      while(!queue.isEmpty()){
+        Edge edge = queue.poll();
+        if(!set.contains(edge.to)){
+          res.add(edge);
+          set.add(edge.to);
+          for(Edge e : edge.to.edges){
+            queue.add(e);
+          }
+        }
+      }
+    }
+  }
+  return res;
+}
+</code></pre>
+<h2 id="5-dijkstra算法">5. Dijkstra算法</h2>
+<pre><code class="language-java">public static HashMap&lt;Node, Integer&gt; dijkstra(Node head){
+  
+  //distanceMap: 存储出发点至其他各点的距离
+  HashMap&lt;Node, Integer&gt; distanceMap = new HashMap&lt;&gt;();
+  //lockedSet: 用于记录已锁定的点
+  HashSet&lt;Node&gt; lockedSet = new HashSet&lt;&gt;();
+  distanceMap.put(head, 0);
+  //unlockedMinNode: 找出distanceMap中距离最小且未锁定的点
+  Node minNode = unlockedMinNode(distanceMap, lockedSet);
+  
+  while(minNode != null){
+    int dis = distanceMap.get(minNode);
+    for(Edge edge : minNode.edges){
+      if(!distanceMap.containsKey(edge.to)){
+        distanceMap.put(edge.to, dis + edge.weight);
+      }
+      //若distanceMap中已存在，则比较原距离和新发现的边所更新的距离
+      distanceMap.put(edge.to, 
+                      Math.min(distanceMap.get(edge.to), 
+                      				 dis + edge.weight));
+    }
+    lockedSet.add(minNode);
+    minNode = unlockedMinNode(distanceMap, lockedSet);
+  }
+  return distanceMap;
+}
+
+public static Node unlockedMinNode(
+  HashMap&lt;Node, Integer&gt; disMap, HashSet&lt;Node&gt; lockedSet){
+  Node minNode = null;
+  int minDis = Integer.MAX_VALUE;
+  for(Map.Entry&lt;Node, Integer&gt; entry : disMap.entrySet()){
+    Node n = entry.getKey();
+    int dis = entry.getValue();
+    if(!lockedSet.contains(n) &amp;&amp; dis &lt; minDis){
+      minNode = n;
+      minDis = dis;
+    }
+  }
+  return minNode;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[链表的常见算法]]></title>
+        <id>https://stevenXu1992.github.io/post/lian-biao-chang-jian-ti-mu/</id>
+        <link href="https://stevenXu1992.github.io/post/lian-biao-chang-jian-ti-mu/">
+        </link>
+        <updated>2020-05-17T14:23:19.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1反转链表">1.反转链表</h2>
+<pre><code class="language-java">//单向链表的反转
+public static class Node{
+  int value;
+  Node next;
+  public Node(int data){
+    this.value = data;
+  }
+}
+
+public static Node reverse(Node head){
+  Node pre = null;
+  Node next = null;
+  while(head != null){
+    next = head.next;
+    head.next = pre;
+    pre = head;
+    head = next;
+  }
+  return pre;
+}
+
+//双向链表的反转
+public static class DoubleNode{
+  int value;
+  DoubleNode next;
+  DoubleNode last;
+  public Double(int data){
+    this.value = data;
+  }
+}
+
+public static Node reverse(DoubleNode head){
+  DoubleNode pre = null;
+  DoubleNode next = null;
+  while(head != null){
+    next = head.next;
+    head.next = pre;
+    head.last = next;
+    pre = head;
+    head = next;
+  }
+  return pre;
+}
+</code></pre>
+<h2 id="2判断是否为回文结构">2.判断是否为回文结构</h2>
+<pre><code class="language-java">public static boolean palindrome1(Node head){
+  Stack&lt;Node&gt; stack = new Stack&lt;Node&gt;();
+  Node cur = head;
+  while(cur != null){
+    stack.push(cur);
+    cur = cur.next;
+  }
+  while(!stack.isEmpty()){
+    Node n = stack.pop();
+    if(head.value != n.value){
+      return false;
+    }
+    head = head.next;
+  }
+  return true;
+}
+
+public static boolean palindrome2(Node head){
+  Node slow = head.next;
+  Node fast = head;
+  while(slow.next != null &amp;&amp; fast.next.next != null){
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  Stack&lt;Node&gt; stack = new Stack&lt;Node&gt;();
+  while(slow != null){
+    stack.push(slow);
+    slow = slow.next;
+  }
+  while(!stack.isEmpty()){
+    Node n = stack.pop();
+    if(n.value != head.value){
+      return false;
+    }
+    head = head.next;
+  }
+  return true;
+}
+
+public static boolean palindrome3(Node head){
+  Node slow = head;
+  Node fast = head;
+  while(slow.next != null &amp;&amp; fast.next.next != null){
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  
+  //此时slow停在中点，复用fast指针反转链表
+  fast = slow.next;
+  slow.next = null;
+  Node next = null;
+  while(fast != null){
+    next = fast.next;
+    fast.next = slow;
+    slow = fast;
+    fast = next;
+  }
+  
+  //反转完成，此时slow在尾部,fast为null，开始判断
+  Node end = slow; //记录尾部节点，复原使用
+  boolean res = true;
+  while(head != null &amp;&amp; slow != null){
+    if(head.value != slow.value){
+      res = false;
+    }
+    head = head.next;
+    slow = slow.next;
+  }
+  
+  //复原链表,复用fast指针
+  fast = end.next;
+  end.next = null;
+  while(fast != null){
+    next = fast.next;
+    fast.next = end;
+    end = fast;
+    fast = next;
+  }
+  return res;
+}
+</code></pre>
+<h2 id="3-链表的荷兰国旗问题">3. 链表的荷兰国旗问题</h2>
+<pre><code class="language-java">public static Node flag(Node head, int pivot){
+  
+  Node sHead = null;
+  Node sTail = null;
+  
+  Node eHead = null;
+  Node eTail = null;
+  
+  Node bHead = null;
+  Node bTail = null;
+  
+  while(head != null){
+    if(head.value &lt; pivot){
+      if(sHead == null){
+        sHead = head;
+        sTail = head;
+      }else{
+        sTail.next = head;
+        sTail = head;
+      }
+    }else if(head.value &gt; pivot){
+      if(bHead == null){
+        bHead = head;
+        bTail = head;
+      }else{
+        bTail.next = head;
+        bTail = head;
+      }
+    }else{
+      if(eHead == null){
+        eHead = head;
+        eTail = head;
+      }else{
+        eTail.next = head;
+        eTail = head;
+      }
+    }
+    head = head.next;
+  }
+  
+  if(sTail != null){
+    sTail.next = eHead;
+    eTail = eTail == null ? sTail : eTail;
+  }
+  
+  if(eTail != null){
+    eTail.next = bHead;
+  }
+  
+  return sHead != null ? 
+    		 sHead : eHead != null ? eHead : bHead; 
+}
+</code></pre>
+<h2 id="4带随机指针的链表复制">4.带随机指针的链表复制</h2>
+<pre><code class="language-java">public static Node copy1(Node head){
+  HashMap&lt;Node, Node&gt; map = new HashMap&lt;&gt;();
+  Node cur = head;
+  while(cur != null){
+    map.put(cur, new Node(cur.value));
+    cur = cur.next;
+  }
+  cur = head;
+  while(cur != null){
+    map.get(cur).next = map.get(cur.next);
+    map.get(cur).random = map.get(cur.random);
+    cur = cur.next;
+  }
+  return map.get(head);
+}
+
+public static Node copy2(Node head){
+  
+  //先按照next指针在原链表中每个节点后面复制对应节点
+  Node cur = head;
+  Node next = null;
+  while(cur != null){
+    next = cur.next;
+    cur.next = new Node(cur.value);
+    cur.next.next = next;
+    cur = next;
+  }
+  
+  //复制原链表的random指针
+  cur = head;
+  Node copy = null;
+  while(cur != null){
+    next = cur.next.next;
+    copy = cur.next;
+    copy.random = cur.random != ? cur.random.next : null;
+    cur = next;
+  }
+  
+  //将原链表与复制好的链表分离
+  Node res = head.next;
+  cur = head;
+  while(cur != null){
+    next = cur.next.next;
+    copy = cur.next;
+    cur.next = next;
+    copy.next = next != null ? next.next : null;
+    cur = next;
+  }
+  return res;
+}
+</code></pre>
+<h2 id="5链表相交相关问题">5.链表相交相关问题</h2>
+<p>判断两个链表是否相交，若相交返回相交节点</p>
+<pre><code class="language-java">public static Node intersection(Node head1, Node head2){
+  if(head1 == null || head2 == null){
+    return null;
+  }
+  Node loop1 = getLoop(head1);
+  Node loop2 = getLoop(head2);
+  //1.若两个链表都无环
+  if(loop1 == null &amp;&amp; loop2 == null){
+    return noLoop(head1, head2);
+  }
+  //2.若一个有环，一个无环，必定不相交
+  //3.若两个链表都有环
+  if(loop1 != null &amp;&amp; loop2 != null){
+    return bothLoop(head1, loop1, head2, loop2);
+  }
+  return null;
+}
+
+//判断一个链表是否有环并返回入环节点
+public static Node getLoop(Node head){
+  if(head == null || head.next == null 
+     || head.next.next == null){
+    return null;
+  }
+  Node slow = head.next;
+  Node fast = head.next.next;
+  while(slow != fast){
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  fast = head;
+  while(slow != fast){
+    slow = slow.next;
+    fast = fast.next;
+  }
+  return fast;
+}
+
+//都无环
+public static Node noLoop(Node head1, Node head2){
+  Node cur1 = head1;
+  Node cur2 = head2;
+  int length = 0;
+  //分别找出两个链表的尾部,length用于求长度的差值
+  while(cur1.next != null){
+    length++;
+    cur1 = cur1.next;
+  }
+  while(cur2.next != null){
+    length--;
+    cur2 = cur2.next;
+  }
+  //只有尾节点相同才会相交
+  if(cur1 == cur2){
+    cur1 = length &gt; 0 ? head1 : head2; //cur1指向更长链表的头部
+    cur2 = cur1 == head1 ? head2 : head1;
+    length = Math.abs(length);
+    while(length != 0){
+      length--;
+      cur1 = cur1.next;
+    }
+    while(cur1 != cur2){
+      cur1 = cur1.next;
+      cur2 = cur2.next;
+    }
+    return cur1;
+  }else{
+    return null;
+  }
+}
+
+//都有环
+public static Node bothLoop(
+  Node head1, Node loop1, Node head2, Node loop2){
+  Node cur1 = null;
+  Node cur2 = null;
+  //若入环节点相同，则类似于无环相交的情况
+  if(loop1 == loop2){
+    cur1 = head1;
+    cur2 = head2;
+    int length = 0;
+    while(cur1 != loop1){
+      length++;
+      cur1 = cur1.next;
+    }
+    while(cur2 != loop2){
+      length--;
+      cur2 = cur.next;
+    }
+    cur1 = length &gt; 0 ? head1 : head2;
+    cur2 = cur1 == head1 ? head2 : head1;
+    length = Math.abs(length);
+    while(length != 0){
+      length--;
+      cur1 = cur1.next;
+    }
+    while(cur1 != cur2){
+      cur1 = cur1.next;
+      cur2 = cur2.next;
+    }
+    return cur1;
+  }else{
+    cur1 = loop1.next;
+    while(cur1 != loop1){
+      if(cur1 == loop2){
+        return loop1;
+      }
+      cur1 = cur1.next;
+    }
+    return null;
+  }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[排序算法]]></title>
+        <id>https://stevenXu1992.github.io/post/pai-xu-suan-fa/</id>
+        <link href="https://stevenXu1992.github.io/post/pai-xu-suan-fa/">
+        </link>
+        <updated>2020-05-15T13:37:58.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1冒泡排序">1.冒泡排序</h2>
+<pre><code class="language-java">public static void bubbleSort(int[] arr){
+  if(arr.length &lt; 2 || arr == null){
+    return;
+  }
+  //大数冒泡
+  for(int i = arr.length - 1; i &gt; 0; i--){
+    for(int j = 0; j &lt; i; j++){
+      if(arr[j] &gt; arr[j + 1]){
+        swap(arr, j, j + 1);
+      }
+    }
+  }
+  
+  //小数冒泡
+  for(int i = 0; i &lt; arr.length - 1; i++){
+    for(int j = length - 1; j &gt; i; j--){
+      if(arr[j] &lt; arr[j - 1]){
+        swap(arr, j, j - 1);
+      }
+    }
+  }
+}
+
+public static void swap(int[] arr, int a, int b){
+  int temp = arr[a];
+  arr[a] = arr[b];
+  arr[b] = temp;
+}
+</code></pre>
+<h2 id="2插入排序">2.插入排序</h2>
+<pre><code class="language-java">public static void insertSort(int[] arr){
+  if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  for(int i = 1; i &lt; arr.length; i++){
+    for(int j = i - 1; j &gt;= 0 &amp;&amp; arr[j] &gt; arr[j + 1]; j--){
+      swap(arr, j, j + 1);
+    }
+  }
+}
+</code></pre>
+<h2 id="3-选择排序">3. 选择排序</h2>
+<pre><code class="language-java">public static void selectSort(int[] arr){
+  if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  for(int i = 0; i &lt; arr.length; i++){
+    int minIndex = i;
+    for(int j = i + 1; j &lt; arr.length; j++){
+      minIndex = arr[j] &lt; arr[minIndex] ? j : minIndex;
+    }
+    swap(arr, minIndex, i);
+  }
+  
+}
+</code></pre>
+<h2 id="4-归并排序">4. 归并排序</h2>
+<pre><code class="language-java">public static void mergeSort(int[] arr){
+   if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  process(arr, 0, arr.length - 1);
+}
+
+public static void process(int[] arr, int left, int right){
+  if(left == right){
+    return;
+  }
+  int mid = (left + right) / 2;
+  process(arr, left, mid);
+  process(arr, mid + 1, right);
+  merge(arr, left, mid, right);
+}
+
+public static void merge(int[] arr, int left, int mid, int right){
+  int[] help = new int[right - left + 1];
+  int p1 = left;
+  int p2 = mid + 1;
+  int i = 0;
+  while(p1 &lt;= mid &amp;&amp; p2 &lt;= right){
+    help[i++] = arr[p1] &lt; arr[p2] ? arr[p1++] : arr[p2++];
+  }
+  while(p1 &lt;= mid){
+    help[i++] = arr[p1++];
+  }
+  while(p2 &lt;= right){
+    help[i++] = arr[p2++];
+  }
+  for(int j = 0; j &lt; help.length; j++){
+    arr[left + j] = help[j];
+  }
+}
+</code></pre>
+<h2 id="5-随机快排">5. 随机快排</h2>
+<pre><code class="language-java">public static void quickSort(int[] arr){
+  if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  process(arr, 0, arr.length - 1);
+}
+
+public static void process(int[] arr, int left, int right){
+  if(left &lt; right){
+    swap(arr, right, 
+         left + (int)(Math.random() * (right - left + 1)));
+    int[] p = partition(arr, left, right);
+    process(arr, left, p[0] - 1);
+    process(arr, p[1] + 1, right);
+  }
+}
+
+public static int[] partition(int[] arr, int left, int right){
+  int lessZone = left - 1;
+  int moreZone = right;
+  while(left &lt; moreZone){
+    if(arr[left] &gt; arr[right]){
+      swap(arr, left, --moreZone);
+    }if(arr[left] &lt; arr[right]){
+      swap(arr, left++, ++lessZone);
+    }else{
+      left++;
+    }
+  }
+  swap(arr, right, moreZone);
+  return new int[] {lessZone + 1, moreZone};
+}
+</code></pre>
+<h2 id="6-堆排序">6. 堆排序</h2>
+<p>用数组的方式表示完全二叉树，对于任意节点i：</p>
+<p>左子节点: 2i + 1, 	右子节点: 2i + 2, 	父节点: （i - 1）/ 2</p>
+<pre><code class="language-java">public static void heapSort(int[] arr){
+  if(arr == null || arr.length &lt; 2){
+    return;
+  }
+  for(int i = 0; i &lt; arr.length; i++){
+    heapInsert(arr, i);
+  }
+  int size = arr.length;
+  swap(arr, 0, --size);
+  while(size &gt; 0){
+    heapify(arr, 0, size);
+    swap(arr, 0, --size);
+  }
+}
+
+public static void heapInsert(int[] arr, int index){
+  while(arr[index] &gt; arr[(index - 1) / 2]){
+    swap(arr, index, (index - 1) / 2);
+    index = (index - 1) / 2;
+  }
+}
+
+public static void heapify(int[] arr, int index, int size){
+  int left = 2 * index + 1;
+  while(left &lt; size){
+    int max = left + 1 &lt; size &amp;&amp; arr[left + 1] &gt; arr[left] 
+      ? left + 1 : left;
+    max = arr[max] &gt; arr[index] ? max : index;
+    if(max == index){
+      break;
+    }
+    swap(arr, index, max);
+    index = max;
+    left = 2 * index + 1;
+  }
+}
+</code></pre>
+<h2 id="7-桶排序">7. 桶排序</h2>
+<p>基数排序</p>
+<p>计数排序</p>
+<h2 id="8-总结">8. 总结</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">时间复杂度</th>
+<th style="text-align:center">空间复杂度</th>
+<th style="text-align:center">是否稳定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>选择排序</td>
+<td style="text-align:center">O(N^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td>冒泡排序</td>
+<td style="text-align:center">O(N^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td>插入排序</td>
+<td style="text-align:center">O(N^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td style="text-align:center">O(N*logN)</td>
+<td style="text-align:center">O(N)</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td>随机快排</td>
+<td style="text-align:center">O(N*logN)</td>
+<td style="text-align:center">O(logN)</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td>堆排序</td>
+<td style="text-align:center">O(N*logN)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td>桶排序</td>
+<td style="text-align:center">O(N)</td>
+<td style="text-align:center">O(M)</td>
+<td style="text-align:center">是</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[二叉树的常见算法]]></title>
+        <id>https://stevenXu1992.github.io/post/er-cha-shu-chang-jian-ti-mu/</id>
+        <link href="https://stevenXu1992.github.io/post/er-cha-shu-chang-jian-ti-mu/">
+        </link>
+        <updated>2020-05-12T09:22:58.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1判断是否为完全二叉树">1.判断是否为完全二叉树</h2>
+<p>判断标准：宽度优先遍历时 1）若某节点有右节点无左节点，则不为完全二叉树 2）某节点左右节点不全，后续都必须为叶节点，否则不是完全二叉树(用一个布尔值记录状态)</p>
+<pre><code class="language-java">public static boolean heapTree(Node head){
+  if(head == null){
+    return true;
+  }
+  LinkedList&lt;Node&gt;() queue = new LinkedList&lt;&gt;();
+  queue.add(head);
+  boolean leaf = false;
+  Node right = null;
+  Node left = null;
+  while(!queue.isEmpty()){
+    head = queue.poll();
+    right = head.right;
+    left = head.left;
+    if( (right != null &amp;&amp; left == null) //条件1
+       || (leaf &amp;&amp; (right != null || left != null))){ //条件2
+      return false;
+    }
+    if(right != null){
+      queue.add(right);
+    }
+    if(left != null){
+      queue.add(left);
+    }
+    if(right == null || left == null){
+      leaf = true; //左右子树有一个为空，开启叶节点的记录状态
+    }
+  }
+  return true;
+} 
+</code></pre>
+<h2 id="2查找两个节点的最低公共祖先节点">2.查找两个节点的最低公共祖先节点</h2>
+<p>设两个节点为n1,n2， 递归函数中：</p>
+<ol>
+<li>若头节点为n1或n2,返回自己（为空则返回空 ）</li>
+<li>递归黑盒求出左右子树的返回值</li>
+<li>若左右子树返回值都不为空，返回自己（已找到公共祖先）</li>
+<li>左右子树一个为空一个不为空，返回不为空的一项</li>
+</ol>
+<pre><code class="language-java">public static Node process(Node head, Node n1, Node n2){
+  if(head == null || head == n1 || head == n2){
+    return head;
+  }
+  Node left = process(head.left, n1, n2);
+  Node right = process(head.right, n1, n2);
+  if(left != null &amp;&amp; right != null){
+    return head;
+  }
+  return left == null ? right : left;
+}
+</code></pre>
+<h2 id="3查找某节点的后继节点">3.查找某节点的后继节点</h2>
+<p>后继节点：某节点在中序遍历中的下一个节点</p>
+<pre><code class="language-java">public static Node find(Node node){
+  if(node == null){
+    return node;
+  }
+  if(node.right != null){ //有右树
+    return process(node.right); //则中继为右树上最左的节点
+  }else{ 	//	无右树
+    Node parent = node.parent;
+    //若node = parent.left, 则直接返回parent
+    //否则继续向上寻找，直到node = parent.node
+    //最后，若一直未找到则返回null(最右节点的中继为null)
+    while(parent != null &amp;&amp; node != parent.left){
+      node = parent;
+      parent = node.parent;
+    }
+    return parent;
+  }
+} 
+
+public static Node process(Node node){
+  if(node == null){
+    return node;
+  }
+  while(node.left != null){
+    node = node.left;
+  }
+  return node;
+}
+</code></pre>
+<h2 id="4序列化与反序列化">4.序列化与反序列化</h2>
+<pre><code class="language-java">// '#'表示null, '_'用于分隔
+public static String serial(Node node){
+  if(node == null){
+    return '#_';
+  }
+  String res = node.data + '_';
+  //按照先序遍历的顺序将树序列化成字符串
+  res += serial(node.left);
+  res += serial(node.right);
+  return res;
+}
+
+public static Node recon(String str){
+  String[] arr = str.split('_');
+  Queue&lt;String&gt; queue = new LinkedList&lt;String&gt;();
+  for(int i = 0; i != arr.length; i++){
+    queue.offer(arr[i]);
+  }
+  return reconProcess(queue);
+}
+
+public static Node reconProcess(Queue&lt;String&gt; queue){
+  String str = queue.poll();
+  if(str.equals('#')){
+    return null;
+  }
+  Node head = new Node(Integer.valueOf(str));
+  head.left = reconProcess(queue);
+  head.right = reconProcess(queue);
+  return head;
 }
 </code></pre>
 ]]></content>
