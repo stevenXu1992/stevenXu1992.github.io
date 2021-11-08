@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven Xu</title>
-    <updated>2021-10-19T19:46:13.736Z</updated>
+    <updated>2021-11-08T20:43:36.875Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,25 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Steven Xu</rights>
+    <entry>
+        <title type="html"><![CDATA[与你一起的第1天 -- 槲寄生下的吻]]></title>
+        <id>https://stevenXu1992.github.io/post/yu-ni-yi-qi-de-di-1-tian-hu-ji-sheng-xia-de-wen/</id>
+        <link href="https://stevenXu1992.github.io/post/yu-ni-yi-qi-de-di-1-tian-hu-ji-sheng-xia-de-wen/">
+        </link>
+        <updated>2021-09-03T15:41:30.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>--从来没有见过槲寄生，哈利没有见过，张秋也没见过，只能从依稀记得读过的书中勾勒出它的样子，想必是一种能让人莫名其妙产生情愫的神奇植物吧。
+</code></pre>
+<p>​	昨天用幼稚的格鲁吉亚手写体写下了：我想你了，晚安，你笑着回复说我的字体很漂亮。我不知天高地厚地想要用你的语言写下漂亮的诗篇送给你，可是再漂亮的字，再优雅的诗，也不及你回眸一笑的美丽芳华。</p>
+<p>​	用中文说晚安时，你记成了我喜欢你的意思，满怀忧愁地告诉我不要说一些连自己都不确定的话。对你来说，喜欢一个人是很特殊的一件事吧，我也一样。看到你感到压力的样子总是让我很心疼，想要让你知道我有多么的喜欢你，但是又害怕会带给你压力，让你紧张，也许感情本来就是一件没有办法用语言说清楚的事情吧。</p>
+<p>​	星期五的天空，晴空万里，云彩似乎也知道今天似乎会有不同寻常的事情要发生。开车去市里的路上，我说喜欢下雨，喜欢飘雪，喜欢刮风，你说我知道你喜欢女人。可你是否知道那个女人就是你？</p>
+<p>​	你喂我吃寿司的动作很甜蜜。</p>
+<p>​	送走了你朋友，我们在回来的路上一度互相沉默了，似乎只是平凡的一天，平凡的一顿晚餐，就连月亮也不知道要如何开口。当车停在昏黄的路灯下，我握着你的手，紧张地想着想要如何给你诉说我对你的喜欢，却担心给你压力，扰乱你的情绪，迟迟不敢开口，只能将你紧紧抱在怀里，希望能通过我的心跳传达给你所有的言语。这时，突然，你说：</p>
+<p>​	“我们就保持现在这样吧”</p>
+<p>​	然后，在想象中的槲寄生下，我们深深地吻在了一起。</p>
+<p>​	路灯似乎变得昏暗，月亮悄悄地注视着我们，街上过往的车辆也像是被人按了暂停键，整个世界只剩下你散发着幽香的嘴唇和温柔的拥抱让我在这个遥远的国度感受到了从未有过的温暖。</p>
+<p>​	你在哪里，槲寄生就在哪里，想象中的植物，比真实更真实。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[有序表]]></title>
         <id>https://stevenXu1992.github.io/post/you-xu-biao/</id>
@@ -2014,240 +2033,6 @@ public static Node bothLoop(
   }
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[排序算法]]></title>
-        <id>https://stevenXu1992.github.io/post/pai-xu-suan-fa/</id>
-        <link href="https://stevenXu1992.github.io/post/pai-xu-suan-fa/">
-        </link>
-        <updated>2020-05-15T13:37:58.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="1冒泡排序">1.冒泡排序</h2>
-<pre><code class="language-java">public static void bubbleSort(int[] arr){
-  if(arr.length &lt; 2 || arr == null){
-    return;
-  }
-  //大数冒泡
-  for(int i = arr.length - 1; i &gt; 0; i--){
-    for(int j = 0; j &lt; i; j++){
-      if(arr[j] &gt; arr[j + 1]){
-        swap(arr, j, j + 1);
-      }
-    }
-  }
-  
-  //小数冒泡
-  for(int i = 0; i &lt; arr.length - 1; i++){
-    for(int j = length - 1; j &gt; i; j--){
-      if(arr[j] &lt; arr[j - 1]){
-        swap(arr, j, j - 1);
-      }
-    }
-  }
-}
-
-public static void swap(int[] arr, int a, int b){
-  int temp = arr[a];
-  arr[a] = arr[b];
-  arr[b] = temp;
-}
-</code></pre>
-<h2 id="2插入排序">2.插入排序</h2>
-<pre><code class="language-java">public static void insertSort(int[] arr){
-  if(arr == null || arr.length &lt; 2){
-    return;
-  }
-  for(int i = 1; i &lt; arr.length; i++){
-    for(int j = i - 1; j &gt;= 0 &amp;&amp; arr[j] &gt; arr[j + 1]; j--){
-      swap(arr, j, j + 1);
-    }
-  }
-}
-</code></pre>
-<h2 id="3-选择排序">3. 选择排序</h2>
-<pre><code class="language-java">public static void selectSort(int[] arr){
-  if(arr == null || arr.length &lt; 2){
-    return;
-  }
-  for(int i = 0; i &lt; arr.length; i++){
-    int minIndex = i;
-    for(int j = i + 1; j &lt; arr.length; j++){
-      minIndex = arr[j] &lt; arr[minIndex] ? j : minIndex;
-    }
-    swap(arr, minIndex, i);
-  }
-  
-}
-</code></pre>
-<h2 id="4-归并排序">4. 归并排序</h2>
-<pre><code class="language-java">public static void mergeSort(int[] arr){
-   if(arr == null || arr.length &lt; 2){
-    return;
-  }
-  process(arr, 0, arr.length - 1);
-}
-
-public static void process(int[] arr, int left, int right){
-  if(left == right){
-    return;
-  }
-  int mid = (left + right) / 2;
-  process(arr, left, mid);
-  process(arr, mid + 1, right);
-  merge(arr, left, mid, right);
-}
-
-public static void merge(int[] arr, int left, int mid, int right){
-  int[] help = new int[right - left + 1];
-  int p1 = left;
-  int p2 = mid + 1;
-  int i = 0;
-  while(p1 &lt;= mid &amp;&amp; p2 &lt;= right){
-    help[i++] = arr[p1] &lt; arr[p2] ? arr[p1++] : arr[p2++];
-  }
-  while(p1 &lt;= mid){
-    help[i++] = arr[p1++];
-  }
-  while(p2 &lt;= right){
-    help[i++] = arr[p2++];
-  }
-  for(int j = 0; j &lt; help.length; j++){
-    arr[left + j] = help[j];
-  }
-}
-</code></pre>
-<h2 id="5-随机快排">5. 随机快排</h2>
-<pre><code class="language-java">public static void quickSort(int[] arr){
-  if(arr == null || arr.length &lt; 2){
-    return;
-  }
-  process(arr, 0, arr.length - 1);
-}
-
-public static void process(int[] arr, int left, int right){
-  if(left &lt; right){
-    swap(arr, right, 
-         left + (int)(Math.random() * (right - left + 1)));
-    int[] p = partition(arr, left, right);
-    process(arr, left, p[0] - 1);
-    process(arr, p[1] + 1, right);
-  }
-}
-
-public static int[] partition(int[] arr, int left, int right){
-  int lessZone = left - 1;
-  int moreZone = right;
-  while(left &lt; moreZone){
-    if(arr[left] &gt; arr[right]){
-      swap(arr, left, --moreZone);
-    }if(arr[left] &lt; arr[right]){
-      swap(arr, left++, ++lessZone);
-    }else{
-      left++;
-    }
-  }
-  swap(arr, right, moreZone);
-  return new int[] {lessZone + 1, moreZone};
-}
-</code></pre>
-<h2 id="6-堆排序">6. 堆排序</h2>
-<p>用数组的方式表示完全二叉树，对于任意节点i：</p>
-<p>左子节点: 2i + 1, 	右子节点: 2i + 2, 	父节点: （i - 1）/ 2</p>
-<pre><code class="language-java">public static void heapSort(int[] arr){
-  if(arr == null || arr.length &lt; 2){
-    return;
-  }
-  for(int i = 0; i &lt; arr.length; i++){
-    heapInsert(arr, i);
-  }
-  int size = arr.length;
-  swap(arr, 0, --size);
-  while(size &gt; 0){
-    heapify(arr, 0, size);
-    swap(arr, 0, --size);
-  }
-}
-
-public static void heapInsert(int[] arr, int index){
-  while(arr[index] &gt; arr[(index - 1) / 2]){
-    swap(arr, index, (index - 1) / 2);
-    index = (index - 1) / 2;
-  }
-}
-
-public static void heapify(int[] arr, int index, int size){
-  int left = 2 * index + 1;
-  while(left &lt; size){
-    int max = left + 1 &lt; size &amp;&amp; arr[left + 1] &gt; arr[left] 
-      ? left + 1 : left;
-    max = arr[max] &gt; arr[index] ? max : index;
-    if(max == index){
-      break;
-    }
-    swap(arr, index, max);
-    index = max;
-    left = 2 * index + 1;
-  }
-}
-</code></pre>
-<h2 id="7-桶排序">7. 桶排序</h2>
-<p>基数排序</p>
-<p>计数排序</p>
-<h2 id="8-总结">8. 总结</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">时间复杂度</th>
-<th style="text-align:center">空间复杂度</th>
-<th style="text-align:center">是否稳定</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>选择排序</td>
-<td style="text-align:center">O(N^2)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>冒泡排序</td>
-<td style="text-align:center">O(N^2)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td>插入排序</td>
-<td style="text-align:center">O(N^2)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td>归并排序</td>
-<td style="text-align:center">O(N*logN)</td>
-<td style="text-align:center">O(N)</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td>随机快排</td>
-<td style="text-align:center">O(N*logN)</td>
-<td style="text-align:center">O(logN)</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>堆排序</td>
-<td style="text-align:center">O(N*logN)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td>桶排序</td>
-<td style="text-align:center">O(N)</td>
-<td style="text-align:center">O(M)</td>
-<td style="text-align:center">是</td>
-</tr>
-</tbody>
-</table>
 ]]></content>
     </entry>
 </feed>
