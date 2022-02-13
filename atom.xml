@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
-    <title>Steven Xu</title>
-    <updated>2021-11-09T19:20:52.312Z</updated>
+    <title>Steven &amp; Nina</title>
+    <updated>2022-02-13T19:43:28.788Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Steven Xu</rights>
+    <rights>All rights reserved 2022, Steven &amp; Nina</rights>
     <entry>
         <title type="html"><![CDATA[与你一起的第2天 -- 日落]]></title>
         <id>https://stevenXu1992.github.io/post/yu-ni-yi-qi-de-di-2-tian-ri-luo/</id>
