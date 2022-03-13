@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven &amp; Nina</title>
-    <updated>2022-03-11T10:14:11.408Z</updated>
+    <updated>2022-03-13T18:45:27.872Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,29 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Steven &amp; Nina</rights>
+    <entry>
+        <title type="html"><![CDATA[与Nina的第192天 - snowy night]]></title>
+        <id>https://stevenXu1992.github.io/post/yu-nina-de-di-192-tian-snowy-night/</id>
+        <link href="https://stevenXu1992.github.io/post/yu-nina-de-di-192-tian-snowy-night/">
+        </link>
+        <updated>2022-03-13T10:31:43.000Z</updated>
+        <content type="html"><![CDATA[<p>Snowy Night</p>
+<p>A mountain hike<br>
+A lake sad<br>
+​Standing on the balcony we watched fireworks<br>
+​The lights of hotel are no longer dazzling at night</p>
+<p>The winds cry<br>
+The snows fly<br>
+They blowing away the snowflakes under street lights<br>
+Flying over the treetops like flowers passing by</p>
+<p>You are in north<br>
+I am in south<br>
+Why should the night be so dark and long?<br>
+Sitting up and count how many cold stars in the sky</p>
+<p>​<br>
+​																												                        -- 2022.3.13</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[与Nina的第189天 - 惊喜]]></title>
         <id>https://stevenXu1992.github.io/post/yu-nina-de-di-189-tian-liang-xi/</id>
@@ -120,16 +143,6 @@
         <content type="html"><![CDATA[<p>幸福来得如此突然，早上给你建议了紫色的衣服，之后就没音儿了。正在房子里躺着没事干时，你突然发来5个表情，之后响起的敲门声好像预示着什么事情要发生。</p>
 <p>​		哈利波特纪录片的内容已经想不起来了，只记得这疯狂的一晚，疯狂的我们。</p>
 <p>​																												-- 2022.1.6</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[与Nina的第120天 - 跨年]]></title>
-        <id>https://stevenXu1992.github.io/post/yu-nina-de-di-120-tian-kua-nian/</id>
-        <link href="https://stevenXu1992.github.io/post/yu-nina-de-di-120-tian-kua-nian/">
-        </link>
-        <updated>2021-12-31T15:10:34.000Z</updated>
-        <content type="html"><![CDATA[<p>2022年的新年有些特别，未曾想到竟然可以和自己心爱的女孩一起跨年，看着外面的烟花绚丽的绽放，拥抱在阳台上的我们一切都显得那么自然。</p>
-<p>​																												-- 2021.12.31</p>
 ]]></content>
     </entry>
 </feed>
