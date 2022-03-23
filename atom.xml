@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://stevenXu1992.github.io</id>
     <title>Steven &amp; Nina</title>
-    <updated>2022-03-13T18:45:27.872Z</updated>
+    <updated>2022-03-23T18:48:05.205Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://stevenXu1992.github.io"/>
     <link rel="self" href="https://stevenXu1992.github.io/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://stevenXu1992.github.io/images/avatar.png</logo>
     <icon>https://stevenXu1992.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Steven &amp; Nina</rights>
+    <entry>
+        <title type="html"><![CDATA[200 days with Nina - Dream]]></title>
+        <id>https://stevenXu1992.github.io/post/200-days-with-nina-dream/</id>
+        <link href="https://stevenXu1992.github.io/post/200-days-with-nina-dream/">
+        </link>
+        <updated>2022-03-22T14:46:10.000Z</updated>
+        <content type="html"><![CDATA[<p>I don't know the passion until I met you</p>
+<p>I don't know the sorrow until you left me</p>
+<p>Overnight thinking of you indistinguishable I'm asleep or awake</p>
+<p>Vividly saw you in the dream:</p>
+<p>Everything seems so elegant</p>
+<p>No words are necessary between our hearts</p>
+<p>I took your hand walk though the yard</p>
+<p>Now I do know what is it called love</p>
+<p>And it is just because of you</p>
+<p>​																											                	-- 2022.3.21</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[与Nina的第192天 - snowy night]]></title>
         <id>https://stevenXu1992.github.io/post/yu-nina-de-di-192-tian-snowy-night/</id>
@@ -132,17 +150,6 @@ Sitting up and count how many cold stars in the sky</p>
 <p>​		今晚感到了前所未有的释然，我会永远记住你的那句if you could not be strong enough, how could i know that i can rely on you。</p>
 <p>​		从开始到现在，我小心翼翼了太长时间，喜欢你早已成为了一种习惯，想要保护你，照顾你的感觉又是那么的自然，总是想对你好，同时又害怕给你压力，你说过你会经常一点小事就想很多，那要怎么才能找到那个平衡点，既要对你好，又不让你感到压力，也许就是把对你的爱一直藏起来，不让你知道吧？</p>
 <p>​																												-- 2022.1.8</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[与Nina的第126天 - 疯狂]]></title>
-        <id>https://stevenXu1992.github.io/post/yu-nina-de-di-126-tian-feng-kuang/</id>
-        <link href="https://stevenXu1992.github.io/post/yu-nina-de-di-126-tian-feng-kuang/">
-        </link>
-        <updated>2022-01-06T14:11:22.000Z</updated>
-        <content type="html"><![CDATA[<p>幸福来得如此突然，早上给你建议了紫色的衣服，之后就没音儿了。正在房子里躺着没事干时，你突然发来5个表情，之后响起的敲门声好像预示着什么事情要发生。</p>
-<p>​		哈利波特纪录片的内容已经想不起来了，只记得这疯狂的一晚，疯狂的我们。</p>
-<p>​																												-- 2022.1.6</p>
 ]]></content>
     </entry>
 </feed>
